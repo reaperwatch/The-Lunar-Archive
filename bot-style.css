@@ -208,7 +208,7 @@ footer {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    background-color: #2a2a2a; /* Add a subtle background */
+    background-color: transparent; /* clear bg */
     border-color: #555; /* Make border more visible on mobile */
   }
 }
