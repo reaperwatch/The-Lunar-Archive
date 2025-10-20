@@ -202,4 +202,11 @@ footer {
     width: 100px;
     height: 100px;
   }
+
+  .back-button {
+    display: block;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
