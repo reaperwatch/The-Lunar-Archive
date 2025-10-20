@@ -1,0 +1,182 @@
+/* General Body Styles */
+body {
+  background: radial-gradient(ellipse at bottom, #2c1d1d 0%, #1a0f0f 100%);
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-attachment: fixed;
+  box-sizing: border-box;
+}
+
+/* Main Container */
+.container {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Profile Picture for Bot Page */
+#bot-profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #cb686b;
+  box-shadow: 0 0 25px rgba(203, 104, 107, 0.4);
+  object-fit: cover;
+  margin-bottom: 1rem;
+  /* Entrance Animation */
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+}
+
+/* Header Styles */
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  background: linear-gradient(90deg, #e4a2a4, #cb686b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Entrance Animation */
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  /* Entrance Animation */
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+/* Call to Action Button */
+.cta-button {
+  display: inline-block;
+  background-color: #cb686b;
+  color: #fff;
+  padding: 15px 30px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  box-shadow: 0 4px 20px rgba(203, 104, 107, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+  /* Entrance Animation */
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(203, 104, 107, 0.5);
+  background-color: #d47c7f;
+}
+
+.cta-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 15px rgba(203, 104, 107, 0.3);
+}
+
+/* Features Section */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+
+.feature-card {
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 8px;
+  border-left: 4px solid #cb686b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  /* Entrance Animation */
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.6s;
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  color: #cb686b;
+  font-size: 1.3rem;
+}
+
+.feature-card p {
+  color: #b0b0b0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Style for code blocks inside feature cards */
+.feature-card code {
+  background-color: #3a2a2a;
+  color: #f2c4c5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  font-size: 0.9rem;
+  color: #616161;
+}
+
+/* Entrance Animation Keyframes */
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animation for the other feature cards */
+.features .feature-card:nth-of-type(2) {
+  animation-delay: 0.7s;
+}
+.features .feature-card:nth-of-type(3) {
+  animation-delay: 0.8s;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .cta-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  #bot-profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+}
