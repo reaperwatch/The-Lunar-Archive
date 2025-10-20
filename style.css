@@ -1,0 +1,84 @@
+/* General Body Styles */
+body {
+  /* Use a radial gradient for a more dynamic background */
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: #e0e0e0; /* Light grey text */
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* Add a subtle animation to the background gradient */
+  background-attachment: fixed;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Main Container */
+.container {
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Profile Picture */
+#profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Makes the image circular */
+  border: 3px solid #bb86fc; /* A nice accent color */
+  /* Add a glow effect to the profile picture */
+  box-shadow: 0 0 25px rgba(187, 134, 252, 0.4);
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+/* Headings and Paragraphs */
+h1 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+p {
+  font-size: 1rem;
+  color: #b0b0b0; /* Slightly dimmer text for bio */
+}
+
+/* Link Card Styles */
+.link-card {
+  display: block;
+  /* Set up the gradient for animation */
+  background: linear-gradient(90deg, #1e1e1e 0%, #1e1e1e 50%, #bb86fc 100%);
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  color: #e0e0e0;
+  padding: 18px 20px;
+  margin: 16px 0;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 1px solid #444;
+  /* Add background-position to the transition for the gradient animation */
+  transition: transform 0.3s ease, background-position 0.4s ease-in-out,
+    box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect for links */
+.link-card:hover {
+  transform: scale(1.03); /* Slightly enlarges the card */
+  /* Animate the gradient to slide in from the right */
+  background-position: 100% 0%;
+  /* Enhance the shadow on hover for a "lifting" effect */
+  box-shadow: 0 8px 25px rgba(187, 134, 252, 0.3);
+}
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #616161;
+}
