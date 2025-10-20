@@ -208,7 +208,7 @@ footer {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    background-color: transparent; /* clear bg */
+    background-color: rgba(0, 0, 0, 0); /* clear bg */
     border-color: #555; /* Make border more visible on mobile */
   }
 }
