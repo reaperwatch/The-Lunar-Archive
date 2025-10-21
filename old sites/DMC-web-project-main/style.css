@@ -12,7 +12,10 @@ body {
   -webkit-text-stroke: 0.4px;
   color: rgb(0, 0, 0);
   -webkit-text-stroke-color: rgb(192, 0, 0);
-  height: 100%;
+}
+
+body {
+  overflow-x: hidden; /* Prevents horizontal scroll/sliding on all pages */
 }
 
 button {
@@ -250,8 +253,6 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   width: 100vw;
   height: 100vh;
   z-index: -1;
