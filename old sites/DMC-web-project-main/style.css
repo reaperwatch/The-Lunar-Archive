@@ -12,6 +12,8 @@ body {
   -webkit-text-stroke: 0.4px;
   color: rgb(0, 0, 0);
   -webkit-text-stroke-color: rgb(192, 0, 0);
+  min-height: 100%;
+  height: 100%;
 }
 
 body {
@@ -50,7 +52,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #body-home {
@@ -58,7 +60,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #body-calc {
@@ -66,7 +68,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #body-char {
@@ -74,7 +76,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 html,
@@ -229,6 +231,8 @@ nav {
 .home-blur-hover,
 .quiz-blur-hover,
 .char-blur-hover {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -240,6 +244,9 @@ nav {
   box-sizing: border-box;
   /* Adjusts desktop content position */
   margin-top: 50px;
+
+  min-height: calc(100vh - 60px); /* allow for footer height */
+  box-sizing: border-box;
 }
 
 /* Blur effect container */
@@ -249,16 +256,14 @@ nav {
 .char-blur-hover::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  /* Apply animation for smooth transition */
+  inset: 0;
+  z-index: 0; /* on top of page background but behind container content (container z-index:1) */
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   transition: backdrop-filter 0.5s ease-in-out,
     -webkit-backdrop-filter 0.5s ease-in-out;
-  backdrop-filter: blur(0px); /* Start with no blur */
-  -webkit-backdrop-filter: blur(0px);
 }
 
 /* Active blur state */
