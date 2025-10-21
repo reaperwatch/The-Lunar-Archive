@@ -1,308 +1,394 @@
 @font-face {
-    font-family: 'Devil May Cry';
-    src: url('DMC5Font.otf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Devil May Cry";
+  src: url("DMC5Font.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-html, body {
-    font-family: 'Devil May Cry', Arial, sans-serif;
-    font-size: 1.25rem;
-    -webkit-text-stroke: 0.4px;
-    color: rgb(0, 0, 0);
-    -webkit-text-stroke-color: rgb(192, 0, 0);
+html,
+body {
+  font-family: "Devil May Cry", Arial, sans-serif;
+  font-size: 1.25rem;
+  -webkit-text-stroke: 0.4px;
+  color: rgb(0, 0, 0);
+  -webkit-text-stroke-color: rgb(192, 0, 0);
 }
-
 
 button {
-    display: inline-block;
-    width: fit-content;
-    align-self: center;
+  display: inline-block;
+  width: fit-content;
+  align-self: center;
 }
 
-.yap{
-    align-self: center;
+.yap {
+  align-self: center;
 }
 body {
-    display: flex; 
-    flex-direction: column; 
-    min-height: 100vh;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
 }
 
 #left-align {
-    margin-left: 0;
-    margin-right: auto;
-    align-self: flex-end;
-    text-align: left;
+  margin-left: 0;
+  margin-right: auto;
+  align-self: flex-end;
+  text-align: left;
 }
 #box {
-    width: 200px;
-    height: 200px;
-    background-color: rgba(0, 0, 0, 0.5);
+  width: 200px;
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #body-quiz {
-    background-image: url('dmc 5 vergil.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-image: url("dmc 5 vergil.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #body-home {
-    background-image: url('dmc 5 , 3(2).jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-image: url("dmc 5 , 3(2).jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #body-calc {
-    background-image: url('dmc 5 logo.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-image: url("dmc 5 logo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #body-char {
-    background-image: url('dmc 5 nero.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-image: url("dmc 5 nero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-html, body{
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 footer {
-    margin-top: auto;
-    text-align: center;
-    background: linear-gradient(to right, rgb(129, 2, 2), rgb(0, 0, 0), rgb(0, 0, 0), rgb(4, 44, 129));
-    font-size: 1.5rem;
-    height: 45px;
+  margin-top: auto;
+  text-align: center;
+  background: linear-gradient(
+    to right,
+    rgb(129, 2, 2),
+    rgb(0, 0, 0),
+    rgb(0, 0, 0),
+    rgb(4, 44, 129)
+  );
+  font-size: 1.5rem;
+  height: 45px;
 }
-nav{
-    box-shadow: 0px -5px 5px  rgb(15, 15, 15);
-    border-top: 1px solid rgb(15, 15, 15); 
-    flex: auto; flex-direction: column;
+nav {
+  box-shadow: 0px -5px 5px rgb(15, 15, 15);
+  border-top: 1px solid rgb(15, 15, 15);
+  flex: auto;
+  flex-direction: column;
 }
-.quizstyle{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 105%;
-    height: 100%;
-    font-size: 1.13rem;
+.quizstyle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Changed from 105% to prevent overflow */
+  font-size: 1.13rem;
 }
 
+/* Character Rating Container - Moved from JS to CSS */
+#rating-container {
+  margin: 32px auto;
+  width: 100%;
+  max-width: 640px; /* Use max-width for responsiveness */
+  border: 2px solid #b22222;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 0 12px #b22222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(34, 34, 34, 0.9);
+}
 #calc-body {
-    display: flex; 
-    flex-direction: column; 
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 
-#calculator{
-    font-family: Arial, sans-serif;
-    background-color: hsl(0, 0%, 15%);
-    border-radius: 15px;
-    max-width: 500px;
-    overflow: hidden;
+#calculator {
+  font-family: Arial, sans-serif;
+  background-color: hsl(0, 0%, 15%);
+  border-radius: 15px;
+  max-width: 500px;
+  overflow: hidden;
 }
-#display{
-    width: 100%;
-    padding: 20px;
-    font-size: 5rem;
-    text-align: left;
-    border: none;
-    background-color: hsl(0, 0%, 20%);
-    color: white;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-text-stroke: 0px;
+#display {
+  width: 100%;
+  padding: 20px;
+  font-size: 5rem;
+  text-align: left;
+  border: none;
+  background-color: hsl(0, 0%, 20%);
+  color: white;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-text-stroke: 0px;
 }
 
-
-#keys{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 25px;
+#keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 25px;
 }
 #calc-btn {
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-    border: none;
-    background-color: hsl(0, 0%, 30%);
-    color: white;
-    font-size: 2.2rem; 
-    font-weight: bold;
-    cursor: pointer;
-    -webkit-text-stroke: 0px;
+  width: 100%; /* Make buttons fill the grid cell */
+  aspect-ratio: 1 / 1; /* Maintain a square shape */
+  border-radius: 50px;
+  border: none;
+  background-color: hsl(0, 0%, 30%);
+  color: white;
+  font-size: 2.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-text-stroke: 0px;
 }
 
 #calc-btn:hover {
-    background-color: hsl(0, 0%, 40%);
+  background-color: hsl(0, 0%, 40%);
 }
 
 #calc-btn:active {
-    background-color: hsl(0, 0%, 50%);
+  background-color: hsl(0, 0%, 50%);
 }
 
 #calc-btn.operator-btn {
-    background-color: hsl(35, 100%, 55%);
+  background-color: hsl(35, 100%, 55%);
 }
 
 #calc-btn.operator-btn:hover {
-    background-color: hsl(35, 100%, 65%);
+  background-color: hsl(35, 100%, 65%);
 }
 
 #calc-btn.operator-btn:active {
-    background-color: hsl(35, 100%, 75%);
+  background-color: hsl(35, 100%, 75%);
 }
 
 #mode-result {
-    width: 100%;
-    font-size: 1.1rem;
-    text-align: center;
-    margin-left: 25%;
-    margin-right: 25%;
+  width: 100%;
+  font-size: 1.1rem;
+  text-align: center;
 }
 #reload {
-    margin-left: 25%;
-    margin-right: 25%;
-    -webkit-text-stroke: 0px;
-    padding: 10px 24px; border-radius: 8px; border: 2px solid #b22222; background: #222; color: #fff; cursor: pointer;
+  margin-left: 25%;
+  margin-right: 25%;
+  -webkit-text-stroke: 0px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 2px solid #b22222;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
 }
 
 .fade-in-text {
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInDown 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInDown 0.5s ease-out forwards;
 }
 @keyframes fadeInDown {
-to {
-        opacity: 1;
-        transform: translateY(0);
-        align-self: center;
-        display: inline-block;
-        width: fit-content;
-        align-self: center;
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    align-self: center;
+    display: inline-block;
+    width: fit-content;
+    align-self: center;
+  }
 }
-
 
 .calc-blur-hover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    height: 25%;
-    margin-left: 25%;
-    margin-right: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 25%;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
-
 .home-blur-hover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    height: 25%;
-    margin-left: 25%;
-    margin-right: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 25%;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .quiz-blur-hover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 30%;
-    height: 50%;
-    margin-left: 35%;
-    margin-right: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 50%;
+  margin-left: 35%;
+  margin-right: 25%;
 }
 
 .char-blur-hover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 28%;
-    height: 25%;
-    margin-left: 35%;
-    margin-right: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 28%;
+  height: 25%;
+  margin-left: 35%;
+  margin-right: 25%;
 }
 
 .quiz-blur-hover:hover::before,
 .calc-blur-hover:hover::before,
 .home-blur-hover:hover::before,
 .char-blur-hover:hover::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    animation: fadeInBlur 1.0s ease-in-out forwards;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  animation: fadeInBlur 1s ease-in-out forwards;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .quiz-blur-hover:not(:hover)::before,
 .calc-blur-hover:not(:hover)::before,
 .home-blur-hover:not(:hover)::before,
 .char-blur-hover:not(:hover)::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    animation: fadeOutBlur 1.0s ease-in-out forwards;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  animation: fadeOutBlur 1s ease-in-out forwards;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 }
 
 @keyframes fadeInBlur {
-    from {
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-    }
-    to {
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
+  from {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 @keyframes fadeOutBlur {
-    from {
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
-    to {
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-    }
+  from {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  to {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
 }
 
-#swap, #swap1, #swap2, #resetchar {
-    padding: 0px; border-radius: 8px; border: 2px  #b22222; background: rgba(34,34,34,0.0); cursor: pointer; font-size: 1.1rem;
-    font-family: 'Devil May Cry', Arial, sans-serif;
-    -webkit-text-stroke: 0.4px;
-    color: rgb(0, 0, 0);
-    -webkit-text-stroke-color: rgb(192, 0, 0);
-    text-decoration: dotted underline;
+#swap,
+#swap1,
+#swap2,
+#resetchar {
+  padding: 0px;
+  border-radius: 8px;
+  border: 2px #b22222;
+  background: rgba(34, 34, 34, 0);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: "Devil May Cry", Arial, sans-serif;
+  -webkit-text-stroke: 0.4px;
+  color: rgb(0, 0, 0);
+  -webkit-text-stroke-color: rgb(192, 0, 0);
+  text-decoration: dotted underline;
+}
+
+/* --- Responsive Media Queries --- */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    font-size: 1.1rem;
+  }
+
+  .home-blur-hover img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #calculator {
+    max-width: 95%;
+  }
+
+  #display {
+    font-size: 3.5rem;
+  }
+
+  #keys {
+    gap: 8px;
+    padding: 15px;
+  }
+
+  #calc-btn {
+    font-size: 1.8rem;
+  }
+
+  footer {
+    font-size: 1.2rem;
+  }
+
+  #rating-container {
+    padding: 10px;
+  }
+
+  #swap,
+  #swap1,
+  #swap2,
+  #resetchar {
+    font-size: 1rem;
+  }
+
+  #result video,
+  #result img {
+    max-width: 100% !important; /* Override inline styles */
+    height: auto !important;
+  }
+
+  #result div {
+    padding: 16px !important;
+  }
 }

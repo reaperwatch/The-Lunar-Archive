@@ -373,11 +373,7 @@ document.getElementById("body-char").onload = function () {
 };
 
 function renderRatingUI() {
-  let container = document.getElementById("rating-container");
-  container.style =
-    "margin: 32px auto; width: 640px; border: 2px solid #b22222; border-radius: 12px; padding: 16px; box-shadow: 0 0 12px #b22222; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(34,34,34,0.9);";
-
-  container.innerHTML = `
+  document.getElementById("rating-container").innerHTML = `
         <h2 style="text-align:center;">Character Rating</h2>
         <ol id="char-list" style="padding-left: 24px;">
             ${chars
