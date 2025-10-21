@@ -95,7 +95,11 @@ footer {
   font-size: 1.5rem;
   height: 45px;
   width: 100%;
+
+  position: relative;
+  z-index: 5;
 }
+
 nav {
   /* Removed border-top. The gradient in the footer provides the thin line. */
   flex: auto;
@@ -240,6 +244,9 @@ nav {
   box-sizing: border-box;
   /* Adjusts desktop content position */
   margin-top: 50px;
+
+  position: relative;
+  z-index: 1;
 }
 
 /* Blur effect container */
@@ -249,11 +256,11 @@ nav {
 .char-blur-hover::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
   /* Apply animation for smooth transition */
   transition: backdrop-filter 0.5s ease-in-out,
     -webkit-backdrop-filter 0.5s ease-in-out;
@@ -269,6 +276,28 @@ nav {
   /* FIX: Directly set target blur value, the transition property above handles the fade/ease */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  /* tiny tint helps older engines and improves visual */
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Fallback for browsers that don't support backdrop-filter:
+   provide a translucent overlay instead of a true blur. */
+@supports not (
+  (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
+) {
+  .calc-blur-hover::before,
+  .home-blur-hover::before,
+  .quiz-blur-hover::before,
+  .char-blur-hover::before {
+    background: rgba(255, 255, 255, 0.18);
+    /* no true blur available in this browser */
+  }
+  .calc-blur-hover.blur-active::before,
+  .home-blur-hover.blur-active::before,
+  .quiz-blur-hover.blur-active::before,
+  .char-blur-hover.blur-active::before {
+    background: rgba(255, 255, 255, 0.28);
+  }
 }
 
 /* Removed old @keyframes fadeInBlur and fadeOutBlur as the transition property handles the fade-in/out effect */
