@@ -238,6 +238,7 @@ nav {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  position: relative;
   z-index: 1;
   /* Adjusts desktop content position */
   margin-top: 50px;
@@ -319,6 +320,8 @@ nav {
   html,
   body {
     font-size: 1.1rem;
+    min-height: auto;
+    max-height: max-content;
     margin: 0;
     padding: 0;
   }
@@ -362,7 +365,6 @@ nav {
     width: 100%;
     max-width: 100%;
     padding: 20px 10px;
-    min-height: calc(100vh - 60px);
   }
 
   .home-blur-hover img {
