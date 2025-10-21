@@ -317,8 +317,6 @@ nav {
   html,
   body {
     font-size: 1.1rem;
-    margin: 0;
-    padding: 0;
   }
 
   /* Reset desktop margin on mobile */
