@@ -19,7 +19,7 @@ body {
   max-width: 680px;
   width: 100%;
   text-align: center;
-  padding: 20px; /* Add padding here for better control */
+  padding: 20px; 
 }
 
 /* Profile Picture */
@@ -141,6 +141,9 @@ footer {
 }
 .link-card:nth-of-type(4) {
   animation-delay: 1s;
+}
+.link-card:nth-of-type(5) {
+  animation-delay: 1.2s;
 }
 
 /* --- Mobile Responsiveness --- */
