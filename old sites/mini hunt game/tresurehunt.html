@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>treasure hunt!</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styletresure.css">
+    </head>
+    <body id="img">
+        <audio id="music" autoplay loop hidden >
+            <source src="Mipha's Theme (The Legend of Zelda_ Breath of the Wild OST).mp3">
+     </audio autoplay loop>
+     <script>let audio1 = document.getElementById("music"); audio1.volume = 0.035;
+       var audio = document.getElementById("music");
+       function Fun2(){
+        audio.play();
+       }
+       function Fun3(){
+        audio.pause();
+       }
+     </script>
+        <div class="game-container">
+            <h2 id="text">a small game of treasure hunt!
+            there are 3 treasure chests and 2 traps</h2>
+            <button class="pretty-button" onclick="Fun()">click to play</button>
+            <button class="pretty-button2" onclick="Fun2()">play music</button>
+            <button class="pretty-button3" onclick="Fun3()">pause music</button>
+        </div>
+        <script src="code.js" async defer></script>
+    </body>
+</html>
