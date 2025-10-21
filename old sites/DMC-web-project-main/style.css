@@ -137,8 +137,7 @@ nav {
   font-family: Arial, sans-serif;
   background-color: hsl(0, 0%, 15%);
   border-radius: 15px;
-  /* FIX: Calculator size reduced by 25% for desktop/large screens (500px -> 375px) */
-  max-width: 375px;
+  max-width: 500px;
   overflow: hidden;
 }
 #display {
@@ -152,7 +151,6 @@ nav {
   overflow-x: auto;
   white-space: nowrap;
   -webkit-text-stroke: 0px;
-  box-sizing: border-box;
 }
 
 #keys {
@@ -261,7 +259,6 @@ nav {
     -webkit-backdrop-filter 0.5s ease-in-out;
   backdrop-filter: blur(0px); /* Start with no blur */
   -webkit-backdrop-filter: blur(0px);
-  transform: translateZ(0);
 }
 
 /* Active blur state */
@@ -363,7 +360,6 @@ nav {
     width: 100%;
     max-width: 100%;
     padding: 20px 10px;
-    box-sizing: border-box;
   }
 
   .home-blur-hover img {
@@ -375,6 +371,7 @@ nav {
   #calculator {
     /* Smaller max-width for better fit on small screens, preventing zoom-in needed */
     max-width: 90vw;
+    width: 250px; /* Reduced from 300px to 250px (another ~17% reduction) */
     min-width: 200px;
     margin: 0 auto;
   }
@@ -382,6 +379,7 @@ nav {
   /* Constrain rating container width more on mobile */
   #rating-container {
     max-width: 95%;
+    min-width: 300px;
     margin-left: auto;
     margin-right: auto;
   }
