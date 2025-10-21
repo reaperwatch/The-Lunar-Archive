@@ -95,7 +95,6 @@ footer {
   font-size: 1.5rem;
   height: 45px;
   width: 100%;
-  z-index: 1;
 }
 nav {
   /* Removed border-top. The gradient in the footer provides the thin line. */
@@ -239,8 +238,6 @@ nav {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
-  position: relative;
-  z-index: 1;
   /* Adjusts desktop content position */
   margin-top: 50px;
 }
@@ -256,8 +253,7 @@ nav {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
-  pointer-events: none;
+  z-index: -1;
   /* Apply animation for smooth transition */
   transition: backdrop-filter 0.5s ease-in-out,
     -webkit-backdrop-filter 0.5s ease-in-out;
@@ -321,8 +317,6 @@ nav {
   html,
   body {
     font-size: 1.1rem;
-    min-height: auto;
-    max-height: max-content;
     margin: 0;
     padding: 0;
   }
@@ -379,7 +373,6 @@ nav {
     max-width: 90vw;
     width: min(480px, 90vw);
     margin: 0 auto;
-    box-sizing: border-box;
   }
 
   /* Constrain rating container width more on mobile */
@@ -404,7 +397,6 @@ nav {
   }
 
   footer {
-    z-index: 1;
     font-size: 1.2rem;
     height: auto;
     padding: 5px 0;
