@@ -5,6 +5,10 @@
   font-style: normal;
 }
 
+html {
+  overflow-x: hidden; /* FIX: Added to html to definitively fix horizontal scroll/sliding */
+}
+
 html,
 body {
   font-family: "Devil May Cry", Arial, sans-serif;
@@ -15,7 +19,12 @@ body {
 }
 
 body {
-  overflow-x: hidden; /* Prevents horizontal scroll/sliding on all pages */
+  overflow-x: hidden; /* Keep on body for redundancy and better cross-browser fix */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -26,11 +35,6 @@ button {
 
 .yap {
   align-self: center;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
 #left-align {
@@ -77,11 +81,6 @@ body {
   background-attachment: fixed;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
 footer {
   margin-top: auto;
   text-align: center;
@@ -97,8 +96,9 @@ footer {
   width: 100%;
 }
 nav {
-  box-shadow: 0px -5px 5px rgb(15, 15, 15);
-  border-top: 1px solid rgb(15, 15, 15);
+  /* FIX: Removed box-shadow to make the footer top line thin */
+  /* box-shadow: 0px -5px 5px rgb(15, 15, 15); */
+  border-top: 1px solid rgb(15, 15, 15); /* This is the thin line you requested */
   flex: auto;
   flex-direction: column;
   width: 100%;
@@ -233,22 +233,20 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Removed justify-content: center to shift content up */
   flex-grow: 1;
   width: 100%;
   max-width: 90%;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
-  /* FIX: Add margin 0 to keep content on top desktop */
-  margin-top: 0px;
+  margin-top: 50px; /* FIX: Shifts content up from the center on desktop */
 }
 
-/* New active blur state - requires JS to toggle .blur-active class */
-.calc-blur-hover.blur-active::before,
-.home-blur-hover.blur-active::before,
-.quiz-blur-hover.blur-active::before,
-.char-blur-hover.blur-active::before {
+/* Blur state - requires JS to toggle .blur-active class */
+.calc-blur-hover::before,
+.home-blur-hover::before,
+.quiz-blur-hover::before,
+.char-blur-hover::before {
   content: "";
   position: fixed;
   top: 0;
@@ -256,7 +254,17 @@ nav {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(0px); /* Start with 0 blur */
+  -webkit-backdrop-filter: blur(0px);
+  transition: backdrop-filter 0.5s ease-in-out,
+    -webkit-backdrop-filter 0.5s ease-in-out; /* NEW: Fade animation */
+}
+
+.calc-blur-hover.blur-active::before,
+.home-blur-hover.blur-active::before,
+.quiz-blur-hover.blur-active::before,
+.char-blur-hover.blur-active::before {
+  backdrop-filter: blur(8px); /* End with 8px blur */
   -webkit-backdrop-filter: blur(8px);
 }
 
@@ -277,24 +285,24 @@ nav {
   text-decoration: dotted underline;
 }
 
-/* Blur Toggle Button (hidden by default) */
+/* Blur Toggle Button (Desktop/Mobile Shared Styles) */
 .blur-toggle-btn {
-  display: none; /* Hide on desktop */
   position: fixed;
   bottom: 60px; /* Position above the footer */
-  left: 10px;
   z-index: 1000;
-  padding: 10px 15px;
+  padding: 12px 20px; /* Slightly larger padding for desktop */
   background: linear-gradient(145deg, #b22222, #7a1616);
   color: white;
   border: none;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   font-family: "Devil May Cry", Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
   -webkit-text-stroke: 0.1px;
   -webkit-text-stroke-color: black;
+  right: 10px; /* NEW: Default to right position (desktop) */
+  left: auto;
 }
 
 /* --- Responsive Media Queries --- */
@@ -307,7 +315,7 @@ nav {
     padding: 0;
   }
 
-  /* FIX: Reset desktop margin on mobile */
+  /* Reset desktop margin on mobile */
   .calc-blur-hover,
   .home-blur-hover,
   .quiz-blur-hover,
@@ -353,21 +361,24 @@ nav {
     height: auto;
   }
 
+  /* FIX: Reduce calculator size for mobile */
   #calculator {
     max-width: 95%;
   }
 
+  /* FIX: Reduce calculator display size for mobile */
   #display {
-    font-size: 3.5rem;
+    font-size: 3rem;
+  }
+
+  /* FIX: Reduce calculator button font size for mobile */
+  #calc-btn {
+    font-size: 1.6rem;
   }
 
   #keys {
     gap: 8px;
     padding: 15px;
-  }
-
-  #calc-btn {
-    font-size: 1.8rem;
   }
 
   footer {
@@ -404,8 +415,11 @@ nav {
     padding: 16px !important;
   }
 
-  /* Show the blur toggle button on mobile */
+  /* Blur Toggle Button: Mobile Overrides (Bottom Left) */
   .blur-toggle-btn {
-    display: block;
+    left: 10px; /* Move to left */
+    right: auto; /* Reset right position */
+    padding: 10px 15px;
+    font-size: 1rem;
   }
 }
