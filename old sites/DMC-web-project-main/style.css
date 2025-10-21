@@ -95,6 +95,7 @@ footer {
   font-size: 1.5rem;
   height: 45px;
   width: 100%;
+  z-index: 1;
 }
 nav {
   /* Removed border-top. The gradient in the footer provides the thin line. */
@@ -403,6 +404,7 @@ nav {
   }
 
   footer {
+    z-index: 1;
     font-size: 1.2rem;
     height: auto;
     padding: 5px 0;
