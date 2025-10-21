@@ -97,8 +97,7 @@ footer {
   width: 100%;
 }
 nav {
-  /* FIX: Removed border-top. This was the 'line inside' the footer. The gradient already provides a crisp top edge. */
-  /* border-top: 1px solid rgb(15, 15, 15); */
+  /* Removed border-top. The gradient in the footer provides the thin line. */
   flex: auto;
   flex-direction: column;
   width: 100%;
@@ -255,8 +254,47 @@ nav {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  backdrop-filter: blur(8px);
+  /* RESTORED: Fade in animation */
+  animation: fadeInBlur 0.5s ease-in-out forwards;
   -webkit-backdrop-filter: blur(8px);
+}
+
+/* Fade out animation when blur is removed */
+.calc-blur-hover:not(.blur-active)::before,
+.home-blur-hover:not(.blur-active)::before,
+.quiz-blur-hover:not(.blur-active)::before,
+.char-blur-hover:not(.blur-active)::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* RESTORED: Fade out animation */
+  animation: fadeOutBlur 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeInBlur {
+  from {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes fadeOutBlur {
+  from {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  to {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
 }
 
 #swap,
@@ -278,11 +316,11 @@ nav {
 
 /* Blur Toggle Button (visible on all screen sizes) */
 .blur-toggle-btn {
-  /* FIX: Ensures the button is visible and works on desktop */
   display: block;
   position: fixed;
   bottom: 60px; /* Position above the footer */
-  left: 10px;
+  right: 10px; /* FIX: Moved button to the bottom right */
+  left: auto; /* Ensure it sticks to the right */
   z-index: 1000;
   padding: 10px 15px;
   background: linear-gradient(145deg, #b22222, #7a1616);
@@ -353,23 +391,24 @@ nav {
     height: auto;
   }
 
-  /* FIX: Calculator size reduced for small screens. Removed restrictive min-width. */
+  /* FIX: Further constrain calculator width on mobile to prevent overflow/zoom */
   #calculator {
-    max-width: 85%; /* Reduced from 90% */
-    /* min-width removed to allow scaling down */
+    max-width: 95vw; /* Use viewport width to be safer */
+    width: 300px; /* Fixed width for better control */
+    min-width: 280px;
+    margin: 0 auto;
   }
 
-  /* FIX: Rating container size reduced for small screens. Removed restrictive min-width. */
+  /* Constrain rating container width more on mobile */
   #rating-container {
     max-width: 95%;
-    /* min-width removed to allow scaling down */
+    min-width: 300px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* FIX: Reduced calculator display size */
   #display {
-    font-size: 3rem; /* Reduced from 3.5rem */
+    font-size: 3.5rem;
   }
 
   #keys {
@@ -377,9 +416,8 @@ nav {
     padding: 15px;
   }
 
-  /* FIX: Reduced calculator button font size */
   #calc-btn {
-    font-size: 1.6rem; /* Reduced from 1.8rem */
+    font-size: 1.8rem;
   }
 
   footer {
