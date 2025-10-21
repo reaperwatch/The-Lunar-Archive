@@ -260,6 +260,7 @@ nav {
     -webkit-backdrop-filter 0.5s ease-in-out;
   backdrop-filter: blur(0px); /* Start with no blur */
   -webkit-backdrop-filter: blur(0px);
+  transform: translateZ(0);
 }
 
 /* Active blur state */

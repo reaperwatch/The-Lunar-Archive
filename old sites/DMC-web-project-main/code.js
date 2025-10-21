@@ -65,20 +65,6 @@ function reset(){
 
 // rating finished (old, remade below)
 
-const blurButton = document.getElementById("blurToggleBtn");
-if (blurButton) {
-  blurButton.addEventListener("click", () => {
-    // Use a single query selector that finds the container for the current page
-    const containers = document.querySelectorAll(
-      ".calc-blur-hover, .home-blur-hover, .quiz-blur-hover, .char-blur-hover"
-    );
-    // Toggle the 'blur-active' class on all found containers to trigger the CSS transition
-    containers.forEach((container) => {
-      container.classList.toggle("blur-active");
-    });
-  });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const blurButton = document.getElementById("blurToggleBtn");
   if (blurButton) {
