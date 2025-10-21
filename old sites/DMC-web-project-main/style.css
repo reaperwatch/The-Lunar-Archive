@@ -16,7 +16,6 @@ body {
 
 body {
   overflow-x: hidden; /* Prevents horizontal scroll/sliding on all pages */
-overflow-y: hidden;
 }
 
 button {
