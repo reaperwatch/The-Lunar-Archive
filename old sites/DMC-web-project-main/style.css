@@ -222,48 +222,19 @@ nav {
   }
 }
 
-.calc-blur-hover {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 25%;
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-.home-blur-hover {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 25%;
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-.quiz-blur-hover {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 30%;
-  height: 50%;
-  margin-left: 35%;
-  margin-right: 25%;
-}
-
+.calc-blur-hover,
+.home-blur-hover,
+.quiz-blur-hover,
 .char-blur-hover {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 28%;
-  height: 25%;
-  margin-left: 35%;
-  margin-right: 25%;
+  width: 100%;
+  max-width: 90%; /* Adjust as needed */
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .quiz-blur-hover:hover::before,
