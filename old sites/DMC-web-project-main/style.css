@@ -240,8 +240,8 @@ nav {
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
-  /* FIX: Add margin to shift content down slightly from the very top on desktop */
-  margin-top: 50px;
+  /* FIX: Add margin 0 to keep content on top desktop */
+  margin-top: 0px;
 }
 
 /* New active blur state - requires JS to toggle .blur-active class */
