@@ -27,7 +27,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* FIX: Removed 'justify-content: center;' to prevent the footer gap */
 }
 
 #left-align {
@@ -103,15 +102,15 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%; /* Changed from 105% to prevent overflow */
+  width: 100%;
   font-size: 1.13rem;
 }
 
-/* Character Rating Container - Moved from JS to CSS */
+/* Character Rating Container */
 #rating-container {
   margin: 32px auto;
   width: 100%;
-  max-width: 640px; /* Use max-width for responsiveness */
+  max-width: 640px;
   border: 2px solid #b22222;
   border-radius: 12px;
   padding: 16px;
@@ -125,7 +124,7 @@ nav {
 #calc-body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /* FIX: Removed min-height: 100vh to fix layout issue */
   justify-content: center;
   align-items: center;
 }
@@ -157,8 +156,8 @@ nav {
   padding: 25px;
 }
 #calc-btn {
-  width: 100%; /* Make buttons fill the grid cell */
-  aspect-ratio: 1 / 1; /* Maintain a square shape */
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 50px;
   border: none;
   background-color: hsl(0, 0%, 30%);
@@ -230,9 +229,9 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-grow: 1; /* FIX: Added to push the footer to the bottom */
+  /* FIX: Removed flex-grow: 1 to fix blur triggering across the whole screen and the footer gap */
   width: 100%;
-  max-width: 90%; /* Adjust as needed */
+  max-width: 90%;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -315,11 +314,11 @@ nav {
   html,
   body {
     font-size: 1.1rem;
-    margin: 0; /* FIX: Ensure no body margin causes overflow */
+    margin: 0;
     padding: 0;
   }
 
-  /* FIX: To fix the background jump issue on mobile (iOS/fixed attachment) */
+  /* Fix background jump issue on mobile (iOS/fixed attachment) */
   #body-quiz,
   #body-home,
   #body-calc,
@@ -327,18 +326,18 @@ nav {
     background-attachment: scroll;
   }
 
-  /* FIX: To make content less "skinny" on mobile */
+  /* Make content less "skinny" on mobile */
   .calc-blur-hover,
   .home-blur-hover,
   .quiz-blur-hover,
   .char-blur-hover {
     width: 100%;
-    max-width: 100%; /* Ensure it uses full width */
-    padding: 20px 10px; /* Use less horizontal padding than desktop's 20px */
+    max-width: 100%;
+    padding: 20px 10px;
   }
 
   .home-blur-hover img {
-    max-width: 90%; /* Adjust logo size */
+    max-width: 90%;
     height: auto;
   }
 
@@ -361,15 +360,15 @@ nav {
 
   footer {
     font-size: 1.2rem;
-    height: auto; /* Allow footer to grow if links wrap */
-    padding: 5px 0; /* Add vertical padding for visual spacing */
+    height: auto;
+    padding: 5px 0;
   }
 
-  /* FIX: Footer link spacing to prevent horizontal overflow/cramping */
+  /* Footer link spacing to prevent horizontal overflow/cramping */
   footer nav a {
-    margin-left: 5px !important; /* Override the 15px inline margin from HTML */
+    margin-left: 5px !important;
     margin-right: 5px;
-    font-size: 0.9rem; /* Slightly smaller font to help fit on one line */
+    font-size: 0.9rem;
   }
 
   #rating-container {
@@ -385,7 +384,7 @@ nav {
 
   #result video,
   #result img {
-    max-width: 100% !important; /* Override inline styles */
+    max-width: 100% !important;
     height: auto !important;
   }
 
