@@ -142,6 +142,9 @@ footer {
 .link-card:nth-of-type(4) {
   animation-delay: 1s;
 }
+.link-card:nth-of-type(5) {
+  animation-delay: 1.2s;
+}
 
 /* --- Mobile Responsiveness --- */
 @media (max-width: 480px) {
