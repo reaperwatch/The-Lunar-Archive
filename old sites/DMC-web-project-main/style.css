@@ -137,7 +137,8 @@ nav {
   font-family: Arial, sans-serif;
   background-color: hsl(0, 0%, 15%);
   border-radius: 15px;
-  max-width: 500px;
+  /* FIX: Calculator size reduced by 25% for desktop/large screens (500px -> 375px) */
+  max-width: 375px;
   overflow: hidden;
 }
 #display {
@@ -242,60 +243,36 @@ nav {
   margin-top: 50px;
 }
 
-/* New active blur state - requires JS to toggle .blur-active class */
+/* Blur effect container */
+.calc-blur-hover::before,
+.home-blur-hover::before,
+.quiz-blur-hover::before,
+.char-blur-hover::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* Apply animation for smooth transition */
+  transition: backdrop-filter 0.5s ease-in-out,
+    -webkit-backdrop-filter 0.5s ease-in-out;
+  backdrop-filter: blur(0px); /* Start with no blur */
+  -webkit-backdrop-filter: blur(0px);
+}
+
+/* Active blur state */
 .calc-blur-hover.blur-active::before,
 .home-blur-hover.blur-active::before,
 .quiz-blur-hover.blur-active::before,
 .char-blur-hover.blur-active::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  /* RESTORED: Fade in animation */
-  animation: fadeInBlur 0.5s ease-in-out forwards;
+  /* FIX: Directly set target blur value, the transition property above handles the fade/ease */
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-/* Fade out animation when blur is removed */
-.calc-blur-hover:not(.blur-active)::before,
-.home-blur-hover:not(.blur-active)::before,
-.quiz-blur-hover:not(.blur-active)::before,
-.char-blur-hover:not(.blur-active)::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  /* RESTORED: Fade out animation */
-  animation: fadeOutBlur 0.5s ease-in-out forwards;
-}
-
-@keyframes fadeInBlur {
-  from {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-  }
-  to {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-}
-
-@keyframes fadeOutBlur {
-  from {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  to {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-  }
-}
+/* Removed old @keyframes fadeInBlur and fadeOutBlur as the transition property handles the fade-in/out effect */
 
 #swap,
 #swap1,
@@ -314,13 +291,13 @@ nav {
   text-decoration: dotted underline;
 }
 
-/* Blur Toggle Button (visible on all screen sizes) */
+/* Blur Toggle Button (visible on all screen sizes and positioned bottom right) */
 .blur-toggle-btn {
   display: block;
   position: fixed;
   bottom: 60px; /* Position above the footer */
-  right: 10px; /* FIX: Moved button to the bottom right */
-  left: auto; /* Ensure it sticks to the right */
+  right: 10px; /* Positioned to the bottom right */
+  left: auto; /* Ensures it sticks to the right */
   z-index: 1000;
   padding: 10px 15px;
   background: linear-gradient(145deg, #b22222, #7a1616);
@@ -391,11 +368,12 @@ nav {
     height: auto;
   }
 
-  /* FIX: Further constrain calculator width on mobile to prevent overflow/zoom */
+  /* FIX: Calculator is now much smaller on mobile/tablet screens */
   #calculator {
-    max-width: 95vw; /* Use viewport width to be safer */
-    width: 300px; /* Fixed width for better control */
-    min-width: 280px;
+    /* Smaller max-width for better fit on small screens, preventing zoom-in needed */
+    max-width: 90vw;
+    width: 250px; /* Reduced from 300px to 250px (another ~17% reduction) */
+    min-width: 200px;
     margin: 0 auto;
   }
 
