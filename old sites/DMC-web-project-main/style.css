@@ -12,8 +12,6 @@ body {
   -webkit-text-stroke: 0.4px;
   color: rgb(0, 0, 0);
   -webkit-text-stroke-color: rgb(192, 0, 0);
-  min-height: 100%;
-  height: 100%;
 }
 
 body {
@@ -52,7 +50,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
 }
 
 #body-home {
@@ -60,7 +58,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
 }
 
 #body-calc {
@@ -68,7 +66,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
 }
 
 #body-char {
@@ -76,7 +74,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
 }
 
 html,
@@ -231,8 +229,6 @@ nav {
 .home-blur-hover,
 .quiz-blur-hover,
 .char-blur-hover {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,9 +240,6 @@ nav {
   box-sizing: border-box;
   /* Adjusts desktop content position */
   margin-top: 50px;
-
-  min-height: calc(100vh - 60px); /* allow for footer height */
-  box-sizing: border-box;
 }
 
 /* Blur effect container */
@@ -256,14 +249,16 @@ nav {
 .char-blur-hover::before {
   content: "";
   position: fixed;
-  inset: 0;
-  z-index: 0; /* on top of page background but behind container content (container z-index:1) */
-  pointer-events: none;
-  background: rgba(255, 255, 255, 0.01);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* Apply animation for smooth transition */
   transition: backdrop-filter 0.5s ease-in-out,
     -webkit-backdrop-filter 0.5s ease-in-out;
+  backdrop-filter: blur(0px); /* Start with no blur */
+  -webkit-backdrop-filter: blur(0px);
 }
 
 /* Active blur state */
@@ -376,9 +371,9 @@ nav {
   #calculator {
     /* Smaller max-width for better fit on small screens, preventing zoom-in needed */
     max-width: 90vw;
-    width: 250px; /* Reduced from 300px to 250px (another ~17% reduction) */
-    min-width: 200px;
+    width: min(480px, 90vw);
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
   /* Constrain rating container width more on mobile */
