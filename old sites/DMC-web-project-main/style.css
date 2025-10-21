@@ -137,8 +137,7 @@ nav {
   font-family: Arial, sans-serif;
   background-color: hsl(0, 0%, 15%);
   border-radius: 15px;
-  /* FIX: Calculator size reduced by 25% for desktop/large screens (500px -> 375px) */
-  max-width: 375px;
+  max-width: 500px;
   overflow: hidden;
 }
 #display {
