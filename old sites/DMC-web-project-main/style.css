@@ -256,7 +256,7 @@ nav {
   z-index: -1;
   /* RESTORED: Fade in animation */
   animation: fadeInBlur 0.5s ease-in-out forwards;
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 /* Fade out animation when blur is removed */
