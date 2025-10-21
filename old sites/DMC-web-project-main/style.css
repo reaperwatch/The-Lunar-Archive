@@ -276,8 +276,6 @@ nav {
   /* FIX: Directly set target blur value, the transition property above handles the fade/ease */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  /* tiny tint helps older engines and improves visual */
-  background: rgba(255, 255, 255, 0.02);
 }
 
 /* Fallback for browsers that don't support backdrop-filter:
