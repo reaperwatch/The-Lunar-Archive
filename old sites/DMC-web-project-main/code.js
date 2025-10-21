@@ -65,6 +65,23 @@ function reset(){
 
 // rating finished (old, remade below)
 
+document.addEventListener("DOMContentLoaded", () => {
+  const blurButton = document.getElementById("blurToggleBtn");
+  if (blurButton) {
+    blurButton.addEventListener("click", () => {
+      // Find the main content container based on the page
+      const containers = document.querySelectorAll(
+        ".calc-blur-hover, .home-blur-hover, .quiz-blur-hover, .char-blur-hover"
+      );
+
+      // Toggle the 'blur-active' class on all found containers
+      containers.forEach((container) => {
+        container.classList.toggle("blur-active");
+      });
+    });
+  }
+});
+
 const preventDefault = document.getElementById("quizForm");
 if (preventDefault) {
   preventDefault.addEventListener(

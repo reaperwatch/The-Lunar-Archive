@@ -5,10 +5,6 @@
   font-style: normal;
 }
 
-html {
-  overflow-x: hidden; /* FIX: Prevents horizontal scroll/gap issues */
-}
-
 html,
 body {
   font-family: "Devil May Cry", Arial, sans-serif;
@@ -16,6 +12,10 @@ body {
   -webkit-text-stroke: 0.4px;
   color: rgb(0, 0, 0);
   -webkit-text-stroke-color: rgb(192, 0, 0);
+}
+
+body {
+  overflow-x: hidden; /* Prevents horizontal scroll/sliding on all pages */
 }
 
 button {
@@ -94,14 +94,14 @@ footer {
   );
   font-size: 1.5rem;
   height: 45px;
-  width: 100%; /* FIX: Ensure footer covers full horizontal width */
+  width: 100%;
 }
 nav {
   box-shadow: 0px -5px 5px rgb(15, 15, 15);
   border-top: 1px solid rgb(15, 15, 15);
   flex: auto;
   flex-direction: column;
-  width: 100%; /* FIX: Ensure nav covers full horizontal width */
+  width: 100%;
 }
 .quizstyle {
   display: flex;
@@ -233,19 +233,22 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-grow: 1; /* FIX: Re-added to solve the vertical gap above the footer */
+  /* Removed justify-content: center to shift content up */
+  flex-grow: 1;
   width: 100%;
   max-width: 90%;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  /* FIX: Add margin to shift content down slightly from the very top on desktop */
+  margin-top: 50px;
 }
 
-.quiz-blur-hover:hover::before,
-.calc-blur-hover:hover::before,
-.home-blur-hover:hover::before,
-.char-blur-hover:hover::before {
+/* New active blur state - requires JS to toggle .blur-active class */
+.calc-blur-hover.blur-active::before,
+.home-blur-hover.blur-active::before,
+.quiz-blur-hover.blur-active::before,
+.char-blur-hover.blur-active::before {
   content: "";
   position: fixed;
   top: 0;
@@ -253,47 +256,8 @@ nav {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  animation: fadeInBlur 1s ease-in-out forwards;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-}
-
-.quiz-blur-hover:not(:hover)::before,
-.calc-blur-hover:not(:hover)::before,
-.home-blur-hover:not(:hover)::before,
-.char-blur-hover:not(:hover)::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  animation: fadeOutBlur 1s ease-in-out forwards;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-}
-
-@keyframes fadeInBlur {
-  from {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-  }
-  to {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-}
-
-@keyframes fadeOutBlur {
-  from {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  to {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-  }
 }
 
 #swap,
@@ -313,6 +277,26 @@ nav {
   text-decoration: dotted underline;
 }
 
+/* Blur Toggle Button (hidden by default) */
+.blur-toggle-btn {
+  display: none; /* Hide on desktop */
+  position: fixed;
+  bottom: 60px; /* Position above the footer */
+  left: 10px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background: linear-gradient(145deg, #b22222, #7a1616);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  font-family: "Devil May Cry", Arial, sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  -webkit-text-stroke: 0.1px;
+  -webkit-text-stroke-color: black;
+}
+
 /* --- Responsive Media Queries --- */
 
 @media (max-width: 768px) {
@@ -321,6 +305,29 @@ nav {
     font-size: 1.1rem;
     margin: 0;
     padding: 0;
+  }
+
+  /* FIX: Reset desktop margin on mobile */
+  .calc-blur-hover,
+  .home-blur-hover,
+  .quiz-blur-hover,
+  .char-blur-hover {
+    margin-top: 0;
+  }
+
+  /* FIX: Reduce H1 and H2 font sizes for mobile */
+  .fade-in-text h1 {
+    font-size: 2rem !important;
+  }
+  .fade-in-text h2 {
+    font-size: 1.5rem !important;
+  }
+
+  /* FIX: Reduce select element font size on mobile */
+  #dmc-calc-select {
+    font-size: 0.9rem;
+    padding: 8px;
+    -webkit-text-stroke: 0.1px;
   }
 
   /* Fix background jump issue on mobile (iOS/fixed attachment) */
@@ -395,5 +402,10 @@ nav {
 
   #result div {
     padding: 16px !important;
+  }
+
+  /* Show the blur toggle button on mobile */
+  .blur-toggle-btn {
+    display: block;
   }
 }
