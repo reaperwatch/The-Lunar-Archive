@@ -27,7 +27,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  justify-content: center;
+  /* FIX: Removed 'justify-content: center;' to prevent the footer gap */
 }
 
 #left-align {
@@ -230,6 +230,7 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-grow: 1; /* FIX: Added to push the footer to the bottom */
   width: 100%;
   max-width: 90%; /* Adjust as needed */
   margin: 0 auto;
@@ -314,10 +315,30 @@ nav {
   html,
   body {
     font-size: 1.1rem;
+    margin: 0; /* FIX: Ensure no body margin causes overflow */
+    padding: 0;
+  }
+
+  /* FIX: To fix the background jump issue on mobile (iOS/fixed attachment) */
+  #body-quiz,
+  #body-home,
+  #body-calc,
+  #body-char {
+    background-attachment: scroll;
+  }
+
+  /* FIX: To make content less "skinny" on mobile */
+  .calc-blur-hover,
+  .home-blur-hover,
+  .quiz-blur-hover,
+  .char-blur-hover {
+    width: 100%;
+    max-width: 100%; /* Ensure it uses full width */
+    padding: 20px 10px; /* Use less horizontal padding than desktop's 20px */
   }
 
   .home-blur-hover img {
-    max-width: 100%;
+    max-width: 90%; /* Adjust logo size */
     height: auto;
   }
 
@@ -340,6 +361,15 @@ nav {
 
   footer {
     font-size: 1.2rem;
+    height: auto; /* Allow footer to grow if links wrap */
+    padding: 5px 0; /* Add vertical padding for visual spacing */
+  }
+
+  /* FIX: Footer link spacing to prevent horizontal overflow/cramping */
+  footer nav a {
+    margin-left: 5px !important; /* Override the 15px inline margin from HTML */
+    margin-right: 5px;
+    font-size: 0.9rem; /* Slightly smaller font to help fit on one line */
   }
 
   #rating-container {

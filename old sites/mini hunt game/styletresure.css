@@ -2,7 +2,7 @@ body {
   background-image: url("https://www.woodlochedge.com/wp-content/uploads/2020/01/treasurehunt.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: contain;
+  background-size: cover;
   background-color: #000;
   /* Add flexbox for centering content */
   display: flex;
