@@ -152,6 +152,7 @@ nav {
   overflow-x: auto;
   white-space: nowrap;
   -webkit-text-stroke: 0px;
+  box-sizing: border-box;
 }
 
 #keys {
