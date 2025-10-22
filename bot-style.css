@@ -212,12 +212,6 @@ footer {
     border-color: #555; /* Make border more visible on mobile */
   }
 
-  .footer-button {
-    display: block;
-    margin: 10px auto;
-    width: 80%;
-  }
-
   .footer-links {
     margin-top: 10px;
   }
