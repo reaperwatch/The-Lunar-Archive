@@ -211,6 +211,12 @@ footer {
     background-color: rgba(0, 0, 0, 0); /* clear bg */
     border-color: #555; /* Make border more visible on mobile */
   }
+
+  .footer-button {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+  }
 }
 
 .footer-links {
