@@ -212,3 +212,21 @@ footer {
     border-color: #555; /* Make border more visible on mobile */
   }
 }
+
+.footer-links {
+  margin-top: 10px;
+}
+
+.footer-button {
+  background-color: #4a4a4a;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 0 5px;
+  font-size: smaller;
+}
+
+.footer-button:hover {
+  background-color: #6a6a6a;
+}
