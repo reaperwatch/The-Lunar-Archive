@@ -185,4 +185,8 @@ footer {
     font-size: 1rem;
     padding: 16px 18px;
   }
+
+  .link-card code {
+    font-size: 0.6rem;
+  }
 }
