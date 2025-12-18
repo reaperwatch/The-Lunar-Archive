@@ -1,0 +1,164 @@
+body {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-attachment: fixed;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+#profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #bb86fc;
+  box-shadow: 0 0 25px rgba(187, 134, 252, 0.4);
+  object-fit: cover;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #bb86fc, #e0aaff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+p {
+  font-size: 1rem;
+  color: #b0b0b0;
+}
+
+header p {
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #bb86fc, #1e1e1e, #1e1e1e 50%);
+  background-size: 100% 450%;
+  background-position: 0% 100%;
+  color: #e0e0e0;
+  padding: 18px 20px;
+  margin: 16px auto;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 1px solid #444;
+  width: 50%;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+
+  transition: transform 0.3s ease, background-position 0.3s ease-in-out,
+    box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.link-card code {
+  background-color: rgba(187, 134, 252, 0.1);
+  color: #bb86fc;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.link-card div {
+  text-align: left;
+}
+
+.card-icon {
+  width: 2em;
+  height: 2em;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.link-card:hover {
+  transform: scale(1.03) translateY(5px);
+
+  background-position: 0% 0%;
+
+  box-shadow: 0 8px 25px rgba(187, 134, 252, 0.3);
+}
+
+.link-card:active {
+  transform: scale(0.98) translateY(2px);
+  box-shadow: 0 4px 15px rgba(187, 134, 252, 0.2);
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #616161;
+}
+
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.link-card:nth-of-type(1) {
+  animation-delay: 0.4s;
+}
+.link-card:nth-of-type(2) {
+  animation-delay: 0.6s;
+}
+.link-card:nth-of-type(3) {
+  animation-delay: 0.8s;
+}
+.link-card:nth-of-type(4) {
+  animation-delay: 1s;
+}
+.link-card:nth-of-type(5) {
+  animation-delay: 1.2s;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  #profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .link-card {
+    font-size: 1rem;
+    padding: 16px 18px;
+  }
+
+  .link-card code {
+    font-size: 0.35rem;
+  }
+}

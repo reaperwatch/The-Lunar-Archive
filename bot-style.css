@@ -1,0 +1,222 @@
+body {
+  background: radial-gradient(ellipse at bottom, #2c1d1d 0%, #1a0f0f 100%);
+  color: #e0e0e0;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-attachment: fixed;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+#bot-profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #cb686b;
+  box-shadow: 0 0 25px rgba(203, 104, 107, 0.4);
+  object-fit: cover;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  background: linear-gradient(90deg, #e4a2a4, #cb686b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #cb686b;
+  color: #fff;
+  padding: 15px 30px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  box-shadow: 0 4px 20px rgba(203, 104, 107, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(203, 104, 107, 0.5);
+  background-color: #d47c7f;
+}
+
+.cta-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 15px rgba(203, 104, 107, 0.3);
+}
+
+.footer-links {
+  margin-top: 20px;
+}
+
+.footer-button {
+  background-color: #4a4a4a;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 0 5px;
+  font-size: smaller;
+  transition: background-color 0.3s ease;
+}
+
+.footer-button:hover {
+  background-color: #6a6a6a;
+}
+
+.back-button {
+  display: inline-block;
+  color: #b0b0b0;
+  padding: 10px 20px;
+  margin-top: 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 400;
+  border: 1px solid #444;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #3a2a2a;
+  color: #e0e0e0;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+
+.feature-card {
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 8px;
+  border-left: 4px solid #cb686b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.6s;
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  color: #cb686b;
+  font-size: 1.3rem;
+}
+
+.feature-card p {
+  color: #b0b0b0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.feature-card code {
+  background-color: #3a2a2a;
+  color: #f2c4c5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+footer {
+  margin-top: 50px;
+  font-size: 0.9rem;
+  color: #616161;
+}
+
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.features .feature-card:nth-of-type(2) {
+  animation-delay: 0.7s;
+}
+.features .feature-card:nth-of-type(3) {
+  animation-delay: 0.8s;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .cta-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  #bot-profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .back-button {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: #555;
+  }
+
+  .footer-links {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .footer-button {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

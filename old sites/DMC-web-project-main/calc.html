@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>calculator page</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body id="body-calc">
+    <script>
+      console.log("Mobile check script running");
+      console.log("Window width:", window.innerWidth);
+      console.log("User agent:", navigator.userAgent);
+
+      var isMobile =
+        window.innerWidth < 768 ||
+        /Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Mobi/i.test(
+          navigator.userAgent
+        );
+      console.log("Is mobile detected:", isMobile);
+
+      if (isMobile) {
+        console.log("Showing alert...");
+        alert("⚠️ MOBILE DETECTED: This calculator works best on desktop!");
+      }
+    </script>
+    <div class="calc-blur-hover b">
+      <div class="fade-in-text">
+        <div id="calc-body">
+          <h2>DMC related calculations</h2>
+          <form>
+            <label>Choose a thing to calculate about DMC</label>
+            <br />
+            <select id="dmc-calc-select" onchange="setCalcMode(this.value)">
+              <option value="">--Normal--</option>
+              <option value="dmc1missions">
+                check how many missions you have left in DMC 1
+              </option>
+              <option value="dmc2missions">
+                check how many missions you have left in DMC 2
+              </option>
+              <option value="dmc3missions">
+                check how many missions you have left in DMC 3
+              </option>
+              <option value="dmc4missions">
+                check how many missions you have left in DMC 4
+              </option>
+              <option value="dmc5missions">
+                check how many missions you have left in DMC 5
+              </option>
+              <option value="dmcstylehuman">
+                check how many style points you are missing for S rank on Human
+              </option>
+              <option value="dmcstyledh">
+                check how many style points you are missing for S rank on Devil
+                Hunter
+              </option>
+              <option value="dmcstylesos">
+                check how many style points you are missing for S rank on Son of
+                Sparda
+              </option>
+              <option value="dmcstylehah">
+                check how many style points you are missing for S rank on Hell
+                and Hell
+              </option>
+              <option value="dmcstyledmd">
+                check how many style points you are missing for S rank on Dante
+                Must Die
+              </option>
+              <option value="totalgamecost">
+                check if you have enough dollars to buy all games
+                (approximately)
+              </option>
+            </select>
+          </form>
+
+          <div id="mode-result"></div>
+          <br />
+
+          <div id="calculator">
+            <input id="display" readonly />
+            <div id="keys">
+              <button
+                id="calc-btn"
+                onclick="clearDisplay()"
+                class="operator-btn"
+              >
+                AC
+              </button>
+              <button id="calc-btn" onclick="deleteLast()" class="operator-btn">
+                DEL
+              </button>
+              <button
+                id="calc-btn"
+                onclick="appendToDisplay('%')"
+                class="operator-btn"
+              >
+                %
+              </button>
+              <button
+                id="calc-btn"
+                onclick="appendToDisplay('/')"
+                class="operator-btn"
+              >
+                /
+              </button>
+              <button id="calc-btn" onclick="appendToDisplay('7')">7</button>
+              <button id="calc-btn" onclick="appendToDisplay('8')">8</button>
+              <button id="calc-btn" onclick="appendToDisplay('9')">9</button>
+              <button
+                id="calc-btn"
+                onclick="appendToDisplay('*')"
+                class="operator-btn"
+              >
+                *
+              </button>
+              <button id="calc-btn" onclick="appendToDisplay('4')">4</button>
+              <button id="calc-btn" onclick="appendToDisplay('5')">5</button>
+              <button id="calc-btn" onclick="appendToDisplay('6')">6</button>
+              <button
+                id="calc-btn"
+                onclick="appendToDisplay('-')"
+                class="operator-btn"
+              >
+                -
+              </button>
+              <button id="calc-btn" onclick="appendToDisplay('1')">1</button>
+              <button id="calc-btn" onclick="appendToDisplay('2')">2</button>
+              <button id="calc-btn" onclick="appendToDisplay('3')">3</button>
+              <button
+                id="calc-btn"
+                onclick="appendToDisplay('+')"
+                class="operator-btn"
+              >
+                +
+              </button>
+              <button id="calc-btn" onclick="appendToDisplay('0')">0</button>
+              <button id="calc-btn" onclick="appendToDisplay('00')">00</button>
+              <button id="calc-btn" onclick="appendToDisplay('.')">.</button>
+              <button id="calc-btn" onclick="calculate()" class="operator-btn">
+                =
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a></a><br />
+      <button class="blur-toggle-btn" id="blurToggleBtn">Toggle Blur</button>
+
+      <script src="code.js" async defer></script>
+    </div>
+  </body>
+
+  <footer>
+    <nav>
+      <a href="dmc.html" style="margin-left: 15px">home page</a>
+      <a href="quiz.html" style="margin-left: 15px">quiz page</a>
+      <a href="character rating.html" style="margin-left: 15px"
+        >character rating page</a
+      >
+      <a href="calc.html" style="margin-left: 15px; color: rgb(255, 0, 0)"
+        >calculator page</a
+      >
+    </nav>
+  </footer>
+</html>

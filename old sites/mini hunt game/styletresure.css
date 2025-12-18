@@ -1,0 +1,150 @@
+body {
+  background-image: url("https://www.woodlochedge.com/wp-content/uploads/2020/01/treasurehunt.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #000;
+  /* Add flexbox for centering content */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  min-height: 100vh; /* Ensure body takes full viewport height */
+  margin: 0; /* Remove default body margin */
+  padding: 20px; /* Add some padding to prevent content from touching edges */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+h1 {
+  color: skyblue;
+  font-family: "Silkscreen", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h2 {
+  color: skyblue;
+  font-family: "Silkscreen", serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center; /* Center the text */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Container for the game elements to manage layout */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally within the container */
+  gap: 20px; /* Space between items */
+  max-width: 90%; /* Prevent container from being too wide on large screens */
+  width: auto; /* Allow content to dictate width, but respect max-width */
+  padding: 20px;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Semi-transparent background for readability */
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.pretty-button {
+  background: linear-gradient(135deg, #c2b280, #aa7e51, #856e56);
+  color: #f4f1de;
+  font-size: 18px;
+  padding: 12px 24px;
+  border: 2px solid #8b6f47;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Garamond", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transform: scale(1); /* Base transform for smooth transitions */
+}
+
+.pretty-button:hover {
+  font-size: 125%;
+  background: linear-gradient(135deg, #92765c, #ac865e);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.pretty-button:active {
+  transform: scale(0.95); /* Scale down on active */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pretty-button2 {
+  background: linear-gradient(135deg, #d4b483, #8c6a4f, #4e3b2c);
+  color: #f0e6d2;
+  font-size: 18px;
+  padding: 12px 24px;
+  border: 2px solid #7a5c3d;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Garamond", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transform: scale(1); /* Base transform for smooth transitions */
+}
+
+.pretty-button2:hover {
+  background: linear-gradient(135deg, #8c6a4f, #4e3b2c);
+  font-size: 125%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.pretty-button2:active {
+  transform: scale(0.95); /* Scale down on active */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pretty-button3 {
+  background: linear-gradient(135deg, #8d7653, #634935, #35261b);
+  color: #f0e6d2;
+  font-size: 18px;
+  padding: 12px 24px;
+  border: 2px solid #7a5c3d;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Garamond", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transform: scale(1); /* Base transform for smooth transitions */
+}
+
+.pretty-button3:hover {
+  background: linear-gradient(135deg, #463323, #2b1e15);
+  font-size: 125%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.pretty-button3:active {
+  transform: scale(0.95); /* Scale down on active */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+  .game-container {
+    gap: 15px; /* Reduce gap on smaller screens */
+    padding: 15px;
+  }
+  h2 {
+    font-size: 1.2em; /* Smaller heading on mobile */
+  }
+  .pretty-button,
+  .pretty-button2,
+  .pretty-button3 {
+    font-size: 16px; /* Smaller button text on mobile */
+    padding: 10px 20px; /* Smaller padding */
+    width: 80%; /* Make buttons take more width */
+    max-width: 250px; /* Limit max width for buttons */
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>quiz page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body id="body-quiz">
+        <div class="quiz-blur-hover b">
+        <div class="quizstyle">
+        <div class="fade-in-text">
+        <h1>Which Devil May Cry Game Fits You?</h1>
+
+        <strong>Rules:</strong><br>
+        Check the box if your answer is "Yes".<br>
+        You may select up to 6 checkboxes. (3 are recommended for accurate results)<br>
+        Click Submit to get your result.
+
+        <form id="quizForm"><br>
+            
+            <div class="question"><label><input type="checkbox" data-game="dmc1"> Do you prefer a more serious and gothic atmosphere?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc2"> Do you like simple, straightforward action without much story?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc3"> Do you enjoy origin stories and character development?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc4"> Do you prefer switching between multiple playable characters?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc5"> Do you enjoy cutting-edge graphics and gameplay mechanics?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmcReboot"> Do you like a modern reimagining of classic characters?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc3"> Do you enjoy challenging combat and mastering styles?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc5"> Do you like flashy combat with high production value?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc4"> Do you enjoy a game that mixes old and new gameplay?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc1"> Do you like puzzle-solving and backtracking?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmcReboot"> Do you prefer edgy, western-styled storytelling?</label></div>
+            <div class="question"><label><input type="checkbox" data-game="dmc2"> Do you like spamming one button like a braindead creature?</label></div>
+        
+            <button type="submit">Submit</button>
+        </form>
+        
+          <div id="result"></div>
+        </div>
+        </div>
+        <button class="blur-toggle-btn" id="blurToggleBtn">Toggle Blur</button>
+        <script src="code.js" async defer></script>
+    </body>
+    </div>
+    <footer>
+        <nav>
+            <a href="dmc.html" style="margin-left: 15px;">home page</a>
+            <a href="quiz.html" style="margin-left: 15px; color: rgb(255, 0, 0);">quiz page</a>
+            <a href="character rating.html" style="margin-left: 15px;">character rating page</a>
+            <a href="calc.html"  style="margin-left: 15px;">calculator page</a>
+        </nav>
+    </footer>
+</html>
