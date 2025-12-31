@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data & Examples</title>
+    <link rel="stylesheet" href="data-style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Data & Examples</h1>
+        <p class="intro">
+          Explore sample screenshots and example data from my systems. Click any
+          image to view it in detail.
+        </p>
+      </header>
+
+      <section class="gallery-section">
+        <h2>Sample Visuals</h2>
+        <div class="gallery" aria-label="Data and log examples">
+          <figure>
+            <img
+              src="dbexample.png"
+              alt="Database example screenshot"
+              loading="lazy"
+            />
+            <figcaption>
+              Database screenshot showing structured data records for bot
+              fuctionality
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img
+              src="logexample.png"
+              alt="Log file example screenshot"
+              loading="lazy"
+            />
+            <figcaption>
+              System logs screenshot displaying timestamp ordered activity and
+              debug information
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <h2>About These Examples</h2>
+        <p>bla</p>
+        <p>bla</p>
+        <p><strong>BLA:</strong> bla (I'll add text tomorrow I'm lazy fr fr)</p>
+      </section>
+
+      <!-- additional info (to avoid questions lmaooooooo) -->
+      <section class="info-section">
+        <h2>Quick FAQ</h2>
+        <p><strong>Data Privacy:</strong></p>
+        <div class="code-block">
+          • Bla<br />
+          • bla<br />
+          • Bla
+        </div>
+        <p><strong>Text:</strong></p>
+        <div class="code-block">
+          • Bla<br />
+          • Bla<br />
+          • Bla
+        </div>
+      </section>
+
+      <footer>
+        <a class="back-button" href="../../bot.html">← Back to Bot Page</a>
+      </footer>
+    </main>
+
+    <div
+      class="lightbox"
+      id="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="lightbox-close" id="lightbox-close">✕ Close</div>
+      <button
+        class="lightbox-nav lightbox-prev"
+        id="lightbox-prev"
+        aria-label="Previous image"
+      >
+        ‹
+      </button>
+      <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="" />
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+      </div>
+      <button
+        class="lightbox-nav lightbox-next"
+        id="lightbox-next"
+        aria-label="Next image"
+      >
+        ›
+      </button>
+      <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <script>
+      (function () {
+        const lightbox = document.getElementById("lightbox");
+        const lbImg = document.getElementById("lightbox-img");
+        const lbCaption = document.getElementById("lightbox-caption");
+        const lbClose = document.getElementById("lightbox-close");
+        const lbPrev = document.getElementById("lightbox-prev");
+        const lbNext = document.getElementById("lightbox-next");
+        const lbCounter = document.getElementById("lightbox-counter");
+
+        let images = [];
+        let currentIndex = 0;
+
+        // open lightbox/zoom on image when clicked
+        document.querySelectorAll(".gallery img").forEach((img, index) => {
+          images.push({
+            src: img.src,
+            alt: img.alt || "",
+            caption: img.nextElementSibling
+              ? img.nextElementSibling.textContent
+              : "",
+          });
+
+          img.addEventListener("click", () => {
+            currentIndex = index;
+            displayImage(currentIndex);
+            lightbox.classList.add("open");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+          });
+        });
+
+        function displayImage(index) {
+          if (images.length === 0) return;
+          lbImg.src = images[index].src;
+          lbImg.alt = images[index].alt;
+          lbCaption.textContent = images[index].caption;
+          lbCounter.textContent = `${index + 1} / ${images.length}`;
+        }
+
+        function nextImage() {
+          currentIndex = (currentIndex + 1) % images.length;
+          displayImage(currentIndex);
+        }
+
+        function prevImage() {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+          displayImage(currentIndex);
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove("open");
+          lightbox.setAttribute("aria-hidden", "true");
+          lbImg.src = "";
+          lbCaption.textContent = "";
+          lbCounter.textContent = "";
+          document.body.style.overflow = "auto";
+        }
+
+        /* this closes when clicking outside the image BUT that would prolly be annoying for mobile
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) closeLightbox();
+        });
+         */
+
+        lbNext.addEventListener("click", nextImage);
+        lbPrev.addEventListener("click", prevImage);
+
+        // Close with the X button
+        lbClose.addEventListener("click", closeLightbox);
+
+        // keyboard keys (I didn't know you could do this before but it's cool asf)
+        document.addEventListener("keydown", (e) => {
+          if (!lightbox.classList.contains("open")) return;
+
+          if (e.key === "ArrowRight") nextImage();
+          if (e.key === "ArrowLeft") prevImage();
+          if (e.key === "Escape") closeLightbox();
+        });
+      })();
+    </script>
+  </body>
+</html>
