@@ -83,6 +83,36 @@ header p {
   box-shadow: 0 4px 15px rgba(203, 104, 107, 0.3);
 }
 
+/* Changelog button (distinct color and entrance animation) */
+.changelog-button {
+  display: inline-block;
+  background-color: #4aa3cb;
+  color: #fff;
+  padding: 12px 26px;
+  margin-bottom: 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+  box-shadow: 0 6px 24px rgba(74, 163, 203, 0.22);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
+  opacity: 0;
+  animation: slideDownFadeIn 0.5s ease-out forwards;
+  animation-delay: 0.45s;
+}
+
+.changelog-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 36px rgba(74, 163, 203, 0.32);
+  background-color: #3b92ab;
+}
+
+.changelog-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 15px rgba(74, 163, 203, 0.18);
+}
+
 .footer-links {
   margin-top: 20px;
 }

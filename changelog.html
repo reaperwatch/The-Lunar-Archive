@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bot Changelog — The Lunar Archive</title>
+    <link rel="stylesheet" href="changelog-style.css" />
+    <link rel="icon" href="icons/moon.png" type="image/png" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="ch-header">
+        <h1>Bot Changelog</h1>
+        <p class="subtitle">
+          All updates, fixes and notes for the bot — organized by version/date
+          and easy to navigate (time by UTC +0). <br />
+          <code>Please use "/bug-report" to help improve the bot.</code>
+        </p>
+        <div class="actions">
+          <input
+            id="search"
+            placeholder="Search changes, versions, or keywords"
+            aria-label="Search changelog"
+          />
+          <a class="btn" href="update logs bot/updatelog.html"
+            >View raw update logs</a
+          >
+        </div>
+      </header>
+
+      <div class="layout">
+        <nav id="toc" class="toc" aria-label="Change list navigation"></nav>
+
+        <section class="content" id="entries">
+          <!-- changelog entries below -->
+          <!-- initial public release -->
+          <!-- hotfix-->
+          <!-- stable release-->
+
+          <article id="v1.0.0" class="changelog-entry">
+            <header>
+              <h2>v1.0.0 — 2026-01-07 (7:45 pm)</h2>
+              <div class="meta">
+                initial public release of web page<!-- as of creating this web page NOT bot!-->
+              </div>
+            </header>
+            <ul>
+              <li>
+                <strong>Added:</strong> A second API to <code>"/cat"</code> to
+                reduce possible server side errors.
+                <div class="thumbs">
+                  <figure class="thumb-figure">
+                    <img
+                      class="thumb"
+                      src="update%20logs%20bot/logimgs/1.0.0/cat%20api%20new.png"
+                      alt="Cat API (new)"
+                      data-caption="Cat API (new)"
+                    />
+                    <figcaption>Cat API (new)</figcaption>
+                  </figure>
+                  <figure class="thumb-figure">
+                    <img
+                      class="thumb"
+                      src="update%20logs%20bot/logimgs/1.0.0/cat%20api%20old.png"
+                      alt="Cat API (old)"
+                      data-caption="Cat API (old)"
+                    />
+                    <figcaption>Cat API (old)</figcaption>
+                  </figure>
+                </div>
+              </li>
+              <li>
+                <strong>Updated:</strong> Server join messages from the bot
+                (only occurs on Josh's server).
+                <div class="thumbs">
+                  <figure class="thumb-figure">
+                    <img
+                      class="thumb"
+                      src="update%20logs%20bot/logimgs/1.0.0/joinmsg.png"
+                      alt="Join Message"
+                      data-caption="Join Message Screenshot"
+                    />
+                    <figcaption>Join Message</figcaption>
+                  </figure>
+                </div>
+              </li>
+              <li>
+                <strong>Known bugs:</strong> <code>"/cat"</code>'s backup image
+                when both API's gifs fail is still bugged inside DMs.
+                <div class="thumbs">
+                  <figure class="thumb-figure">
+                    <img
+                      class="thumb"
+                      src="update%20logs%20bot/logimgs/1.0.0/dm%20fail.png"
+                      alt="DM Fail"
+                      data-caption="DM Fail Screenshot"
+                    />
+                    <figcaption>DM Fail</figcaption>
+                  </figure>
+                </div>
+              </li>
+            </ul>
+          </article>
+
+          <!-- added spacing in code for comfort, end of entries!-->
+        </section>
+      </div>
+
+      <footer class="ch-footer">
+        <div>
+          <a class="back" href="index.html">← Back to Home</a>
+          <a class="back" href="bot.html" style="margin-left: 12px"
+            >← Back to Bot</a
+          >
+        </div>
+        <span>Made by slashing__moon • The Lunar Archive</span>
+      </footer>
+    </main>
+
+    <div id="img-modal" class="img-modal" aria-hidden="true">
+      <div class="box">
+        <button class="close" id="img-modal-close" aria-label="Close image">
+          ✕
+        </button>
+        <img id="img-modal-img" src="" alt="" />
+        <div class="caption" id="img-modal-caption"></div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const entries = Array.from(
+          document.querySelectorAll(".changelog-entry")
+        );
+        const toc = document.getElementById("toc");
+        const search = document.getElementById("search");
+
+        // disable thumbnail transitions until first user interaction
+        if (document && document.body)
+          document.body.classList.add("no-thumb-transitions");
+
+        function buildTOC() {
+          if (!toc) return;
+          toc.innerHTML = "";
+          entries.forEach((el) => {
+            const title = el.querySelector("h2")?.textContent || "entry";
+            const id = el.id;
+            const a = document.createElement("a");
+            a.href = "#" + id;
+            a.textContent = title;
+            a.className = "toc-link";
+            toc.appendChild(a);
+          });
+        }
+
+        function filter(q) {
+          const ql = q.trim().toLowerCase();
+          entries.forEach((el) => {
+            const txt = el.textContent.toLowerCase();
+            const show = ql === "" || txt.includes(ql);
+            el.style.display = show ? "" : "none";
+          });
+        }
+
+        // build TOC first to link toc items to entries
+        buildTOC();
+
+        const contentEl = document.querySelector(".content");
+        function syncTOC(animate = true) {
+          if (!toc || !contentEl) return;
+
+          // find target height for the TOC. (ts took me like.. uhh 30 minutes to figure this out)
+          const tocRect = toc.getBoundingClientRect();
+          const scrollY = window.scrollY || window.pageYOffset;
+          const tocTopAbs = tocRect.top + scrollY;
+
+          const doc = document.documentElement || document.body;
+          const docBottom = Math.max(
+            document.documentElement.scrollHeight || 0,
+            document.body.scrollHeight || 0
+          );
+
+          const padding = 24;
+          const target = Math.max(docBottom - tocTopAbs - padding, 200);
+
+          if (!animate) {
+            toc.style.maxHeight = target + "px";
+            return;
+          }
+
+          // measure current visible maxHeight (fall back to clientHeight)
+          let current = toc.clientHeight || 0;
+          const computed = window.getComputedStyle(toc).maxHeight;
+          if (computed && computed !== "none") {
+            const parsed = parseFloat(computed);
+            if (!Number.isNaN(parsed)) current = parsed;
+          }
+
+          // set starting point then animate to target for smooth growth
+          toc.style.maxHeight = current + "px";
+          requestAnimationFrame(() => {
+            toc.style.maxHeight = target + "px";
+            toc.classList.add("slide-down");
+            window.clearTimeout(toc._slideTimeout);
+            toc._slideTimeout = setTimeout(
+              () => toc.classList.remove("slide-down"),
+              700
+            );
+          });
+        }
+
+        syncTOC();
+        window.addEventListener("resize", syncTOC);
+
+        entries.forEach((el, i) => {
+          el.style.animationDelay = `${i * 70}ms`;
+
+          // if data-img attribute, add "view image" button (adding these comments so I don't forget 😭)
+          const imgSrc = el.dataset.img;
+          const hdr = el.querySelector("header");
+          if (imgSrc) {
+            const btn = document.createElement("button");
+            btn.className = "img-btn";
+            btn.type = "button";
+            btn.textContent = "View Image";
+            btn.dataset.img = imgSrc;
+            const caption = el.querySelector(".meta")?.textContent || "";
+            btn.dataset.caption = caption;
+            hdr.appendChild(btn);
+          }
+
+          const thumbsList = Array.from(el.querySelectorAll(".thumbs"));
+          if (thumbsList.length > 0) {
+            const tocLink = toc.querySelector(`a[href="#${el.id}"]`);
+            // start CLOSED by default for all thumbs
+            thumbsList.forEach((t) => {
+              t.classList.add("collapsed");
+              t.style.maxHeight = "0";
+            });
+            el.classList.remove("expanded");
+            if (tocLink) tocLink.classList.remove("expanded");
+
+            const toggle = document.createElement("button");
+            toggle.type = "button";
+            toggle.className = "img-toggle";
+            toggle.textContent = "Show images";
+            toggle.setAttribute("aria-pressed", "true");
+            hdr.appendChild(toggle);
+
+            function openThumbs() {
+              // enable thumbnail transitions on first user interaction
+              requestAnimationFrame(() =>
+                document.body.classList.remove("no-thumb-transitions")
+              );
+
+              // open each thumbs container and measure its natural height
+              requestAnimationFrame(() => {
+                thumbsList.forEach((t) => {
+                  t.classList.remove("collapsed");
+                  // clear inline maxHeight to allow measurement
+                  t.style.maxHeight = "";
+                  const full = t.scrollHeight;
+                  // set measured height to animate
+                  t.style.maxHeight = full + "px";
+                });
+                el.classList.add("expanded");
+                if (tocLink) tocLink.classList.add("expanded");
+                toggle.textContent = "Hide images";
+                toggle.setAttribute("aria-pressed", "false");
+                // sync TOC and wait for images to load for accurate height
+                setTimeout(() => syncTOC(true), 24);
+                // if any images inside this entry are still loading, wait for them
+                const imgs = Array.from(el.querySelectorAll("img"));
+                const pending = imgs.filter((img) => !img.complete);
+                if (pending.length) {
+                  let remaining = pending.length;
+                  pending.forEach((img) => {
+                    img.addEventListener("load", () => {
+                      remaining -= 1;
+                      if (remaining === 0) syncTOC(true);
+                    });
+                  });
+                } else {
+                  setTimeout(syncTOC, 180);
+                }
+              });
+            }
+
+            function closeThumbs() {
+              // close all thumbs smoothly
+              thumbsList.forEach((t) => {
+                // set current height then collapse to 0 for the sexy transition
+                const full = t.scrollHeight;
+                t.style.maxHeight = full + "px";
+                requestAnimationFrame(() => {
+                  t.style.maxHeight = "0";
+                  t.classList.add("collapsed");
+                });
+              });
+              el.classList.remove("expanded");
+              if (tocLink) tocLink.classList.remove("expanded");
+              toggle.textContent = "Show images";
+              toggle.setAttribute("aria-pressed", "true");
+              // sync after the animation finishes
+              setTimeout(syncTOC, 460);
+            }
+
+            toggle.addEventListener("click", () => {
+              // if first thumbs is collapsed, consider all collapsed
+              if (thumbsList[0].classList.contains("collapsed")) openThumbs();
+              else closeThumbs();
+            });
+          }
+        });
+
+        const modal = document.getElementById("img-modal");
+        const modalImg = document.getElementById("img-modal-img");
+        const modalCap = document.getElementById("img-modal-caption");
+        const modalClose = document.getElementById("img-modal-close");
+
+        document.addEventListener("click", (e) => {
+          const b = e.target.closest(".img-btn");
+          const t = e.target.closest("img.thumb");
+          const target = b || t;
+          if (target) {
+            const src = target.dataset.img || target.src;
+            modalImg.src = src;
+            modalImg.alt =
+              (target.dataset && target.dataset.caption) ||
+              target.alt ||
+              "Change image";
+            modalCap.textContent =
+              (target.dataset && target.dataset.caption) || target.alt || "";
+            modal.classList.add("open");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+          }
+        });
+
+        function closeModal() {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+          modalImg.src = "";
+          modalCap.textContent = "";
+          document.body.style.overflow = "";
+        }
+
+        modalClose.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) closeModal();
+        });
+
+        search.addEventListener("input", (e) => filter(e.target.value));
+
+        // I'm finally free from ts bro
+      })();
+    </script>
+  </body>
+</html>
