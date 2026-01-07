@@ -249,12 +249,11 @@ body {
   align-items: center;
   margin-top: 18px;
   color: #9a9a9a;
-  padding: 5px 0;
 }
 .back {
   color: #cfcfcf;
   text-decoration: none;
-  padding: 8px;
+  padding: 16px;
   border-radius: 6px;
 }
 
