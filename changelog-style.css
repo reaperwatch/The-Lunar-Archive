@@ -176,6 +176,9 @@ body {
     flex-direction: column;
     gap: 16px;
   }
+  .ch-footer div {
+    flex-direction: column;
+  }
 }
 .layout {
   display: grid;
