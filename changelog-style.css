@@ -172,6 +172,10 @@ body {
   .thumb-figure {
     width: 48%;
   }
+  .ch-footer {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 .layout {
   display: grid;
@@ -250,10 +254,16 @@ body {
   margin-top: 18px;
   color: #9a9a9a;
 }
+.ch-footer div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
 .back {
   color: #cfcfcf;
   text-decoration: none;
-  padding: 16px;
+  padding: 8px;
   border-radius: 6px;
 }
 
