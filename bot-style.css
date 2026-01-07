@@ -72,6 +72,14 @@ header p {
   animation-delay: 0.4s;
 }
 
+/* fix desktop ui with bot buttons */
+.cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
 .cta-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(203, 104, 107, 0.5);
@@ -96,7 +104,8 @@ header p {
   font-size: 1.05rem;
   border: none;
   box-shadow: 0 6px 24px rgba(74, 163, 203, 0.22);
-  transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease,
+    background-color 0.28s ease;
   opacity: 0;
   animation: slideDownFadeIn 0.5s ease-out forwards;
   animation-delay: 0.45s;

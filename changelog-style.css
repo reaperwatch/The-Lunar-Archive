@@ -21,6 +21,7 @@ body {
   margin: 0 0 6px 0;
   background: linear-gradient(90deg, #e4a2a4, #cb686b);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 .subtitle {
