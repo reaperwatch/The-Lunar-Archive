@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://reaperwatch.github.io/The-Lunar-Archive/sitemap.xml
