@@ -151,6 +151,13 @@
           My TikTok Account (old acc)
         </a>
       </main>
+      <script>
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker
+            .register("https://reaperwatch.github.io/sw.js")
+            .then(() => console.log("Service Worker Registered"));
+        }
+      </script>
       <footer>
         <p>&copy; 2026 The Lunar Archive</p>
         <p style="font-size: smaller">Made by slashing__moon on discord.</p>
