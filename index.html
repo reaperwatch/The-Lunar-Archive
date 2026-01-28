@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -48,7 +48,61 @@
     />
     <!-- Favicon -->
 
-    <meta property="og:title" content="The Lunar Archive - Home" />
+    <!-- indexing stuff below and info for search engines or smth-->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "The Lunar Archive",
+        "alternateName": [
+          "slashing__moon",
+          "reaperwatch",
+          "jetstream sam's 2967 bot",
+          "Rifty Drift",
+          "eapernut"
+          "jetstream sam bot"
+          "jetstream sam discord bot"
+        ],
+        "url": "https://reaperwatch.github.io/The-Lunar-Archive/",
+        "description": "The official repository for Lunar Archive projects, media, and community links.",
+        "image": "https://reaperwatch.github.io/moon.png",
+        "creativeWorkStatus": "Active",
+        "about": [
+          { "@type": "Thing", "name": "Discord Bot Development" },
+          { "@type": "Thing", "name": "Archive Collections" },
+          { "@type": "Thing", "name": "JavaScript Programming" }
+        ],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://reaperwatch.github.io/The-Lunar-Archive/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "slashing__moon",
+          "alternateName": [
+            "reaperwatch",
+            "Rifty Drift",
+            "eapernut",
+            "jetstream sam#2967",
+            "Josh"
+          ],
+          "url": "https://github.com/reaperwatch",
+          "sameAs": [
+            "https://www.youtube.com/channel/UCQQXqGQNBHpV3iPldrnUOKw",
+            "https://discord.gg/eVRBbBvxJe",
+            "https://www.tiktok.com/@rifty_the_drift"
+          ],
+          "knowsAbout": [
+            "Discord Bot Development",
+            "Web Development",
+            "JavaScript"
+          ]
+        }
+      }
+    </script>
+
+    <meta property="og:title" content="The Lunar Archive - slashing__moon" />
     <meta
       property="og:description"
       content="Welcome to my corner of the internet. Discover my projects, Discord server, and more."
@@ -152,14 +206,12 @@
         </a>
       </main>
       <script>
-        
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker
             .register("https://reaperwatch.github.io/sw.js?v=1")
             .then(() => console.log("Service Worker Registered Successfully"))
             .catch((error) => console.error("Service Worker Failed:", error));
         }
-        
       </script>
       <footer>
         <p>&copy; 2026 The Lunar Archive</p>
