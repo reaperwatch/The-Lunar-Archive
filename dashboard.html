@@ -32,10 +32,24 @@
         style="background: #f4f4f4; padding: 15px; border-radius: 8px"
       >
         <h4>Your Game Stats</h4>
-        <p>🐍 Snake Wins: <b id="snWins">0</b></p>
-        <p>❌ Tic-Tac-Toe Wins: <b id="tttWins">0</b></p>
-        <p>✂️ RPS Wins: <b id="rpsWins">0</b></p>
-        <p>🧠 Memory Matching Wins: <b id="mmWins">0</b></p>
+        <p>
+          🐍 Snake Wins: <b id="snWins">0</b>
+          <button onclick="resetScore('sn_wins', 'Snake')">Reset</button>
+        </p>
+        <p>
+          ❌ Tic-Tac-Toe Wins: <b id="tttWins">0</b>
+          <button onclick="resetScore('ttt_wins', 'Tic-Tac-Toe')">Reset</button>
+        </p>
+        <p>
+          ✂️ RPS Wins: <b id="rpsWins">0</b>
+          <button onclick="resetScore('rps_wins', 'RPS')">Reset</button>
+        </p>
+        <p>
+          🧠 Memory Matching Wins: <b id="mmWins">0</b>
+          <button onclick="resetScore('mm_wins', 'Memory Matching')">
+            Reset
+          </button>
+        </p>
       </div>
 
       <div class="toggle-group">
@@ -191,6 +205,36 @@
           }
         } catch (err) {
           status.innerText = "❌ Offline.";
+        }
+      }
+
+      async function resetScore(gameKey, gameName) {
+        const confirmReset = confirm(
+          `⚠️ WARNING: Are you sure you want to reset your ${gameName} wins?\n\nThis action is NOT reversible!`,
+        );
+
+        if (!confirmReset) return;
+
+        const token = localStorage.getItem("session");
+        try {
+          const response = await fetch(`${TUNNEL_URL}/api/reset-score`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              "ngrok-skip-browser-warning": "true",
+            },
+            body: JSON.stringify({ gameKey: gameKey }),
+          });
+
+          if (response.ok) {
+            alert(`${gameName} wins have been reset to 0.`);
+            location.reload(); // Refresh to show the updated 0 score
+          } else {
+            alert("Failed to reset score.");
+          }
+        } catch (err) {
+          alert("Error connecting to server.");
         }
       }
 
