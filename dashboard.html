@@ -2,6 +2,20 @@
 <html>
   <head>
     <title>Bot Test Dashboard</title>
+    <style>
+      .toggle-group {
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #fff;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <h1>My Bot Dashboard</h1>
@@ -22,6 +36,50 @@
         <p>❌ Tic-Tac-Toe Wins: <b id="tttWins">0</b></p>
         <p>✂️ RPS Wins: <b id="rpsWins">0</b></p>
         <p>🧠 Memory Matching Wins: <b id="mmWins">0</b></p>
+      </div>
+
+      <div class="toggle-group">
+        <h4>Privacy & AI Settings</h4>
+        <label
+          ><input
+            type="checkbox"
+            id="sn_hidden"
+            onclick="toggleOption('sn_hidden')"
+          />
+          Hide Snake Score</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            id="ttt_hidden"
+            onclick="toggleOption('ttt_hidden')"
+          />
+          Hide Tic-Tac-Toe Score</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            id="rps_hidden"
+            onclick="toggleOption('rps_hidden')"
+          />
+          Hide RPS Score</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            id="mm_hidden"
+            onclick="toggleOption('mm_hidden')"
+          />
+          Hide Memory Score</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            id="dm_reply"
+            onclick="toggleOption('dm_reply')"
+          />
+          Enable AI DM Replies</label
+        >
       </div>
 
       <div
@@ -68,6 +126,23 @@
         window.location.href = window.location.pathname;
       }
 
+      async function toggleOption(key) {
+        const token = localStorage.getItem("session");
+        try {
+          await fetch(`${TUNNEL_URL}/api/toggle-setting`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              "ngrok-skip-browser-warning": "true",
+            },
+            body: JSON.stringify({ settingKey: key }),
+          });
+        } catch (err) {
+          alert("Failed to update setting.");
+        }
+      }
+
       async function savePrefix() {
         const token = localStorage.getItem("session");
         const status = document.getElementById("saveStatus");
@@ -77,7 +152,7 @@
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
-              "ngrok-skip-browser-warning": "any-value", // This skips the 'Visit Site' page that I HATE
+              "ngrok-skip-browser-warning": "true",
             },
             body: JSON.stringify({
               guildId: window.currentGuildId,
@@ -96,7 +171,6 @@
         const token = localStorage.getItem("session");
 
         if (code) {
-          document.getElementById("status").innerText = "Verifying...";
           const res = await fetch(`${TUNNEL_URL}/api/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -108,11 +182,10 @@
             window.location.href = window.location.pathname;
           }
         } else if (token) {
-          document.getElementById("status").innerText = "Connecting to bot...";
           fetch(`${TUNNEL_URL}/api/get-settings`, {
             headers: {
               Authorization: token,
-              "ngrok-skip-browser-warning": "any-value", // I hate that page
+              "ngrok-skip-browser-warning": "true",
             },
           })
             .then((res) => res.json())
@@ -127,6 +200,17 @@
                 data.stats.rps_wins;
               document.getElementById("mmWins").innerText = data.stats.mm_wins;
 
+              // Set initial checkbox states
+              document.getElementById("sn_hidden").checked =
+                data.stats.sn_hidden;
+              document.getElementById("ttt_hidden").checked =
+                data.stats.ttt_hidden;
+              document.getElementById("rps_hidden").checked =
+                data.stats.rps_hidden;
+              document.getElementById("mm_hidden").checked =
+                data.stats.mm_hidden;
+              document.getElementById("dm_reply").checked = data.stats.dm_reply;
+
               if (data.adminGuilds?.length > 0) {
                 document.getElementById("adminStatus").innerText =
                   "Managing: " + data.adminGuilds[0].name;
@@ -135,16 +219,10 @@
                 document.getElementById("prefixInput").value =
                   data.adminGuilds[0].prefix;
                 window.currentGuildId = data.adminGuilds[0].id;
-              } else {
-                document.getElementById("adminStatus").innerText =
-                  "No admin servers found.";
               }
             })
-            .catch((err) => {
-              console.error("Connection failed:", err);
-              document.getElementById("status").innerHTML =
-                `Bot is offline. <br><small>If bot is running, click <a href="${TUNNEL_URL}" target="_blank">HERE</a> and click 'Visit Site'.</small>`;
-              document.getElementById("status").style.color = "red";
+            .catch(() => {
+              document.getElementById("status").innerText = "Bot is offline.";
             });
         } else {
           document.getElementById("status").innerText = "Please log in.";
