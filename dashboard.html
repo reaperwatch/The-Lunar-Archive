@@ -135,7 +135,7 @@
           }
         }
 
-        // If we are already logged in check LocalStorage
+        // If we are already logged in Check LocalStorage
         else {
           const token = localStorage.getItem("session");
           if (!token) {
@@ -144,17 +144,24 @@
             document.getElementById("loginBtn").onclick = () =>
               (window.location.href = DISCORD_LOGIN_URL);
           } else {
-            // SHOW DASHBOARD
-            document.getElementById("status").style.display = "none";
-            document.getElementById("settingsArea").style.display = "block";
+            // Fetch data BEFORE showing dashboard
+            document.getElementById("status").innerText =
+              "Connecting to bot...";
 
-            // Fetch Settings
             fetch(`${TUNNEL_URL}/api/get-settings`, {
               headers: { Authorization: token },
             })
-              .then((res) => res.json())
+              .then((res) => {
+                if (!res.ok) throw new Error("Bot returned error");
+                return res.json();
+              })
               .then((data) => {
                 if (data.userId) {
+                  // show dashboard
+                  document.getElementById("status").style.display = "none";
+                  document.getElementById("settingsArea").style.display =
+                    "block";
+
                   document.getElementById("displayUserId").innerText =
                     data.userId;
 
@@ -190,9 +197,14 @@
                   logout(); // Invalid token
                 }
               })
-              .catch(() => {
-                document.getElementById("status").innerText = "Bot is offline.";
+              .catch((err) => {
+                // IF FAILS: Keep dashboard hidden, show specific error
+                console.error(err);
+                document.getElementById("status").innerText =
+                  "Bot is offline (or ngrok URL changed).";
+                document.getElementById("status").style.color = "red";
                 document.getElementById("status").style.display = "block";
+                document.getElementById("settingsArea").style.display = "none";
               });
           }
         }
