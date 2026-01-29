@@ -6,7 +6,6 @@
   <body>
     <h1>My Bot Dashboard</h1>
     <div id="status">Checking login...</div>
-
     <button id="loginBtn" style="display: none">Login with Discord</button>
 
     <div id="settingsArea" style="display: none">
@@ -16,12 +15,7 @@
 
       <div
         id="statsDisplay"
-        style="
-          background: #f4f4f4;
-          padding: 15px;
-          border-radius: 8px;
-          margin-top: 10px;
-        "
+        style="background: #f4f4f4; padding: 15px; border-radius: 8px"
       >
         <h4>Your Game Stats</h4>
         <p>🐍 Snake Wins: <b id="snWins">0</b></p>
@@ -71,17 +65,12 @@
 
       function logout() {
         localStorage.removeItem("session");
-        window.location.href = window.location.pathname; // Clean URL
+        window.location.href = window.location.pathname;
       }
 
       async function savePrefix() {
         const token = localStorage.getItem("session");
-        const newPrefix = document.getElementById("prefixInput").value;
         const status = document.getElementById("saveStatus");
-
-        if (!window.currentGuildId) return;
-
-        status.innerText = "Saving...";
         try {
           const response = await fetch(`${TUNNEL_URL}/api/save-prefix`, {
             method: "POST",
@@ -91,122 +80,73 @@
             },
             body: JSON.stringify({
               guildId: window.currentGuildId,
-              newPrefix: newPrefix,
+              newPrefix: document.getElementById("prefixInput").value,
             }),
           });
-
-          if (response.ok) {
-            status.innerText = "✅ Prefix updated!";
-          } else {
-            status.innerText = "❌ Failed to save.";
-          }
+          status.innerText = response.ok ? "✅ Updated!" : "❌ Error.";
         } catch (err) {
-          status.innerText = "❌ Bot connection error.";
+          status.innerText = "❌ Offline.";
         }
       }
 
       window.onload = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
+        const token = localStorage.getItem("session");
 
-        // If we just got redirected from Discord with a code
         if (code) {
-          document.getElementById("status").innerText = "Verifying login...";
-          try {
-            const response = await fetch(`${TUNNEL_URL}/api/login`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ code: code }),
-            });
-            const data = await response.json();
-
-            if (data.token) {
-              localStorage.setItem("session", data.token);
-              window.history.replaceState(
-                {},
-                document.title,
-                window.location.pathname,
-              ); // Clean URL
-              window.location.reload(); // Refresh
-            }
-          } catch (err) {
-            document.getElementById("status").innerText =
-              "Connection error. Is the bot/ngrok running?";
+          document.getElementById("status").innerText = "Verifying...";
+          const res = await fetch(`${TUNNEL_URL}/api/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code }),
+          });
+          const data = await res.json();
+          if (data.token) {
+            localStorage.setItem("session", data.token);
+            window.location.href = window.location.pathname;
           }
-        }
+        } else if (token) {
+          document.getElementById("status").innerText = "Connecting to bot...";
+          fetch(`${TUNNEL_URL}/api/get-settings`, {
+            headers: { Authorization: token },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              document.getElementById("status").style.display = "none";
+              document.getElementById("settingsArea").style.display = "block";
+              document.getElementById("displayUserId").innerText = data.userId;
+              document.getElementById("snWins").innerText = data.stats.sn_wins;
+              document.getElementById("tttWins").innerText =
+                data.stats.ttt_wins;
+              document.getElementById("rpsWins").innerText =
+                data.stats.rps_wins;
+              document.getElementById("mmWins").innerText = data.stats.mm_wins;
 
-        // If we are already logged in Check LocalStorage
-        else {
-          const token = localStorage.getItem("session");
-          if (!token) {
-            document.getElementById("status").innerText = "Please log in.";
-            document.getElementById("loginBtn").style.display = "block";
-            document.getElementById("loginBtn").onclick = () =>
-              (window.location.href = DISCORD_LOGIN_URL);
-          } else {
-            // Fetch data BEFORE showing dashboard
-            document.getElementById("status").innerText =
-              "Connecting to bot...";
-
-            fetch(`${TUNNEL_URL}/api/get-settings`, {
-              headers: { Authorization: token },
+              if (data.adminGuilds?.length > 0) {
+                document.getElementById("adminStatus").innerText =
+                  "Managing: " + data.adminGuilds[0].name;
+                document.getElementById("prefixControls").style.display =
+                  "block";
+                document.getElementById("prefixInput").value =
+                  data.adminGuilds[0].prefix;
+                window.currentGuildId = data.adminGuilds[0].id;
+              } else {
+                document.getElementById("adminStatus").innerText =
+                  "No admin servers found.";
+              }
             })
-              .then((res) => {
-                if (!res.ok) throw new Error("Bot returned error");
-                return res.json();
-              })
-              .then((data) => {
-                if (data.userId) {
-                  // show dashboard
-                  document.getElementById("status").style.display = "none";
-                  document.getElementById("settingsArea").style.display =
-                    "block";
-
-                  document.getElementById("displayUserId").innerText =
-                    data.userId;
-
-                  // Fill Stats
-                  document.getElementById("snWins").innerText =
-                    data.stats.sn_wins;
-                  document.getElementById("tttWins").innerText =
-                    data.stats.ttt_wins;
-                  document.getElementById("rpsWins").innerText =
-                    data.stats.rps_wins;
-                  document.getElementById("mmWins").innerText =
-                    data.stats.mm_wins;
-
-                  // Admin Logic
-                  const adminArea = document.getElementById("prefixControls");
-                  const statusLabel = document.getElementById("adminStatus");
-
-                  if (data.adminGuilds && data.adminGuilds.length > 0) {
-                    statusLabel.innerText =
-                      "You can manage the following server(s): " +
-                      data.adminGuilds.map((g) => g.name).join(", ");
-                    adminArea.style.display = "block";
-
-                    // Load first guild for now
-                    document.getElementById("prefixInput").value =
-                      data.adminGuilds[0].prefix;
-                    window.currentGuildId = data.adminGuilds[0].id;
-                  } else {
-                    statusLabel.innerText =
-                      "No servers found where you have Admin permissions.";
-                  }
-                } else {
-                  logout(); // Invalid token
-                }
-              })
-              .catch((err) => {
-                // IF FAILS: Keep dashboard hidden, show specific error
-                console.error(err);
-                document.getElementById("status").innerText =
-                  "Bot is offline (or ngrok URL changed).";
-                document.getElementById("status").style.color = "red";
-                document.getElementById("status").style.display = "block";
-                document.getElementById("settingsArea").style.display = "none";
-              });
-          }
+            .catch((err) => {
+              console.error("Connection failed:", err);
+              document.getElementById("status").innerHTML =
+                `Bot is offline. <br><small>If bot is running, click <a href="${TUNNEL_URL}" target="_blank">HERE</a> and click 'Visit Site'.</small>`;
+              document.getElementById("status").style.color = "red";
+            });
+        } else {
+          document.getElementById("status").innerText = "Please log in.";
+          document.getElementById("loginBtn").style.display = "block";
+          document.getElementById("loginBtn").onclick = () =>
+            (window.location.href = DISCORD_LOGIN_URL);
         }
       };
     </script>
