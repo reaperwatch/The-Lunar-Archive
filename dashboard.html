@@ -24,7 +24,7 @@
 
     <div id="settingsArea" style="display: none">
       <hr />
-      <h3>Welcome Back!</h3>
+      <!-- <h3>Welcome Back!</h3> -->
       <div
         style="
           display: flex;
@@ -127,7 +127,7 @@
         id="adminArea"
         style="margin-top: 20px; border-top: 2px solid #ddd; padding-top: 10px"
       >
-        <h4>Guild Settings (Admin Only)</h4>
+        <h4>Server Settings (Owner/Admin Only)</h4>
         <div
           id="guildSelectorArea"
           style="
@@ -361,7 +361,7 @@
                 document.getElementById("guildSelectorArea").style.display =
                   "flex";
                 document.getElementById("adminStatus").innerText =
-                  "Managing your servers:";
+                  "Managing your servers successfully.";
                 updateSelectedGuild();
               } else {
                 document.getElementById("adminStatus").innerText =
