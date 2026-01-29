@@ -25,6 +25,19 @@
     <div id="settingsArea" style="display: none">
       <hr />
       <h3>Welcome Back!</h3>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          margin-bottom: 10px;
+        "
+      >
+        <img id="userAvatar" src="" style="width: 50px; border-radius: 50%" />
+        <h3 style="margin: 0">
+          Welcome Back, <span id="userName">User</span>!
+        </h3>
+      </div>
       <p>User ID: <span id="displayUserId"></span></p>
 
       <div
@@ -101,7 +114,25 @@
         style="margin-top: 20px; border-top: 2px solid #ddd; padding-top: 10px"
       >
         <h4>Guild Settings (Admin Only)</h4>
-        <div id="guildSelectorArea" style="display: none; margin-bottom: 10px">
+        <div
+          id="guildSelectorArea"
+          style="
+            display: none;
+            margin-bottom: 10px;
+            align-items: center;
+            gap: 10px;
+          "
+        >
+          <img
+            id="guildIcon"
+            src=""
+            style="
+              width: 32px;
+              border-radius: 50%;
+              vertical-align: middle;
+              display: none;
+            "
+          />
           <label>Select Server: </label>
           <select id="guildSelect" onchange="updateSelectedGuild()"></select>
         </div>
@@ -174,6 +205,15 @@
           document.getElementById("prefixInput").value = guild.prefix;
           document.getElementById("prefixControls").style.display = "block";
           document.getElementById("saveStatus").innerText = "";
+
+          // Update the server icon next to the dropdown
+          const iconImg = document.getElementById("guildIcon");
+          if (guild.icon) {
+            iconImg.src = guild.icon;
+            iconImg.style.display = "inline";
+          } else {
+            iconImg.style.display = "none";
+          }
         }
       }
 
@@ -265,7 +305,13 @@
             .then((data) => {
               document.getElementById("status").style.display = "none";
               document.getElementById("settingsArea").style.display = "block";
+
+              // Set User Metadata
+              document.getElementById("userName").innerText = data.displayName;
+              document.getElementById("userAvatar").src = data.avatar;
               document.getElementById("displayUserId").innerText = data.userId;
+
+              // Set Game Stats
               document.getElementById("snWins").innerText = data.stats.sn_wins;
               document.getElementById("tttWins").innerText =
                 data.stats.ttt_wins;
@@ -273,6 +319,7 @@
                 data.stats.rps_wins;
               document.getElementById("mmWins").innerText = data.stats.mm_wins;
 
+              // Set Checkbox states
               document.getElementById("sn_hidden").checked =
                 data.stats.sn_hidden;
               document.getElementById("ttt_hidden").checked =
@@ -283,6 +330,7 @@
                 data.stats.mm_hidden;
               document.getElementById("dm_reply").checked = data.stats.dm_reply;
 
+              // Server Dropdown
               if (data.adminGuilds?.length > 0) {
                 allAdminGuilds = data.adminGuilds;
                 const select = document.getElementById("guildSelect");
@@ -294,7 +342,7 @@
                   select.appendChild(opt);
                 });
                 document.getElementById("guildSelectorArea").style.display =
-                  "block";
+                  "flex";
                 document.getElementById("adminStatus").innerText =
                   "Managing your servers:";
                 updateSelectedGuild();
