@@ -14,6 +14,40 @@
       <h3>Welcome Back!</h3>
       <p>User ID: <span id="displayUserId"></span></p>
 
+      <div
+        id="statsDisplay"
+        style="
+          background: #f4f4f4;
+          padding: 15px;
+          border-radius: 8px;
+          margin-top: 10px;
+        "
+      >
+        <h4>Your Game Stats</h4>
+        <p>🐍 Snake Wins: <b id="snWins">0</b></p>
+        <p>❌ Tic-Tac-Toe Wins: <b id="tttWins">0</b></p>
+        <p>✂️ RPS Wins: <b id="rpsWins">0</b></p>
+        <p>🧠 Memory Matching Wins: <b id="mmWins">0</b></p>
+      </div>
+
+      <div
+        id="adminArea"
+        style="margin-top: 20px; border-top: 2px solid #ddd; padding-top: 10px"
+      >
+        <h4>Guild Settings (Admin Only)</h4>
+        <p id="adminStatus">Checking permissions...</p>
+        <div id="prefixControls" style="display: none">
+          <label>Server Prefix:</label>
+          <input
+            type="text"
+            id="prefixInput"
+            maxlength="3"
+            style="width: 40px"
+          />
+          <button onclick="savePrefix()">Save Prefix</button>
+        </div>
+      </div>
+
       <br />
       <button
         onclick="logout()"
@@ -78,11 +112,11 @@
             document.getElementById("loginBtn").onclick = () =>
               (window.location.href = DISCORD_LOGIN_URL);
           } else {
-            // SHOW DASHBOARD
+            // show dashboard
             document.getElementById("status").style.display = "none";
             document.getElementById("settingsArea").style.display = "block";
 
-            // Fetch info from bot to prove it works
+            // fetch info from database
             fetch(`${TUNNEL_URL}/api/get-settings`, {
               headers: { Authorization: token },
             })
@@ -91,6 +125,20 @@
                 if (data.userId) {
                   document.getElementById("displayUserId").innerText =
                     data.userId;
+
+                  // Fill Stats using the data from YAML file
+                  document.getElementById("snWins").innerText =
+                    data.stats.sn_wins || 0;
+                  document.getElementById("tttWins").innerText =
+                    data.stats.ttt_wins || 0;
+                  document.getElementById("rpsWins").innerText =
+                    data.stats.rps_wins || 0;
+                  document.getElementById("mmWins").innerText =
+                    data.stats.mm_wins || 0;
+
+                  // Admin status message
+                  document.getElementById("adminStatus").innerText =
+                    "Stats loaded. Server management coming soon.";
                 } else {
                   // If token is invalid/expired in DB
                   logout();
