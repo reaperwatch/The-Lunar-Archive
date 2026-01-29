@@ -11,13 +11,8 @@
 
     <div id="settingsArea" style="display: none">
       <hr />
-      <h3>Bot Settings</h3>
+      <h3>Welcome Back!</h3>
       <p>User ID: <span id="displayUserId"></span></p>
-
-      <label>Command Prefix:</label>
-      <input type="text" id="prefixInput" maxlength="3" style="width: 50px" />
-      <button onclick="saveSettings()">Save Changes</button>
-      <p id="saveStatus"></p>
 
       <br />
       <button
@@ -41,62 +36,69 @@
 
       function logout() {
         localStorage.removeItem("session");
-        window.location.reload(); // Refresh to show login screen
-      }
-
-      async function saveSettings() {
-        const token = localStorage.getItem("session");
-        const prefix = document.getElementById("prefixInput").value;
-        const status = document.getElementById("saveStatus");
-
-        status.innerText = "Saving...";
-
-        try {
-          const response = await fetch(`${TUNNEL_URL}/api/save`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-            body: JSON.stringify({ prefix: prefix }),
-          });
-
-          if (response.ok) {
-            status.innerText = "✅ Prefix updated in database.yml!";
-          } else {
-            status.innerText = "❌ Failed to save. Session might be expired.";
-          }
-        } catch (err) {
-          status.innerText = "❌ Error connecting to bot.";
-        }
+        window.location.href = window.location.pathname; // Redirect to clean URL without codes
       }
 
       window.onload = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
 
+        // If we just got redirected from Discord with a code
         if (code) {
-        } else {
+          document.getElementById("status").innerText = "Verifying login...";
+          try {
+            const response = await fetch(`${TUNNEL_URL}/api/login`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ code: code }),
+            });
+            const data = await response.json();
+
+            if (data.token) {
+              localStorage.setItem("session", data.token);
+              window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname,
+              ); // Clean URL
+              window.location.reload(); // Refresh to show the logged-in state
+            }
+          } catch (err) {
+            document.getElementById("status").innerText =
+              "Connection error. Is the bot/ngrok running?";
+          }
+        }
+
+        // If we are already logged in check LocalStorage
+        else {
           const token = localStorage.getItem("session");
           if (!token) {
+            document.getElementById("status").innerText = "Please log in.";
             document.getElementById("loginBtn").style.display = "block";
             document.getElementById("loginBtn").onclick = () =>
               (window.location.href = DISCORD_LOGIN_URL);
           } else {
-            // USER IS LOGGED IN
-            document.getElementById("status").innerText = "Welcome back!";
+            // SHOW DASHBOARD
+            document.getElementById("status").style.display = "none";
             document.getElementById("settingsArea").style.display = "block";
 
-            // Fetch current settings from the bot
+            // Fetch info from bot to prove it works
             fetch(`${TUNNEL_URL}/api/get-settings`, {
               headers: { Authorization: token },
             })
               .then((res) => res.json())
               .then((data) => {
-                document.getElementById("prefixInput").value =
-                  data.prefix || "!";
-                document.getElementById("displayUserId").innerText =
-                  data.userId;
+                if (data.userId) {
+                  document.getElementById("displayUserId").innerText =
+                    data.userId;
+                } else {
+                  // If token is invalid/expired in DB
+                  logout();
+                }
+              })
+              .catch(() => {
+                document.getElementById("status").innerText = "Bot is offline.";
+                document.getElementById("status").style.display = "block";
               });
           }
         }
