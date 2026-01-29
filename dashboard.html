@@ -109,7 +109,10 @@
         } else if (token) {
           document.getElementById("status").innerText = "Connecting to bot...";
           fetch(`${TUNNEL_URL}/api/get-settings`, {
-            headers: { Authorization: token },
+            headers: {
+              Authorization: token,
+              "ngrok-skip-browser-warning": "any-value", // This skips the 'Visit Site' page that I HATE
+            },
           })
             .then((res) => res.json())
             .then((data) => {
