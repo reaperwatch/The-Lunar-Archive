@@ -87,7 +87,11 @@
         style="margin-top: 20px; border-top: 2px solid #ddd; padding-top: 10px"
       >
         <h4>Guild Settings (Admin Only)</h4>
-        <p id="adminStatus">Checking permissions...</p>
+        <div id="guildSelectorArea" style="display: none; margin-bottom: 10px">
+          <label>Select Server: </label>
+          <select id="guildSelect" onchange="updateSelectedGuild()"></select>
+        </div>
+
         <div id="prefixControls" style="display: none">
           <label>Server Prefix:</label>
           <input
@@ -99,6 +103,7 @@
           <button onclick="savePrefix()">Save Prefix</button>
           <p id="saveStatus"></p>
         </div>
+        <p id="adminStatus">Checking permissions...</p>
       </div>
 
       <br />
@@ -120,6 +125,8 @@
       const TUNNEL_URL = "https://instructively-hushful-cinda.ngrok-free.dev";
       const DISCORD_LOGIN_URL =
         "https://discord.com/oauth2/authorize?client_id=1048675302722768896&response_type=code&redirect_uri=https%3A%2F%2Freaperwatch.github.io%2FThe-Lunar-Archive%2Fdashboard.html&scope=identify%20guilds";
+
+      let allAdminGuilds = []; // Local cache for guild data
 
       function logout() {
         localStorage.removeItem("session");
@@ -143,9 +150,23 @@
         }
       }
 
+      function updateSelectedGuild() {
+        const select = document.getElementById("guildSelect");
+        const guildId = select.value;
+        const guild = allAdminGuilds.find((g) => g.id === guildId);
+
+        if (guild) {
+          window.currentGuildId = guild.id;
+          document.getElementById("prefixInput").value = guild.prefix;
+          document.getElementById("prefixControls").style.display = "block";
+          document.getElementById("saveStatus").innerText = "";
+        }
+      }
+
       async function savePrefix() {
         const token = localStorage.getItem("session");
         const status = document.getElementById("saveStatus");
+        const newPrefix = document.getElementById("prefixInput").value;
         try {
           const response = await fetch(`${TUNNEL_URL}/api/save-prefix`, {
             method: "POST",
@@ -156,10 +177,18 @@
             },
             body: JSON.stringify({
               guildId: window.currentGuildId,
-              newPrefix: document.getElementById("prefixInput").value,
+              newPrefix: newPrefix,
             }),
           });
-          status.innerText = response.ok ? "✅ Updated!" : "❌ Error.";
+          if (response.ok) {
+            status.innerText = "✅ Updated!";
+            const guild = allAdminGuilds.find(
+              (g) => g.id === window.currentGuildId,
+            );
+            if (guild) guild.prefix = newPrefix;
+          } else {
+            status.innerText = "❌ Error.";
+          }
         } catch (err) {
           status.innerText = "❌ Offline.";
         }
@@ -200,7 +229,6 @@
                 data.stats.rps_wins;
               document.getElementById("mmWins").innerText = data.stats.mm_wins;
 
-              // Set initial checkbox states
               document.getElementById("sn_hidden").checked =
                 data.stats.sn_hidden;
               document.getElementById("ttt_hidden").checked =
@@ -212,13 +240,23 @@
               document.getElementById("dm_reply").checked = data.stats.dm_reply;
 
               if (data.adminGuilds?.length > 0) {
-                document.getElementById("adminStatus").innerText =
-                  "Managing: " + data.adminGuilds[0].name;
-                document.getElementById("prefixControls").style.display =
+                allAdminGuilds = data.adminGuilds;
+                const select = document.getElementById("guildSelect");
+                select.innerHTML = "";
+                data.adminGuilds.forEach((guild) => {
+                  const opt = document.createElement("option");
+                  opt.value = guild.id;
+                  opt.innerText = guild.name;
+                  select.appendChild(opt);
+                });
+                document.getElementById("guildSelectorArea").style.display =
                   "block";
-                document.getElementById("prefixInput").value =
-                  data.adminGuilds[0].prefix;
-                window.currentGuildId = data.adminGuilds[0].id;
+                document.getElementById("adminStatus").innerText =
+                  "Managing your servers:";
+                updateSelectedGuild();
+              } else {
+                document.getElementById("adminStatus").innerText =
+                  "No admin servers found.";
               }
             })
             .catch(() => {
