@@ -117,28 +117,45 @@
             document.getElementById("settingsArea").style.display = "block";
 
             // fetch info from database
+            // Inside your window.onload else block:
             fetch(`${TUNNEL_URL}/api/get-settings`, {
               headers: { Authorization: token },
             })
               .then((res) => res.json())
               .then((data) => {
-                if (data.userId) {
-                  document.getElementById("displayUserId").innerText =
-                    data.userId;
+                // Hide the "Bot is offline" message if we got data
+                document.getElementById("status").style.display = "none";
+                document.getElementById("settingsArea").style.display = "block";
 
-                  // Fill Stats using the data from YAML file
-                  document.getElementById("snWins").innerText =
-                    data.stats.sn_wins || 0;
-                  document.getElementById("tttWins").innerText =
-                    data.stats.ttt_wins || 0;
-                  document.getElementById("rpsWins").innerText =
-                    data.stats.rps_wins || 0;
-                  document.getElementById("mmWins").innerText =
-                    data.stats.mm_wins || 0;
+                document.getElementById("displayUserId").innerText =
+                  data.userId;
 
-                  // Admin status message
-                  document.getElementById("adminStatus").innerText =
-                    "Stats loaded. Server management coming soon.";
+                // Fill Stats
+                document.getElementById("snWins").innerText =
+                  data.stats.sn_wins;
+                document.getElementById("tttWins").innerText =
+                  data.stats.ttt_wins;
+                document.getElementById("rpsWins").innerText =
+                  data.stats.rps_wins;
+                document.getElementById("mmWins").innerText =
+                  data.stats.mm_wins;
+
+                // Server Management Logic
+                const adminArea = document.getElementById("prefixControls");
+                const statusLabel = document.getElementById("adminStatus");
+
+                if (data.adminGuilds && data.adminGuilds.length > 0) {
+                  statusLabel.innerText =
+                    "You can manage the following servers:";
+                  adminArea.style.display = "block";
+                  // Note: For now we'll show the first admin server,
+                  // later we can add a dropdown if you have many.
+                  document.getElementById("prefixInput").placeholder =
+                    data.adminGuilds[0].prefix || "!";
+                  window.currentGuildId = data.adminGuilds[0].id;
+                } else if (data.adminGuilds && data.adminGuilds.length === 0) {
+                  statusLabel.innerText =
+                    "No servers found where you have Admin permissions.";
                 } else {
                   // If token is invalid/expired in DB
                   logout();
