@@ -6,54 +6,98 @@
   <body>
     <h1>My Bot Dashboard</h1>
     <div id="status">Checking login...</div>
+
     <button id="loginBtn" style="display: none">Login with Discord</button>
+
+    <div id="settingsArea" style="display: none">
+      <hr />
+      <h3>Bot Settings</h3>
+      <p>User ID: <span id="displayUserId"></span></p>
+
+      <label>Command Prefix:</label>
+      <input type="text" id="prefixInput" maxlength="3" style="width: 50px" />
+      <button onclick="saveSettings()">Save Changes</button>
+      <p id="saveStatus"></p>
+
+      <br />
+      <button
+        onclick="logout()"
+        style="
+          background-color: #ff4444;
+          color: white;
+          border: none;
+          padding: 10px;
+          cursor: pointer;
+        "
+      >
+        Log Out
+      </button>
+    </div>
 
     <script>
       const TUNNEL_URL = "https://instructively-hushful-cinda.ngrok-free.dev";
       const DISCORD_LOGIN_URL =
         "https://discord.com/oauth2/authorize?client_id=1048675302722768896&response_type=code&redirect_uri=https%3A%2F%2Freaperwatch.github.io%2FThe-Lunar-Archive%2Fdashboard.html&scope=identify";
 
+      function logout() {
+        localStorage.removeItem("session");
+        window.location.reload(); // Refresh to show login screen
+      }
+
+      async function saveSettings() {
+        const token = localStorage.getItem("session");
+        const prefix = document.getElementById("prefixInput").value;
+        const status = document.getElementById("saveStatus");
+
+        status.innerText = "Saving...";
+
+        try {
+          const response = await fetch(`${TUNNEL_URL}/api/save`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify({ prefix: prefix }),
+          });
+
+          if (response.ok) {
+            status.innerText = "✅ Prefix updated in database.yml!";
+          } else {
+            status.innerText = "❌ Failed to save. Session might be expired.";
+          }
+        } catch (err) {
+          status.innerText = "❌ Error connecting to bot.";
+        }
+      }
+
       window.onload = async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
 
         if (code) {
-          document.getElementById("status").innerText = "Verifying with Bot...";
-
-          // 5 mins ID sent to bot for verification
-          try {
-            const response = await fetch(`${TUNNEL_URL}/api/login`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ code: code }),
-            });
-            const data = await response.json();
-
-            if (data.token) {
-              localStorage.setItem("session", data.token);
-              document.getElementById("status").innerText =
-                `Logged in as ${data.username}!`;
-              // Clean the URL
-              window.history.replaceState(
-                {},
-                document.title,
-                window.location.pathname,
-              );
-            }
-          } catch (err) {
-            document.getElementById("status").innerText =
-              "Error connecting to Bot. Is ngrok running?";
-          }
         } else {
           const token = localStorage.getItem("session");
           if (!token) {
-            document.getElementById("status").innerText = "Please log in.";
             document.getElementById("loginBtn").style.display = "block";
             document.getElementById("loginBtn").onclick = () =>
               (window.location.href = DISCORD_LOGIN_URL);
           } else {
-            document.getElementById("status").innerText =
-              "Welcome back! Session found.";
+            // USER IS LOGGED IN
+            document.getElementById("status").innerText = "Welcome back!";
+            document.getElementById("settingsArea").style.display = "block";
+
+            // Fetch current settings from the bot
+            fetch(`${TUNNEL_URL}/api/get-settings`, {
+              headers: { Authorization: token },
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                document.getElementById("prefixInput").value =
+                  data.prefix || "!";
+                document.getElementById("displayUserId").innerText =
+                  data.userId;
+              });
           }
         }
       };
