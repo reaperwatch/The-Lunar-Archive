@@ -63,6 +63,12 @@
             Reset
           </button>
         </p>
+        <p>
+          🔤 Word Scramble Wins: <b id="wsWins">0</b>
+          <button onclick="resetScore('ws_wins', 'Word Scramble')">
+            Reset
+          </button>
+        </p>
       </div>
 
       <div class="toggle-group">
@@ -107,6 +113,14 @@
           />
           Enable AI DM Replies</label
         >
+        <label>
+          <input
+            type="checkbox"
+            id="ws_hidden"
+            onclick="toggleOption('ws_hidden')"
+          />
+          Hide Word Scramble Score
+        </label>
       </div>
 
       <div
@@ -312,6 +326,7 @@
               document.getElementById("displayUserId").innerText = data.userId;
 
               // Set Game Stats
+              document.getElementById("wsWins").innerText = data.stats.ws_wins;
               document.getElementById("snWins").innerText = data.stats.sn_wins;
               document.getElementById("tttWins").innerText =
                 data.stats.ttt_wins;
@@ -320,6 +335,8 @@
               document.getElementById("mmWins").innerText = data.stats.mm_wins;
 
               // Set Checkbox states
+              document.getElementById("ws_hidden").checked =
+                data.stats.ws_hidden;
               document.getElementById("sn_hidden").checked =
                 data.stats.sn_hidden;
               document.getElementById("ttt_hidden").checked =
