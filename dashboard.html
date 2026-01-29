@@ -45,6 +45,7 @@
             style="width: 40px"
           />
           <button onclick="savePrefix()">Save Prefix</button>
+          <p id="saveStatus"></p>
         </div>
       </div>
 
@@ -66,11 +67,42 @@
     <script>
       const TUNNEL_URL = "https://instructively-hushful-cinda.ngrok-free.dev";
       const DISCORD_LOGIN_URL =
-        "https://discord.com/oauth2/authorize?client_id=1048675302722768896&response_type=code&redirect_uri=https%3A%2F%2Freaperwatch.github.io%2FThe-Lunar-Archive%2Fdashboard.html&scope=identify+guilds";
+        "https://discord.com/oauth2/authorize?client_id=1048675302722768896&response_type=code&redirect_uri=https%3A%2F%2Freaperwatch.github.io%2FThe-Lunar-Archive%2Fdashboard.html&scope=identify%20guilds";
 
       function logout() {
         localStorage.removeItem("session");
-        window.location.href = window.location.pathname; // Redirect to clean URL without codes
+        window.location.href = window.location.pathname; // Clean URL
+      }
+
+      async function savePrefix() {
+        const token = localStorage.getItem("session");
+        const newPrefix = document.getElementById("prefixInput").value;
+        const status = document.getElementById("saveStatus");
+
+        if (!window.currentGuildId) return;
+
+        status.innerText = "Saving...";
+        try {
+          const response = await fetch(`${TUNNEL_URL}/api/save-prefix`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify({
+              guildId: window.currentGuildId,
+              newPrefix: newPrefix,
+            }),
+          });
+
+          if (response.ok) {
+            status.innerText = "✅ Prefix updated!";
+          } else {
+            status.innerText = "❌ Failed to save.";
+          }
+        } catch (err) {
+          status.innerText = "❌ Bot connection error.";
+        }
       }
 
       window.onload = async () => {
@@ -95,7 +127,7 @@
                 document.title,
                 window.location.pathname,
               ); // Clean URL
-              window.location.reload(); // Refresh to show the logged-in state
+              window.location.reload(); // Refresh
             }
           } catch (err) {
             document.getElementById("status").innerText =
@@ -112,53 +144,50 @@
             document.getElementById("loginBtn").onclick = () =>
               (window.location.href = DISCORD_LOGIN_URL);
           } else {
-            // show dashboard
+            // SHOW DASHBOARD
             document.getElementById("status").style.display = "none";
             document.getElementById("settingsArea").style.display = "block";
 
-            // fetch info from database
-            // Inside your window.onload else block:
+            // Fetch Settings
             fetch(`${TUNNEL_URL}/api/get-settings`, {
               headers: { Authorization: token },
             })
               .then((res) => res.json())
               .then((data) => {
-                // Hide the "Bot is offline" message if we got data
-                document.getElementById("status").style.display = "none";
-                document.getElementById("settingsArea").style.display = "block";
+                if (data.userId) {
+                  document.getElementById("displayUserId").innerText =
+                    data.userId;
 
-                document.getElementById("displayUserId").innerText =
-                  data.userId;
+                  // Fill Stats
+                  document.getElementById("snWins").innerText =
+                    data.stats.sn_wins;
+                  document.getElementById("tttWins").innerText =
+                    data.stats.ttt_wins;
+                  document.getElementById("rpsWins").innerText =
+                    data.stats.rps_wins;
+                  document.getElementById("mmWins").innerText =
+                    data.stats.mm_wins;
 
-                // Fill Stats
-                document.getElementById("snWins").innerText =
-                  data.stats.sn_wins;
-                document.getElementById("tttWins").innerText =
-                  data.stats.ttt_wins;
-                document.getElementById("rpsWins").innerText =
-                  data.stats.rps_wins;
-                document.getElementById("mmWins").innerText =
-                  data.stats.mm_wins;
+                  // Admin Logic
+                  const adminArea = document.getElementById("prefixControls");
+                  const statusLabel = document.getElementById("adminStatus");
 
-                // Server Management Logic
-                const adminArea = document.getElementById("prefixControls");
-                const statusLabel = document.getElementById("adminStatus");
+                  if (data.adminGuilds && data.adminGuilds.length > 0) {
+                    statusLabel.innerText =
+                      "You can manage the following server(s): " +
+                      data.adminGuilds.map((g) => g.name).join(", ");
+                    adminArea.style.display = "block";
 
-                if (data.adminGuilds && data.adminGuilds.length > 0) {
-                  statusLabel.innerText =
-                    "You can manage the following servers:";
-                  adminArea.style.display = "block";
-                  // Note: For now we'll show the first admin server,
-                  // later we can add a dropdown if you have many.
-                  document.getElementById("prefixInput").placeholder =
-                    data.adminGuilds[0].prefix || "!";
-                  window.currentGuildId = data.adminGuilds[0].id;
-                } else if (data.adminGuilds && data.adminGuilds.length === 0) {
-                  statusLabel.innerText =
-                    "No servers found where you have Admin permissions.";
+                    // Load first guild for now
+                    document.getElementById("prefixInput").value =
+                      data.adminGuilds[0].prefix;
+                    window.currentGuildId = data.adminGuilds[0].id;
+                  } else {
+                    statusLabel.innerText =
+                      "No servers found where you have Admin permissions.";
+                  }
                 } else {
-                  // If token is invalid/expired in DB
-                  logout();
+                  logout(); // Invalid token
                 }
               })
               .catch(() => {
