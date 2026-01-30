@@ -37,17 +37,20 @@
       .container {
         max-width: 800px;
         width: 100%;
+        margin: 0 12px;
+        box-sizing: border-box;
         background:
           linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.02),
+            rgba(255, 255, 255, 0.015),
             rgba(255, 255, 255, 0.01)
           ),
-          var(--card-bg);
+          rgba(15, 23, 32, 0.55);
         padding: 30px;
         border-radius: 12px;
         box-shadow: 0 12px 40px rgba(3, 6, 10, 0.6);
         border: 1px solid rgba(109, 211, 196, 0.12);
+        backdrop-filter: blur(6px);
       }
 
       h1,
