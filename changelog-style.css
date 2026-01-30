@@ -108,6 +108,16 @@ body {
   padding: 6px;
 }
 
+/* make overlay close button visually match the image modal close */
+#video-player-overlay .close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 6px;
+}
+
 /* inline thumbnails for the imgs */
 .thumbs {
   display: flex;
@@ -131,7 +141,10 @@ body {
   object-fit: cover;
   border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 320ms ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 320ms ease;
 }
 .thumb-figure img.thumb:hover {
   transform: scale(1.03);
@@ -139,7 +152,9 @@ body {
 }
 
 .thumb-figure {
-  transition: transform 300ms ease, opacity 300ms ease;
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease;
 }
 .thumbs.collapsed .thumb-figure {
   transform: translateY(-8px);
@@ -199,7 +214,8 @@ body {
   top: 22px;
   will-change: max-height;
   /* animate height so it grows smoothly */
-  transition: max-height 420ms cubic-bezier(0.2, 0.9, 0.2, 1),
+  transition:
+    max-height 420ms cubic-bezier(0.2, 0.9, 0.2, 1),
     box-shadow 300ms ease;
 }
 .toc.slide-down {
@@ -288,7 +304,9 @@ body {
 }
 
 .toc-link {
-  transition: transform 0.18s ease, background 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
 }
 .toc-link:active {
   transform: translateY(1px);
@@ -312,8 +330,10 @@ body {
 /* collapsed/expanded thumbnails and toggles */
 .thumbs {
   max-height: 2000px;
-  transition: max-height 420ms cubic-bezier(0.2, 0.9, 0.2, 1),
-    opacity 360ms ease, padding 360ms ease;
+  transition:
+    max-height 420ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 360ms ease,
+    padding 360ms ease;
   overflow: hidden;
   opacity: 1;
 }
