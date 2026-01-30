@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="bot-style.css" />
     <style>
       :root {
-        --primary: #6dd3c4; /* teal */
-        --bg-dark: #071022; /* deep navy */
-        --card-bg: #0f1720; /* dark card */
+        --primary: #6dd3c4;
+        --bg-dark: #071022;
+        --card-bg: #0f1720;
         --text: #e0e0e0;
-        --accent: #b39dff; /* lavender accent */
+        --accent: #b39dff;
       }
 
       body {
@@ -196,6 +196,86 @@
         margin-top: 12px;
         color: rgba(224, 224, 224, 0.85);
         padding: 6px 12px;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 600px) {
+        body {
+          padding: 18px 12px;
+        }
+
+        .container {
+          padding: 18px;
+        }
+
+        header h1 {
+          font-size: 1.5rem;
+          text-align: center;
+        }
+
+        #status {
+          padding: 12px;
+          font-size: 0.95rem;
+        }
+
+        .user-profile {
+          flex-direction: row;
+          gap: 12px;
+          padding: 10px;
+        }
+
+        #userAvatar {
+          width: 48px !important;
+          height: 48px !important;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .stat-card {
+          padding: 12px;
+        }
+
+        .stat-card b {
+          font-size: 1rem;
+        }
+
+        .toggle-group {
+          grid-template-columns: 1fr;
+          padding: 12px;
+          gap: 10px;
+        }
+
+        label {
+          font-size: 0.95rem;
+        }
+
+        button,
+        .reset-btn,
+        .back-button {
+          padding: 10px 14px;
+          font-size: 1rem;
+        }
+
+        .back-links .back-button {
+          display: block;
+          width: 100%;
+          max-width: 420px;
+          margin: 6px auto;
+          box-sizing: border-box;
+        }
+
+        #loginBtn {
+          width: 100%;
+          padding: 12px;
+        }
+
+        .site-footer {
+          padding: 8px 10px;
+          font-size: 0.85rem;
+        }
       }
     </style>
   </head>

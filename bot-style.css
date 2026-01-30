@@ -87,33 +87,27 @@ header p {
   box-shadow: 0 8px 30px rgba(203, 104, 107, 0.5);
   background-color: #d47c7f;
 }
-
 .dashboard-button {
   display: inline-block;
-  background-color: #c16b70;
-  color: #fff;
+  background: linear-gradient(90deg, #6dd3c4 0%, #b39dff 100%);
+  color: #ffffff;
   padding: 13px 26px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 700;
   font-size: 1.06rem;
   border: none;
-  box-shadow: 0 6px 22px rgba(193, 107, 112, 0.32);
+  box-shadow: 0 6px 24px rgba(107, 148, 142, 0.28);
   transition:
     transform 0.28s ease,
     box-shadow 0.28s ease,
-    background-color 0.28s ease;
+    filter 0.28s ease;
 }
 
 .dashboard-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 34px rgba(193, 107, 112, 0.36);
-  background-color: #d07b7f;
-}
-
-.cta-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 4px 15px rgba(203, 104, 107, 0.3);
+  box-shadow: 0 12px 40px rgba(107, 148, 142, 0.36);
+  filter: brightness(1.03);
 }
 
 .changelog-button {
