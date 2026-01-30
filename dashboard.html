@@ -7,19 +7,22 @@
     <link rel="stylesheet" href="bot-style.css" />
     <style>
       :root {
-        --primary: #cb686b;
-        --bg-dark: #1a0f0f;
-        --card-bg: #2c1d1d;
+        --primary: #6dd3c4; /* teal */
+        --bg-dark: #071022; /* deep navy */
+        --card-bg: #0f1720; /* dark card */
         --text: #e0e0e0;
-        --accent: #f2c4c5;
+        --accent: #b39dff; /* lavender accent */
       }
 
       body {
-        background: radial-gradient(
-          ellipse at bottom,
-          #2c1d1d 0%,
-          #1a0f0f 100%
-        );
+        background:
+          radial-gradient(
+            circle at 12% 18%,
+            rgba(109, 211, 196, 0.08) 0%,
+            rgba(179, 157, 255, 0.06) 18%,
+            transparent 36%
+          ),
+          radial-gradient(ellipse at bottom, #0f1720 0%, #071022 100%);
         color: var(--text);
         font-family: "Inter", sans-serif;
         margin: 0;
@@ -34,11 +37,17 @@
       .container {
         max-width: 800px;
         width: 100%;
-        background: var(--card-bg);
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.02),
+            rgba(255, 255, 255, 0.01)
+          ),
+          var(--card-bg);
         padding: 30px;
         border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(203, 104, 107, 0.2);
+        box-shadow: 0 12px 40px rgba(3, 6, 10, 0.6);
+        border: 1px solid rgba(109, 211, 196, 0.12);
       }
 
       h1,

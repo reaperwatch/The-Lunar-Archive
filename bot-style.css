@@ -64,20 +64,21 @@ header p {
   font-size: 1.2rem;
   border: none;
   box-shadow: 0 4px 20px rgba(203, 104, 107, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease,
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
     background-color 0.3s ease;
   opacity: 0;
   animation: slideDownFadeIn 0.5s ease-out forwards;
   animation-delay: 0.4s;
 }
 
-/* fix desktop ui with bot buttons not stacking (invite and changelog) */
 .cta-group {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
   margin-bottom: 40px;
 }
 
@@ -85,6 +86,29 @@ header p {
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(203, 104, 107, 0.5);
   background-color: #d47c7f;
+}
+
+.dashboard-button {
+  display: inline-block;
+  background-color: #c16b70;
+  color: #fff;
+  padding: 13px 26px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.06rem;
+  border: none;
+  box-shadow: 0 6px 22px rgba(193, 107, 112, 0.32);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    background-color 0.28s ease;
+}
+
+.dashboard-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 34px rgba(193, 107, 112, 0.36);
+  background-color: #d07b7f;
 }
 
 .cta-button:active {
@@ -96,14 +120,16 @@ header p {
   display: inline-block;
   background-color: #4aa3cb;
   color: #fff;
-  padding: 12px 26px;
+  padding: 10px 20px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   border: none;
   box-shadow: 0 6px 24px rgba(74, 163, 203, 0.22);
-  transition: transform 0.28s ease, box-shadow 0.28s ease,
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
     background-color 0.28s ease;
   opacity: 0;
   animation: slideDownFadeIn 0.5s ease-out forwards;
@@ -149,7 +175,9 @@ header p {
   text-decoration: none;
   font-weight: 400;
   border: 1px solid #444;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .back-button:hover {
