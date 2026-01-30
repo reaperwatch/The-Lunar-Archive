@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -22,13 +22,38 @@
     <title>Bot Changelog — The Lunar Archive</title>
     <link rel="stylesheet" href="changelog-style.css" />
 
-    <link rel="shortcut icon" href="https://reaperwatch.github.io/favicon.ico" />
+    <link
+      rel="shortcut icon"
+      href="https://reaperwatch.github.io/favicon.ico"
+    />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="https://reaperwatch.github.io/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="https://reaperwatch.github.io/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="https://reaperwatch.github.io/favicon-16x16.png" />
-    <link rel="manifest" href="https://reaperwatch.github.io/site.webmanifest" />
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://reaperwatch.github.io/sitemap.xml" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://reaperwatch.github.io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://reaperwatch.github.io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://reaperwatch.github.io/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="https://reaperwatch.github.io/site.webmanifest"
+    />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="Sitemap"
+      href="https://reaperwatch.github.io/sitemap.xml"
+    />
   </head>
   <body>
     <main class="wrap">
@@ -59,6 +84,60 @@
           <!-- initial public release -->
           <!-- hotfix-->
           <!-- stable release-->
+
+          <article id="v2.0.0" class="changelog-entry">
+            <header>
+              <h2>v2.0.0 — 2026-01-30 (5:56 pm)</h2>
+              <div class="meta">major update</div>
+            </header>
+            <ul>
+              <li>
+                <strong>Added:</strong> <code>/connect-four</code> game command
+                AND a
+                <a
+                  href="/dashboard.html"
+                  style="
+                    background: linear-gradient(90deg, #e4a2a4, #cb686b);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                  >dashboard</a
+                >
+                to manage your database data just as shown
+                <a
+                  href="/terms and policy/info/data.html"
+                  style="
+                    background: linear-gradient(90deg, #e4a2a4, #cb686b);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                  >here</a
+                >!
+                <div class="thumbs">
+                  <figure class="thumb-figure">
+                    <img
+                      class="thumb"
+                      src="update%20logs%20bot/logimgs/2.0.0/newdashboard.png"
+                      alt="NEW dashboard webpage!"
+                      data-caption="NEW dashboard webpage!"
+                    />
+                    <figcaption>NEW dashboard webpage!</figcaption>
+                  </figure>
+                  <figure class="thumb-figure">
+                    <img
+                      class="thumb"
+                      src="update%20logs%20bot/logimgs/2.0.0/c4.mp4"
+                      alt="video of connect four gameplay"
+                      data-caption="video of connect four gameplay"
+                    />
+                    <figcaption>video of connect four gameplay</figcaption>
+                  </figure>
+                </div>
+              </li>
+            </ul>
+          </article>
 
           <article id="v1.0.1" class="changelog-entry">
             <header>
@@ -179,15 +258,84 @@
         <button class="close" id="img-modal-close" aria-label="Close image">
           ✕
         </button>
-        <img id="img-modal-img" src="" alt="" />
+        <img id="img-modal-img" src="" alt="" style="display: none" />
+        <video
+          id="img-modal-video"
+          controls
+          preload="metadata"
+          poster=""
+          style="display: none; max-width: 100%; height: auto"
+        ></video>
+        <div id="img-modal-controls" style="display: none; margin-top: 8px">
+          <button id="video-play" type="button">Play</button>
+          <input
+            id="video-progress"
+            type="range"
+            min="0"
+            max="0"
+            value="0"
+            step="0.1"
+            style="width: 60%; margin-left: 8px"
+          />
+        </div>
         <div class="caption" id="img-modal-caption"></div>
+      </div>
+    </div>
+
+    <!-- in-page video player overlay (opens videos in-place without navigating away) -->
+    <div
+      id="video-player-overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      "
+      aria-hidden="true"
+    >
+      <div
+        class="box"
+        style="
+          position: relative;
+          max-width: 90%;
+          max-height: 90%;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        "
+      >
+        <button class="close" id="overlay-close" aria-label="Close video">
+          ✕
+        </button>
+        <video
+          id="overlay-video"
+          controls
+          preload="metadata"
+          poster=""
+          style="
+            object-fit: contain;
+            width: auto;
+            height: auto;
+            max-width: calc(85vw - 48px);
+            max-height: calc(85vh - 96px);
+            background: #000;
+          "
+        ></video>
+        <div
+          id="overlay-caption"
+          style="color: #fff; margin-top: 8px; text-align: center"
+        ></div>
       </div>
     </div>
 
     <script>
       (function () {
         const entries = Array.from(
-          document.querySelectorAll(".changelog-entry")
+          document.querySelectorAll(".changelog-entry"),
         );
         const toc = document.getElementById("toc");
         const search = document.getElementById("search");
@@ -234,7 +382,7 @@
           const doc = document.documentElement || document.body;
           const docBottom = Math.max(
             document.documentElement.scrollHeight || 0,
-            document.body.scrollHeight || 0
+            document.body.scrollHeight || 0,
           );
 
           const padding = 24;
@@ -261,7 +409,7 @@
             window.clearTimeout(toc._slideTimeout);
             toc._slideTimeout = setTimeout(
               () => toc.classList.remove("slide-down"),
-              700
+              700,
             );
           });
         }
@@ -287,6 +435,28 @@
           }
 
           const thumbsList = Array.from(el.querySelectorAll(".thumbs"));
+          // convert any thumbnails that are actually videos: move src -> data-img and use a lightweight SVG placeholder (I didn't code ts  I stole it)
+          (function convertVideoThumbs() {
+            const videoRE = /\.(mp4|webm|ogg)(\?|$)/i;
+            thumbsList.forEach((t) => {
+              const imgs = Array.from(t.querySelectorAll("img.thumb"));
+              imgs.forEach((img) => {
+                try {
+                  const src = img.getAttribute("src") || "";
+                  if (videoRE.test(src)) {
+                    img.dataset.img = src;
+                    // prefer a -Cover.jpg poster next to the video (e.g. c4.mp4 -> c4-Cover.jpg)
+                    const poster = src.replace(
+                      /\.(mp4|webm|ogg)(\?|$)/i,
+                      "-Cover.jpg",
+                    );
+                    img.setAttribute("src", poster);
+                    img.setAttribute("loading", "lazy");
+                  }
+                } catch (err) {}
+              });
+            });
+          })();
           if (thumbsList.length > 0) {
             const tocLink = toc.querySelector(`a[href="#${el.id}"]`);
             // start CLOSED by default for all thumbs
@@ -300,14 +470,14 @@
             const toggle = document.createElement("button");
             toggle.type = "button";
             toggle.className = "img-toggle";
-            toggle.textContent = "Show images";
+            toggle.textContent = "Show media";
             toggle.setAttribute("aria-pressed", "true");
             hdr.appendChild(toggle);
 
             function openThumbs() {
               // enable thumbnail transitions on first user interaction
               requestAnimationFrame(() =>
-                document.body.classList.remove("no-thumb-transitions")
+                document.body.classList.remove("no-thumb-transitions"),
               );
 
               // open each thumbs container and measure its natural height
@@ -356,7 +526,7 @@
               });
               el.classList.remove("expanded");
               if (tocLink) tocLink.classList.remove("expanded");
-              toggle.textContent = "Show images";
+              toggle.textContent = "Show media";
               toggle.setAttribute("aria-pressed", "true");
               // sync after the animation finishes
               setTimeout(syncTOC, 460);
@@ -372,8 +542,72 @@
 
         const modal = document.getElementById("img-modal");
         const modalImg = document.getElementById("img-modal-img");
+        const modalVideo = document.getElementById("img-modal-video");
         const modalCap = document.getElementById("img-modal-caption");
         const modalClose = document.getElementById("img-modal-close");
+        const vControls = document.getElementById("img-modal-controls");
+        const vPlay = document.getElementById("video-play");
+        const vProgress = document.getElementById("video-progress");
+        // overlay player elements
+        const overlay = document.getElementById("video-player-overlay");
+        const overlayVideo = document.getElementById("overlay-video");
+        const overlayClose = document.getElementById("overlay-close");
+        const overlayCap = document.getElementById("overlay-caption");
+
+        function showOverlay(src, poster, caption) {
+          try {
+            overlayVideo.src = src;
+            if (poster) overlayVideo.poster = poster;
+            overlayCap.textContent = caption || "";
+            overlay.style.display = "flex";
+            overlay.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            const p = overlayVideo.play();
+            if (p && p.catch) p.catch(() => {});
+          } catch (err) {}
+        }
+
+        function hideOverlay() {
+          try {
+            overlayVideo.pause();
+          } catch (err) {}
+          overlayVideo.removeAttribute("src");
+          overlayVideo.load();
+          overlay.style.display = "none";
+          overlay.setAttribute("aria-hidden", "true");
+          overlayCap.textContent = "";
+          document.body.style.overflow = "";
+        }
+
+        if (overlayClose) overlayClose.addEventListener("click", hideOverlay);
+        if (overlay)
+          overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) hideOverlay();
+          });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") hideOverlay();
+        });
+        try {
+          if (vPlay) {
+            vPlay.addEventListener("click", () => {
+              try {
+                if (modalVideo.paused) {
+                  modalVideo.play();
+                } else {
+                  modalVideo.pause();
+                }
+              } catch (err) {}
+            });
+          }
+          if (vProgress) {
+            vProgress.addEventListener("input", (e) => {
+              try {
+                const val = Number(e.target.value || 0);
+                modalVideo.currentTime = val;
+              } catch (err) {}
+            });
+          }
+        } catch (err) {}
 
         document.addEventListener("click", (e) => {
           const b = e.target.closest(".img-btn");
@@ -381,13 +615,42 @@
           const target = b || t;
           if (target) {
             const src = target.dataset.img || target.src;
-            modalImg.src = src;
-            modalImg.alt =
-              (target.dataset && target.dataset.caption) ||
-              target.alt ||
-              "Change image";
-            modalCap.textContent =
+            const caption =
               (target.dataset && target.dataset.caption) || target.alt || "";
+            const isVideo = /\.(mp4|webm|ogg)(\?|$)/i.test(src);
+
+            // If it's a video, open directly in the in-page overlay player and skip the modal
+            if (isVideo) {
+              try {
+                const poster = src.replace(
+                  /\.(mp4|webm|ogg)(\?|$)/i,
+                  "-Cover.jpg",
+                );
+                showOverlay(src, poster, caption || "");
+              } catch (err) {
+                try {
+                  window.location.href = src;
+                } catch (e) {}
+              }
+              return;
+            }
+
+            // reset both
+            modalImg.style.display = "none";
+            modalImg.src = "";
+            modalImg.alt = "";
+            modalVideo.style.display = "none";
+            try {
+              modalVideo.pause();
+            } catch (err) {}
+            modalVideo.removeAttribute("src");
+            modalVideo.load();
+
+            modalImg.src = src;
+            modalImg.alt = caption || "Change image";
+            modalImg.style.display = "";
+
+            modalCap.textContent = caption || "";
             modal.classList.add("open");
             modal.setAttribute("aria-hidden", "false");
             document.body.style.overflow = "hidden";
@@ -397,7 +660,25 @@
         function closeModal() {
           modal.classList.remove("open");
           modal.setAttribute("aria-hidden", "true");
+          // clear image
           modalImg.src = "";
+          modalImg.alt = "";
+          // stop and clear video
+          try {
+            modalVideo.pause();
+          } catch (err) {}
+          modalVideo.removeAttribute("src");
+          modalVideo.load();
+          modalVideo.style.display = "none";
+          // hide/reset controls
+          try {
+            if (vControls) vControls.style.display = "none";
+            if (vProgress) {
+              vProgress.value = 0;
+              vProgress.max = 0;
+            }
+            if (vPlay) vPlay.textContent = "Play";
+          } catch (err) {}
           modalCap.textContent = "";
           document.body.style.overflow = "";
         }
