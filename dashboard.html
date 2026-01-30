@@ -24,7 +24,9 @@
         font-family: "Inter", sans-serif;
         margin: 0;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         padding: 40px 20px;
         min-height: 100vh;
       }
@@ -175,6 +177,16 @@
         margin: 20px auto;
         font-size: 1.1rem;
         padding: 12px 24px;
+      }
+
+      .site-footer {
+        width: 100%;
+        max-width: 800px;
+        box-sizing: border-box;
+        text-align: center;
+        margin-top: 12px;
+        color: rgba(224, 224, 224, 0.85);
+        padding: 6px 12px;
       }
     </style>
   </head>
@@ -399,7 +411,11 @@
         </div>
       </div>
     </div>
-    <span>Made by slashing__moon • The Lunar Archive</span>
+    <footer class="site-footer" style="text-align: center; margin-top: 12px">
+      <small style="font-size: 0.9rem">
+        <span>Made by slashing__moon • The Lunar Archive</span>
+      </small>
+    </footer>
 
     <script>
       const TUNNEL_URL = "https://instructively-hushful-cinda.ngrok-free.dev";
