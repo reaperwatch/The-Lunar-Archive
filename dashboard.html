@@ -69,6 +69,10 @@
             Reset
           </button>
         </p>
+        <p>
+          🔴 Connect Four Wins: <b id="c4Wins">0</b>
+          <button onclick="resetScore('c4_wins', 'Connect Four')">Reset</button>
+        </p>
       </div>
 
       <div class="toggle-group">
@@ -112,6 +116,14 @@
             onclick="toggleOption('ws_hidden')"
           />
           Hide Word Scramble Score
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="c4_hidden"
+            onclick="toggleOption('c4_hidden')"
+          />
+          Hide Connect Four Score
         </label>
         <label
           ><input
@@ -333,6 +345,7 @@
               document.getElementById("rpsWins").innerText =
                 data.stats.rps_wins;
               document.getElementById("mmWins").innerText = data.stats.mm_wins;
+              document.getElementById("c4Wins").innerText = data.stats.c4_wins;
 
               // Set Checkbox states
               document.getElementById("ws_hidden").checked =
@@ -345,6 +358,8 @@
                 data.stats.rps_hidden;
               document.getElementById("mm_hidden").checked =
                 data.stats.mm_hidden;
+              document.getElementById("c4_hidden").checked =
+                data.stats.c4_hidden;
               document.getElementById("dm_reply").checked = data.stats.dm_reply;
 
               // Server Dropdown
