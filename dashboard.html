@@ -1,195 +1,376 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bot Test Dashboard</title>
+    <link rel="stylesheet" href="bot-style.css" />
     <style>
-      .toggle-group {
-        margin-top: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background: #fff;
+      :root {
+        --primary: #cb686b;
+        --bg-dark: #1a0f0f;
+        --card-bg: #2c1d1d;
+        --text: #e0e0e0;
+        --accent: #f2c4c5;
       }
+
+      body {
+        background: radial-gradient(
+          ellipse at bottom,
+          #2c1d1d 0%,
+          #1a0f0f 100%
+        );
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(203, 104, 107, 0.2);
+      }
+
+      h1,
+      h3,
+      h4 {
+        color: var(--primary);
+        margin-top: 0;
+      }
+
+      #status {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .stat-card b {
+        color: var(--accent);
+        font-size: 1.2rem;
+      }
+
+      .toggle-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
       label {
-        display: block;
-        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        font-weight: 600;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+
+      .reset-btn {
+        background: transparent;
+        border: 1px solid #ff4444;
+        color: #ff4444;
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        margin-top: 10px;
+        align-self: flex-start;
+      }
+
+      .reset-btn:hover {
+        background: #ff4444;
+        color: white;
+      }
+
+      select,
+      input[type="text"] {
+        background: #3a2a2a;
+        border: 1px solid var(--primary);
+        color: white;
+        padding: 8px;
+        border-radius: 5px;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 30px 0;
+      }
+
+      #loginBtn {
+        display: block;
+        margin: 20px auto;
+        font-size: 1.1rem;
+        padding: 12px 24px;
       }
     </style>
   </head>
   <body>
-    <h1>My Bot Dashboard</h1>
-    <div id="status">Checking login...</div>
-    <button id="loginBtn" style="display: none">Login with Discord</button>
+    <div class="container">
+      <header>
+        <h1>My Bot Dashboard</h1>
+        <div id="status">Checking login...</div>
+        <button id="loginBtn" style="display: none">Login with Discord</button>
+      </header>
 
-    <div id="settingsArea" style="display: none">
-      <hr />
-      <!-- <h3>Welcome Back!</h3> -->
-      <div
-        style="
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          margin-bottom: 10px;
-        "
-      >
-        <img id="userAvatar" src="" style="width: 50px; border-radius: 50%" />
-        <h3 style="margin: 0">
-          Welcome Back, <span id="userName">User</span>!
-        </h3>
-      </div>
-      <p>User ID: <span id="displayUserId"></span></p>
-
-      <div
-        id="statsDisplay"
-        style="background: #f4f4f4; padding: 15px; border-radius: 8px"
-      >
-        <h4>Your Game Stats</h4>
-        <p>
-          🐍 Snake Wins: <b id="snWins">0</b>
-          <button onclick="resetScore('sn_wins', 'Snake')">Reset</button>
-        </p>
-        <p>
-          ❌ Tic-Tac-Toe Wins: <b id="tttWins">0</b>
-          <button onclick="resetScore('ttt_wins', 'Tic-Tac-Toe')">Reset</button>
-        </p>
-        <p>
-          ✂️ RPS Wins: <b id="rpsWins">0</b>
-          <button onclick="resetScore('rps_wins', 'RPS')">Reset</button>
-        </p>
-        <p>
-          🧠 Memory Matching Wins: <b id="mmWins">0</b>
-          <button onclick="resetScore('mm_wins', 'Memory Matching')">
-            Reset
-          </button>
-        </p>
-        <p>
-          🔤 Word Scramble Wins: <b id="wsWins">0</b>
-          <button onclick="resetScore('ws_wins', 'Word Scramble')">
-            Reset
-          </button>
-        </p>
-        <p>
-          🔴 Connect Four Wins: <b id="c4Wins">0</b>
-          <button onclick="resetScore('c4_wins', 'Connect Four')">Reset</button>
-        </p>
-      </div>
-
-      <div class="toggle-group">
-        <h4>Privacy & AI Settings</h4>
-        <label
-          ><input
-            type="checkbox"
-            id="sn_hidden"
-            onclick="toggleOption('sn_hidden')"
-          />
-          Hide Snake Score</label
-        >
-        <label
-          ><input
-            type="checkbox"
-            id="ttt_hidden"
-            onclick="toggleOption('ttt_hidden')"
-          />
-          Hide Tic-Tac-Toe Score</label
-        >
-        <label
-          ><input
-            type="checkbox"
-            id="rps_hidden"
-            onclick="toggleOption('rps_hidden')"
-          />
-          Hide RPS Score</label
-        >
-        <label
-          ><input
-            type="checkbox"
-            id="mm_hidden"
-            onclick="toggleOption('mm_hidden')"
-          />
-          Hide Memory Score</label
-        >
-        <label>
-          <input
-            type="checkbox"
-            id="ws_hidden"
-            onclick="toggleOption('ws_hidden')"
-          />
-          Hide Word Scramble Score
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            id="c4_hidden"
-            onclick="toggleOption('c4_hidden')"
-          />
-          Hide Connect Four Score
-        </label>
-        <label
-          ><input
-            type="checkbox"
-            id="dm_reply"
-            onclick="toggleOption('dm_reply')"
-          />
-          Enable AI DM Replies</label
-        >
-      </div>
-
-      <div
-        id="adminArea"
-        style="margin-top: 20px; border-top: 2px solid #ddd; padding-top: 10px"
-      >
-        <h4>Server Settings (Owner/Admin Only)</h4>
-        <div
-          id="guildSelectorArea"
-          style="
-            display: none;
-            margin-bottom: 10px;
-            align-items: center;
-            gap: 10px;
-          "
-        >
+      <div id="settingsArea" style="display: none">
+        <div class="user-profile">
           <img
-            id="guildIcon"
+            id="userAvatar"
             src=""
             style="
-              width: 32px;
+              width: 60px;
               border-radius: 50%;
-              vertical-align: middle;
-              display: none;
+              border: 2px solid var(--primary);
             "
           />
-          <label>Select Server: </label>
-          <select id="guildSelect" onchange="updateSelectedGuild()"></select>
+          <div>
+            <h3 style="margin: 0">Welcome, <span id="userName">User</span>!</h3>
+            <small style="opacity: 0.7"
+              >ID: <span id="displayUserId"></span
+            ></small>
+          </div>
         </div>
 
-        <div id="prefixControls" style="display: none">
-          <label>Server Prefix:</label>
-          <input
-            type="text"
-            id="prefixInput"
-            maxlength="3"
-            style="width: 40px"
-          />
-          <button onclick="savePrefix()">Save Prefix</button>
-          <p id="saveStatus"></p>
+        <h4>Your Game Stats</h4>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span>🐍 Snake Wins</span>
+            <b id="snWins">0</b>
+            <button class="reset-btn" onclick="resetScore('sn_wins', 'Snake')">
+              Reset
+            </button>
+          </div>
+          <div class="stat-card">
+            <span>❌ Tic-Tac-Toe</span>
+            <b id="tttWins">0</b>
+            <button
+              class="reset-btn"
+              onclick="resetScore('ttt_wins', 'Tic-Tac-Toe')"
+            >
+              Reset
+            </button>
+          </div>
+          <div class="stat-card">
+            <span>✂️ RPS Wins</span>
+            <b id="rpsWins">0</b>
+            <button class="reset-btn" onclick="resetScore('rps_wins', 'RPS')">
+              Reset
+            </button>
+          </div>
+          <div class="stat-card">
+            <span>🧠 Memory</span>
+            <b id="mmWins">0</b>
+            <button
+              class="reset-btn"
+              onclick="resetScore('mm_wins', 'Memory Matching')"
+            >
+              Reset
+            </button>
+          </div>
+          <div class="stat-card">
+            <span>🔤 Word Scramble</span>
+            <b id="wsWins">0</b>
+            <button
+              class="reset-btn"
+              onclick="resetScore('ws_wins', 'Word Scramble')"
+            >
+              Reset
+            </button>
+          </div>
+          <div class="stat-card">
+            <span>🔴 Connect Four</span>
+            <b id="c4Wins">0</b>
+            <button
+              class="reset-btn"
+              onclick="resetScore('c4_wins', 'Connect Four')"
+            >
+              Reset
+            </button>
+          </div>
         </div>
-        <p id="adminStatus">Checking permissions...</p>
+
+        <h4>Privacy & AI Settings</h4>
+        <div class="toggle-group">
+          <label
+            ><input
+              type="checkbox"
+              id="sn_hidden"
+              onclick="toggleOption('sn_hidden')"
+            />
+            Hide Snake</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              id="ttt_hidden"
+              onclick="toggleOption('ttt_hidden')"
+            />
+            Hide Tic-Tac-Toe</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              id="rps_hidden"
+              onclick="toggleOption('rps_hidden')"
+            />
+            Hide RPS</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              id="mm_hidden"
+              onclick="toggleOption('mm_hidden')"
+            />
+            Hide Memory</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              id="ws_hidden"
+              onclick="toggleOption('ws_hidden')"
+            />
+            Hide Word Scramble</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              id="c4_hidden"
+              onclick="toggleOption('c4_hidden')"
+            />
+            Hide Connect Four</label
+          >
+          <label
+            style="grid-column: span 2; margin-top: 10px; color: var(--accent)"
+          >
+            <input
+              type="checkbox"
+              id="dm_reply"
+              onclick="toggleOption('dm_reply')"
+            />
+            Enable AI DM Replies
+          </label>
+        </div>
+
+        <hr />
+
+        <div id="adminArea">
+          <h4>Server Management</h4>
+          <div
+            id="guildSelectorArea"
+            style="
+              display: none;
+              margin-bottom: 20px;
+              align-items: center;
+              gap: 15px;
+              background: rgba(0, 0, 0, 0.2);
+              padding: 15px;
+              border-radius: 8px;
+            "
+          >
+            <img
+              id="guildIcon"
+              src=""
+              style="width: 40px; border-radius: 50%; display: none"
+            />
+            <div style="flex-grow: 1">
+              <label style="margin-bottom: 5px">Select Server</label>
+              <select
+                id="guildSelect"
+                style="width: 100%"
+                onchange="updateSelectedGuild()"
+              ></select>
+            </div>
+          </div>
+
+          <div
+            id="prefixControls"
+            style="
+              display: none;
+              background: rgba(0, 0, 0, 0.2);
+              padding: 15px;
+              border-radius: 8px;
+            "
+          >
+            <label>Server Prefix</label>
+            <div style="display: flex; gap: 10px; margin-top: 10px">
+              <input
+                type="text"
+                id="prefixInput"
+                maxlength="3"
+                style="width: 60px; text-align: center"
+              />
+              <button onclick="savePrefix()">Save Prefix</button>
+            </div>
+            <p id="saveStatus" style="font-size: 0.8rem; margin-top: 10px"></p>
+          </div>
+          <p id="adminStatus" style="font-size: 0.9rem; opacity: 0.8"></p>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center">
+          <button
+            onclick="logout()"
+            style="
+              background-color: transparent;
+              border: 1px solid #ff4444;
+              color: #ff4444;
+            "
+          >
+            Log Out
+          </button>
+        </div>
       </div>
-
-      <br />
-      <button
-        onclick="logout()"
-        style="
-          background-color: #ff4444;
-          color: white;
-          border: none;
-          padding: 10px;
-          cursor: pointer;
-        "
-      >
-        Log Out
-      </button>
     </div>
 
     <script>
@@ -197,7 +378,7 @@
       const DISCORD_LOGIN_URL =
         "https://discord.com/oauth2/authorize?client_id=1048675302722768896&response_type=code&redirect_uri=https%3A%2F%2Freaperwatch.github.io%2FThe-Lunar-Archive%2Fdashboard.html&scope=identify%20guilds";
 
-      let allAdminGuilds = []; // Local cache for guild data
+      let allAdminGuilds = [];
 
       function logout() {
         localStorage.removeItem("session");
@@ -231,8 +412,6 @@
           document.getElementById("prefixInput").value = guild.prefix;
           document.getElementById("prefixControls").style.display = "block";
           document.getElementById("saveStatus").innerText = "";
-
-          // Update the server icon next to the dropdown
           const iconImg = document.getElementById("guildIcon");
           if (guild.icon) {
             iconImg.src = guild.icon;
@@ -278,9 +457,7 @@
         const confirmReset = confirm(
           `⚠️ WARNING: Are you sure you want to reset your ${gameName} wins?\n\nThis action is NOT reversible!`,
         );
-
         if (!confirmReset) return;
-
         const token = localStorage.getItem("session");
         try {
           const response = await fetch(`${TUNNEL_URL}/api/reset-score`, {
@@ -292,10 +469,9 @@
             },
             body: JSON.stringify({ gameKey: gameKey }),
           });
-
           if (response.ok) {
             alert(`${gameName} wins have been reset to 0.`);
-            location.reload(); // Refresh to show the updated 0 score
+            location.reload();
           } else {
             alert("Failed to reset score.");
           }
@@ -331,13 +507,9 @@
             .then((data) => {
               document.getElementById("status").style.display = "none";
               document.getElementById("settingsArea").style.display = "block";
-
-              // Set User Metadata
               document.getElementById("userName").innerText = data.username;
               document.getElementById("userAvatar").src = data.avatar;
               document.getElementById("displayUserId").innerText = data.userId;
-
-              // Set Game Stats
               document.getElementById("wsWins").innerText = data.stats.ws_wins;
               document.getElementById("snWins").innerText = data.stats.sn_wins;
               document.getElementById("tttWins").innerText =
@@ -346,8 +518,6 @@
                 data.stats.rps_wins;
               document.getElementById("mmWins").innerText = data.stats.mm_wins;
               document.getElementById("c4Wins").innerText = data.stats.c4_wins;
-
-              // Set Checkbox states
               document.getElementById("ws_hidden").checked =
                 data.stats.ws_hidden;
               document.getElementById("sn_hidden").checked =
@@ -362,7 +532,6 @@
                 data.stats.c4_hidden;
               document.getElementById("dm_reply").checked = data.stats.dm_reply;
 
-              // Server Dropdown
               if (data.adminGuilds?.length > 0) {
                 allAdminGuilds = data.adminGuilds;
                 const select = document.getElementById("guildSelect");
