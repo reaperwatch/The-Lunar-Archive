@@ -690,6 +690,46 @@
 
         search.addEventListener("input", (e) => filter(e.target.value));
 
+        // Expand entry media if URL hash targets a version (e.g. #1.0.0 or #v1.0.0)
+        function openEntryFromHash() {
+          try {
+            const raw = decodeURIComponent(window.location.hash || "").replace(
+              /^#/,
+              "",
+            );
+            if (!raw) return;
+            const idsToTry = [raw, "v" + raw];
+            let target = null;
+            for (const id of idsToTry) {
+              const el = document.getElementById(id);
+              if (el) {
+                target = el;
+                break;
+              }
+            }
+            if (!target) return;
+            // ensure visible if a search filter hid it
+            target.style.display = "";
+            const toggle = target.querySelector(".img-toggle");
+            if (toggle) {
+              // only click if thumbs appear collapsed
+              const firstThumb = target.querySelector(".thumbs");
+              const isCollapsed =
+                firstThumb && firstThumb.classList.contains("collapsed");
+              if (isCollapsed) toggle.click();
+            }
+            // scroll into view after a short delay for smooth behavior
+            setTimeout(() => {
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 120);
+          } catch (err) {}
+        }
+
+        // open on initial load and on subsequent hash changes
+        window.addEventListener("hashchange", openEntryFromHash);
+        // call after a short delay so initial layout and conversion logic have run
+        setTimeout(openEntryFromHash, 80);
+
         // I'm finally free from ts bro
       })();
     </script>
