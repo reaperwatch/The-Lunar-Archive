@@ -87,6 +87,12 @@ header p {
   box-shadow: 0 8px 30px rgba(203, 104, 107, 0.5);
   background-color: #d47c7f;
 }
+.cta-button.dashboard-button {
+  /* more specific to ensure invite button styles don't override */
+  background: linear-gradient(90deg, #6dd3c4 0%, #b39dff 100%);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(107, 148, 142, 0.28);
+}
 .dashboard-button {
   display: inline-block;
   background: linear-gradient(90deg, #6dd3c4 0%, #b39dff 100%);
