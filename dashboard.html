@@ -118,6 +118,28 @@
         opacity: 0.8;
       }
 
+      .back-links {
+        text-align: center;
+        margin: 16px 0;
+      }
+
+      .back-button {
+        display: inline-block;
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin: 6px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
       .reset-btn {
         background: transparent;
         border: 1px solid #ff4444;
@@ -163,6 +185,11 @@
         <div id="status">Checking login...</div>
         <button id="loginBtn" style="display: none">Login with Discord</button>
       </header>
+
+      <div class="back-links">
+        <a href="index.html" class="back-button">← Back to Home</a>
+        <a href="bot.html" class="back-button">← Back to Bot</a>
+      </div>
 
       <div id="settingsArea" style="display: none">
         <div class="user-profile">
@@ -359,7 +386,6 @@
         </div>
 
         <div style="margin-top: 40px; text-align: center">
-          <a href="index.html" class="back-button"> &larr; Go Back to Home </a>
           <button
             onclick="logout()"
             style="
@@ -370,7 +396,6 @@
           >
             Log Out
           </button>
-          <a class="back-button" href="bot.html">← Back to Bot</a>
         </div>
       </div>
     </div>
