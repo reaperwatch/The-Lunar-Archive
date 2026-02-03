@@ -538,7 +538,7 @@
               <input
                 type="text"
                 id="prefixInput"
-                maxlength="3"
+                maxlength="2"
                 style="width: 60px; text-align: center"
               />
               <button onclick="savePrefix()">Save Prefix</button>
@@ -748,7 +748,8 @@
               }
             })
             .catch(() => {
-              document.getElementById("status").innerText = "Dashboard is offline.";
+              document.getElementById("status").innerText =
+                "Dashboard is offline.";
             });
         } else {
           document.getElementById("status").innerText = "Please log in.";
