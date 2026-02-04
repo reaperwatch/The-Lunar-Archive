@@ -569,6 +569,13 @@
     </footer>
 
     <script>
+      async function handle(res) {
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Error ${res.status}`);
+        }
+        return res.json();
+      }
       const TUNNEL_URL = "https://instructively-hushful-cinda.ngrok-free.dev";
       const DISCORD_LOGIN_URL =
         "https://discord.com/oauth2/authorize?client_id=1048675302722768896&response_type=code&redirect_uri=https%3A%2F%2Freaperwatch.github.io%2FThe-Lunar-Archive%2Fdashboard.html&scope=identify%20guilds";
@@ -735,7 +742,7 @@
               }
               return res;
             })
-            .then((res) => res.json())
+            .then(handle)
             .then((data) => {
               document.getElementById("status").style.display = "none";
               document.getElementById("settingsArea").style.display = "block";
