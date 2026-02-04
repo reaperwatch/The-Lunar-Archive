@@ -686,6 +686,13 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code }),
           });
+          if (res.status === 429) {
+            const data = await res.json();
+            alert(
+              `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${data.retryAfter} minute(s).`,
+            );
+            throw new Error("Rate limited");
+          }
           const data = await res.json();
           if (data.token) {
             localStorage.setItem("session", data.token);
@@ -749,7 +756,9 @@
             })
             .catch(() => {
               document.getElementById("status").innerText =
-                "Dashboard is offline.";
+                res.status === 429
+                  ? "⛔ Too many requests. Please try again later."
+                  : "Dashboard is offline.";
             });
         } else {
           document.getElementById("status").innerText = "Please log in.";
