@@ -707,13 +707,8 @@
                 rateLimitError.retryAfter = errData.retryAfter;
                 throw rateLimitError;
               }
-
-              // other errors than 429
-              if (!res.ok) {
-                throw new Error("Offline");
-              }
-              const data = await res.json();
             })
+            .then((res) => res.json())
             .then((data) => {
               document.getElementById("status").style.display = "none";
               document.getElementById("settingsArea").style.display = "block";
