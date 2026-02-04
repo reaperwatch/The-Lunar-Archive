@@ -712,9 +712,6 @@
               if (!res.ok) {
                 throw new Error("Offline");
               }
-
-              // If all is good
-              return res();
             })
             .then((res) => res.json())
             .then((data) => {
