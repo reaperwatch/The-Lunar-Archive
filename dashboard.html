@@ -601,7 +601,7 @@
             throw new Error(errorMessage);
           }
         } catch (err) {
-          alert(`⛔ Error: ${`err.message`}`);
+          alert(`⛔ Error: ${err.message}`);
           // Revert the checkbox state on any failure
           if (checkbox) checkbox.checked = !checkbox.checked;
         }
@@ -657,7 +657,7 @@
           );
           if (guild) guild.prefix = newPrefix;
         } catch (err) {
-          status.innerText = `❌ Error: ${`err.message`}`;
+          status.innerText = `❌ Error: ${err.message}`;
         }
       }
 
@@ -690,7 +690,7 @@
           alert(`${gameName} wins have been reset to 0.`);
           location.reload();
         } catch (err) {
-          alert(`⛔ Error: ${`err.message`}`);
+          alert(`⛔ Error: ${err.message}`);
         }
       }
 
@@ -728,7 +728,7 @@
                 const errorData = await res.json().catch(() => ({}));
                 const errorMessage =
                   errorData.error ||
-                  `An unexpected error occurred (Status: ${`res.status`})`;
+                  `An unexpected error occurred (Status: ${res.status})`;
                 const err = new Error(errorMessage);
                 err.status = res.status;
                 throw err;
@@ -793,8 +793,8 @@
                 document.getElementById("loginBtn").style.display = "block";
                 localStorage.removeItem("session");
               } else {
-                statusEl.innerText = `⛔ ${`err.message`}`;
-                alert(`⛔ ${`err.message`}`);
+                statusEl.innerText = `⛔ ${err.message}`;
+                alert(`⛔ ${err.message}`);
               }
             });
         } else {
