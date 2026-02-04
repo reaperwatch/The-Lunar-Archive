@@ -701,12 +701,22 @@
             .then(async (res) => {
               // Handle 429 rate limit
               if (res.status === 429) {
-                const errData = await res.json();
-                const rateLimitError = new Error("Rate Limited");
-                rateLimitError.status = 429;
-                rateLimitError.retryAfter = errData.retryAfter;
-                throw rateLimitError;
+                const err = new Error("Rate Limited");
+                err.status = 429;
+                throw err;
               }
+
+              if (res.status === 401) {
+                const err = new Error("Unauthorized");
+                err.status = 401;
+                throw err;
+              }
+
+              if (!res.ok) {
+                throw new Error("Offline");
+              }
+
+              return res;
             })
             .then((res) => res.json())
             .then((data) => {
