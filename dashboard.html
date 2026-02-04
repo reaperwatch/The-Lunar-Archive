@@ -582,20 +582,31 @@
 
       async function toggleOption(key) {
         const token = localStorage.getItem("session");
+        const checkbox = document.getElementById(key);
+
         try {
-          await fetch(`${TUNNEL_URL}/api/toggle-setting`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-              "ngrok-skip-browser-warning": "true",
+          const response = await fetch(
+            `${TUNNEL_URL}` / api / toggle - setting``,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+                "ngrok-skip-browser-warning": "true",
+              },
+              body: JSON.stringify({ settingKey: key }),
             },
-            body: JSON.stringify({ settingKey: key }),
-          });
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            const errorMessage = errorData.error || "Failed to update setting.";
+            throw new Error(errorMessage);
+          }
         } catch (err) {
-          /*if (err) {
-            alert("Failed to update setting.");
-          }*/
+          alert(`⛔ Error: ${`err.message`}`);
+          // Revert the checkbox state on any failure
+          if (checkbox) checkbox.checked = !checkbox.checked;
         }
       }
 
@@ -623,57 +634,72 @@
         const token = localStorage.getItem("session");
         const status = document.getElementById("saveStatus");
         const newPrefix = document.getElementById("prefixInput").value;
+        status.innerText = "💾 Saving...";
         try {
-          const response = await fetch(`${TUNNEL_URL}/api/save-prefix`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-              "ngrok-skip-browser-warning": "true",
+          const response = await fetch(
+            `${TUNNEL_URL}` / api / save - prefix``,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+                "ngrok-skip-browser-warning": "true",
+              },
+              body: JSON.stringify({
+                guildId: window.currentGuildId,
+                newPrefix: newPrefix,
+              }),
             },
-            body: JSON.stringify({
-              guildId: window.currentGuildId,
-              newPrefix: newPrefix,
-            }),
-          });
-          if (response.ok) {
-            status.innerText = "✅ Updated!";
-            const guild = allAdminGuilds.find(
-              (g) => g.id === window.currentGuildId,
-            );
-            if (guild) guild.prefix = newPrefix;
-          } else {
-            status.innerText = "❌ Error.";
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || "An unknown error occurred.");
           }
+
+          status.innerText = "✅ Updated!";
+          const guild = allAdminGuilds.find(
+            (g) => g.id === window.currentGuildId,
+          );
+          if (guild) guild.prefix = newPrefix;
         } catch (err) {
-          status.innerText = "❌ Offline.";
+          status.innerText = `❌ Error: ${`err.message`}`;
         }
       }
 
       async function resetScore(gameKey, gameName) {
-        const confirmReset = confirm(
-          `⚠️ WARNING: Are you sure you want to reset your ${gameName} wins?\n\nThis action is NOT reversible!`,
-        );
-        if (!confirmReset) return;
+        if (
+          !confirm(
+            `⚠️ WARNING: Are you sure you want to reset your ${gameName} wins?``\n\nThis action is NOT reversible  !`,
+          )
+        ) {
+          return;
+        }
+
         const token = localStorage.getItem("session");
         try {
-          const response = await fetch(`${TUNNEL_URL}/api/reset-score`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-              "ngrok-skip-browser-warning": "true",
+          const response = await fetch(
+            `${TUNNEL_URL}` / api / reset - score``,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+                "ngrok-skip-browser-warning": "true",
+              },
+              body: JSON.stringify({ gameKey: gameKey }),
             },
-            body: JSON.stringify({ gameKey: gameKey }),
-          });
-          if (response.ok) {
-            alert(`${gameName} wins have been reset to 0.`);
-            location.reload();
-          } else {
-            alert("Failed to reset score.");
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || "Failed to reset score.");
           }
+
+          alert(`${gameName} wins have been reset to 0.`);
+          location.reload();
         } catch (err) {
-          alert("Error connecting to server.");
+          alert(`⛔ Error: ${`err.message`}`);
         }
       }
 
@@ -683,41 +709,39 @@
         const token = localStorage.getItem("session");
 
         if (code) {
-          const res = await fetch(`${TUNNEL_URL}/api/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code }),
-          });
-          const data = await res.json();
-          if (data.token) {
-            localStorage.setItem("session", data.token);
-            window.location.href = window.location.pathname;
+          try {
+            const res = await fetch(`${TUNNEL_URL}` / api / login``, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ code }),
+            });
+            const data = await res.json();
+            if (data.token) {
+              localStorage.setItem("session", data.token);
+              window.location.href = window.location.pathname;
+            } else {
+              throw new Error(data.error || "Login failed.");
+            }
+          } catch (err) {
+            document.getElementById("status").innerText = err.message;
           }
         } else if (token) {
-          fetch(`${TUNNEL_URL}/api/get-settings`, {
+          fetch(`${TUNNEL_URL}` / api / get - settings``, {
             headers: {
               Authorization: token,
               "ngrok-skip-browser-warning": "true",
             },
           })
             .then(async (res) => {
-              // Handle 429 rate limit
-              if (res.status === 429) {
-                const err = new Error("Rate Limited");
-                err.status = 429;
-                throw err;
-              }
-
-              if (res.status === 401) {
-                const err = new Error("Unauthorized");
-                err.status = 401;
-                throw err;
-              }
-
               if (!res.ok) {
-                throw new Error("Offline");
+                const errorData = await res.json().catch(() => ({}));
+                const errorMessage =
+                  errorData.error ||
+                  `An unexpected error occurred (Status: ${`res.status`})`;
+                const err = new Error(errorMessage);
+                err.status = res.status;
+                throw err;
               }
-
               return res;
             })
             .then((res) => res.json())
@@ -770,16 +794,17 @@
               }
             })
             .catch((err) => {
-              console.log("Caught Error:", err);
-              document.getElementById("status").innerText =
-                err.status === 429
-                  ? `⛔ Too many requests. Please try again later in ${err.retryAfter} minute(s)`
-                  : "Dashboard is offline.";
-              err.status === 429
-                ? alert(
-                    `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${err.retryAfter} minute(s).`,
-                  )
-                : null;
+              console.error("Caught Error:", err);
+              const statusEl = document.getElementById("status");
+
+              if (err.status === 401) {
+                statusEl.innerText = "Session invalid. Please log in again.";
+                document.getElementById("loginBtn").style.display = "block";
+                localStorage.removeItem("session");
+              } else {
+                statusEl.innerText = `⛔ ${`err.message`}`;
+                alert(`⛔ ${`err.message`}`);
+              }
             });
         } else {
           document.getElementById("status").innerText = "Please log in.";
