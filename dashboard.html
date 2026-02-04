@@ -593,7 +593,11 @@
             body: JSON.stringify({ settingKey: key }),
           });
         } catch (err) {
-          alert("Failed to update setting.");
+          if (err.status === 429) {
+            alert("Too many requests. Please try again later.");
+          } else {
+            alert("Failed to update setting.");
+          }
         }
       }
 
