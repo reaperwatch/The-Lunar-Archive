@@ -760,10 +760,10 @@
                   "No admin servers found.";
               }
             })
-            .catch(() => {
+            .catch((err) => {
               document.getElementById("status").innerText =
-                res.status === 429
-                  ? `⛔ Too many requests. Please try again later in ${data.retryAfter} minute(s)`
+                err.status === 429
+                  ? `⛔ Too many requests. Please try again later in ${err.retryAfter} minute(s)`
                   : "Dashboard is offline.";
             });
         } else {
