@@ -711,6 +711,8 @@
               // other errors than 429
               if (!res.ok) {
                 throw new Error("Offline");
+                // help
+                return (res) => res.json();
               }
             })
             .then((res) => res.json())
