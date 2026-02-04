@@ -691,7 +691,8 @@
             alert(
               `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${data.retryAfter} minute(s).`,
             );
-            throw new Error("Rate limited");
+            if (!res.ok) throw new Error("Login failed");
+            return res.json();
           }
           const data = await res.json();
           if (data.token) {
