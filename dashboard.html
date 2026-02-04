@@ -703,9 +703,6 @@
                 return res.json().then((errData) => {
                   errData.status = 429;
                   throw errData;
-                  alert(
-                    `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${data.retryAfter} minute(s).`,
-                  );
                 });
               }
               if (!res.ok) throw new Error("Offline");
@@ -765,6 +762,11 @@
                 err.status === 429
                   ? `⛔ Too many requests. Please try again later in ${err.retryAfter} minute(s)`
                   : "Dashboard is offline.";
+              err.status === 429
+                ? alert(
+                    `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${err.retryAfter} minute(s).`,
+                  )
+                : null;
             });
         } else {
           document.getElementById("status").innerText = "Please log in.";
