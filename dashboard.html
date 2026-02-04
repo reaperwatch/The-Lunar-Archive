@@ -698,14 +698,22 @@
               "ngrok-skip-browser-warning": "true",
             },
           })
-            .then((res) => {
+            .then(async (res) => {
+              // Handle 429 rate limit
               if (res.status === 429) {
-                return res.json().then((errData) => {
-                  errData.status = 429;
-                  throw errData;
-                });
+                const errData = await res.json();
+                const rateLimitError = new Error("Rate Limited");
+                rateLimitError.status = 429;
+                rateLimitError.retryAfter = errData.retryAfter;
+                throw rateLimitError;
               }
-              if (!res.ok) throw new Error("Offline");
+
+              // other errors than 429
+              if (!res.ok) {
+                throw new Error("Offline");
+              }
+
+              // If all is good
               return res.json();
             })
             .then((res) => res.json())
@@ -758,6 +766,7 @@
               }
             })
             .catch((err) => {
+              console.log("Caught Error:", err);
               document.getElementById("status").innerText =
                 err.status === 429
                   ? `⛔ Too many requests. Please try again later in ${err.retryAfter} minute(s)`
