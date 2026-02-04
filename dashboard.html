@@ -686,14 +686,6 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code }),
           });
-          if (res.status === 429) {
-            const data = await res.json();
-            alert(
-              `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${data.retryAfter} minute(s).`,
-            );
-            if (!res.ok) throw new Error("Login failed");
-            return;
-          }
           const data = await res.json();
           if (data.token) {
             localStorage.setItem("session", data.token);
@@ -706,6 +698,19 @@
               "ngrok-skip-browser-warning": "true",
             },
           })
+            .then((res) => {
+              if (res.status === 429) {
+                return res.json().then((errData) => {
+                  errData.status = 429;
+                  throw errData;
+                  alert(
+                    `⛔ Too many attempts to change data/settings were made in the last 15 minutes. Please wait ${data.retryAfter} minute(s).`,
+                  );
+                });
+              }
+              if (!res.ok) throw new Error("Offline");
+              return res.json();
+            })
             .then((res) => res.json())
             .then((data) => {
               document.getElementById("status").style.display = "none";
@@ -758,7 +763,7 @@
             .catch(() => {
               document.getElementById("status").innerText =
                 res.status === 429
-                  ? "⛔ Too many requests. Please try again later."
+                  ? `⛔ Too many requests. Please try again later in ${data.retryAfter} minute(s)`
                   : "Dashboard is offline.";
             });
         } else {
