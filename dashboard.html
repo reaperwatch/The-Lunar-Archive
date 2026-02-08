@@ -596,6 +596,7 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "x-requested-with": "TheLunarArchive-Dashboard",
               Authorization: token,
               "ngrok-skip-browser-warning": "true",
             },
@@ -644,6 +645,7 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "x-requested-with": "TheLunarArchive-Dashboard",
               Authorization: token,
               "ngrok-skip-browser-warning": "true",
             },
@@ -683,6 +685,7 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "x-requested-with": "TheLunarArchive-Dashboard",
               Authorization: token,
               "ngrok-skip-browser-warning": "true",
             },
@@ -710,7 +713,10 @@
           try {
             const res = await fetch(`${TUNNEL_URL}/api/login`, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                "x-requested-with": "TheLunarArchive-Dashboard",
+              },
               body: JSON.stringify({ code }),
             });
             const data = await res.json();
@@ -726,6 +732,7 @@
         } else if (token) {
           fetch(`${TUNNEL_URL}/api/get-settings`, {
             headers: {
+              "x-requested-with": "TheLunarArchive-Dashboard",
               Authorization: token,
               "ngrok-skip-browser-warning": "true",
             },
