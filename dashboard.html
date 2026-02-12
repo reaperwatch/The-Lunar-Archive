@@ -519,7 +519,10 @@
               <select
                 id="guildSelect"
                 style="width: 100%"
-                onchange="updateSelectedGuild()"
+                onchange="
+                  updateSelectedGuild();
+                  loadCommands();
+                "
               ></select>
             </div>
           </div>
@@ -695,21 +698,23 @@
             listEl.innerHTML = data.commands
               .map(
                 (cmd) => `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #eee;">
+                <div class="command-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #444;">
                     <div>
                         <strong style="color:#cb686b;">/${cmd.name}</strong>
-                        <div style="font-size:0.85em; color:#666;">${cmd.description || "No description"}</div>
+                        <div style="font-size:0.8em; color:#bbb;">${cmd.description || "No description"}</div>
                     </div>
                     <label class="switch">
                         <input type="checkbox" ${cmd.enabled ? "checked" : ""} 
                                onchange="toggleCommand('${cmd.name}', this)">
+                        <span class="slider"></span>
                     </label>
                 </div>
             `,
               )
               .join("");
           } else {
-            listEl.innerHTML = "<p>No commands found.</p>";
+            listEl.innerHTML =
+              "<p>No commands found registered in the bot.</p>";
           }
         } catch (err) {
           listEl.innerHTML = "<p>Error connecting to bot API.</p>";
