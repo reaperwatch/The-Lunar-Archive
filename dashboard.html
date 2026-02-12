@@ -524,9 +524,19 @@
             </div>
           </div>
 
-          <div id="commandManagement" style="display: none; margin-top: 20px">
-            <h3>Command Management</h3>
-            <div id="commandList" class="toggle-group"></div>
+          <div class="tabs">
+            <button class="tab-btn" onclick="showTab('general')">
+              General
+            </button>
+            <button class="tab-btn" onclick="showTab('commands')">
+              Commands
+            </button>
+            <button class="tab-btn" onclick="showTab('stats')">Stats</button>
+          </div>
+
+          <div id="commands" class="tab-content" style="display: none">
+            <h3>Manage Commands</h3>
+            <div id="commandsList">Loading commands...</div>
           </div>
 
           <div
@@ -675,47 +685,54 @@
         }
       }
 
-      async function toggleCommand(commandName, checkbox) {
-        const action = checkbox.checked ? "enable" : "disable";
-        const session = JSON.parse(localStorage.getItem("session"));
-        const guildId = document.getElementById("guildSelector").value;
+      async function loadCommands(guildId) {
+        const commandsList = document.getElementById("commandsList");
+        commandsList.innerHTML = "Fetching commands...";
 
         try {
-          const response = await fetch(`${API_URL}/api/toggle-command`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: session.token,
+          const response = await fetch(
+            `${API_BASE_URL}/api/commands/${guildId}`,
+            {
+              headers: { Authorization: localStorage.getItem("session") },
               "x-requested-with": "TheLunarArchive-Dashboard",
               "ngrok-skip-browser-warning": "true",
             },
-            body: JSON.stringify({ guildId, commandName, action }),
-          });
+          );
+          const data = await response.json();
 
-          if (!response.ok) throw new Error("Failed to update");
-          console.log(`${commandName} is now ${action}d`);
+          if (data.success) {
+            commandsList.innerHTML = data.commands
+              .map(
+                (cmd) => `
+        <div class="command-item">
+          <span>/${cmd.name} - ${cmd.description}</span>
+          <label class="switch">
+            <input type="checkbox" ${cmd.enabled ? "checked" : ""} 
+                   onchange="toggleCommand('${guildId}', '${cmd.name}', this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+      `,
+              )
+              .join("");
+          }
         } catch (err) {
-          alert("Error updating command: " + err.message);
-          checkbox.checked = !checkbox.checked; // Revert on failure
+          commandsList.innerHTML = "Error loading commands.";
         }
       }
 
-      // Function to render the list (call this when a guild is selected)
-      function renderCommands(disabledList = []) {
-        const commands = ["ping", "other_command"]; // Add your command names here
-        const listEl = document.getElementById("commandList");
-        listEl.innerHTML = "";
-
-        commands.forEach((cmd) => {
-          const isEnabled = !disabledList.includes(cmd);
-          listEl.innerHTML += `
-            <label>
-                <input type="checkbox" ${isEnabled ? "checked" : ""} 
-                       onchange="toggleCommand('${cmd}', this)">
-                ${cmd.charAt(0).toUpperCase() + cmd.slice(1)}
-            </label>`;
+      async function toggleCommand(guildId, commandName, isEnabled) {
+        const action = isEnabled ? "enable" : "disable";
+        await fetch(`${API_BASE_URL}/api/toggle-command`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("session"),
+            "ngrok-skip-browser-warning": "true",
+            "x-requested-with": "TheLunarArchive-Dashboard",
+          },
+          body: JSON.stringify({ guildId, commandName, action }),
         });
-        document.getElementById("commandManagement").style.display = "block";
       }
 
       async function resetScore(gameKey, gameName) {
