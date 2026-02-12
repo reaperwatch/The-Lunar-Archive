@@ -702,7 +702,11 @@
 
         try {
           const response = await fetch(`${API_URL}/api/commands/${guildId}`, {
-            headers: { Authorization: session.token },
+            headers: {
+              Authorization: session.token,
+              "x-requested-with": "TheLunarArchive-Dashboard",
+              "ngrok-skip-browser-warning": "true",
+            },
           });
           const data = await response.json();
 
