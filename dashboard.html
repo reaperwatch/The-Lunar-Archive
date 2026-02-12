@@ -803,7 +803,7 @@
 
         const IscurrentStatus = String(currentStatus) === "true";
 
-        const newStatus = !IscurrentStatus; // This flips the switch
+        const newStatus = !currentStatus; // This flips the switch
 
         try {
           const response = await fetch(`${TUNNEL_URL}/api/commands/toggle`, {
