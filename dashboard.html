@@ -687,13 +687,13 @@
 
       async function loadCommands() {
         const guildSelector = document.getElementById("guildSelector");
-        const guildId = guildSelector.value;
 
         if (!guildSelector || !guildSelector.value) {
           console.warn("Guild selector not ready. Skipping loadCommands.");
           return;
         }
 
+        const guildId = guildSelector.value;
         const session = JSON.parse(localStorage.getItem("session"));
         const listEl = document.getElementById("commandsList");
 
