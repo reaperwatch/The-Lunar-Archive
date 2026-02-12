@@ -707,13 +707,16 @@
         listEl.innerHTML = "<p>Loading commands...</p>";
 
         try {
-          const response = await fetch(`${API_URL}/api/commands/${guildId}`, {
-            headers: {
-              Authorization: session.token,
-              "x-requested-with": "TheLunarArchive-Dashboard",
-              "ngrok-skip-browser-warning": "true",
+          const response = await fetch(
+            `${TUNNEL_URL}/api/commands/${guildId}`,
+            {
+              headers: {
+                Authorization: session.token,
+                "x-requested-with": "TheLunarArchive-Dashboard",
+                "ngrok-skip-browser-warning": "true",
+              },
             },
-          });
+          );
 
           if (!response.ok) {
             throw new Error(`Server responded with ${response.status}`);
