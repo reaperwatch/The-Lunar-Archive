@@ -785,6 +785,49 @@
         }
       }
 
+      async function toggleCommand(commandName, currentStatus) {
+        const guildSelector = document.getElementById("guildSelector");
+        if (!guildSelector) return;
+
+        const guildId = guildSelector.value;
+        const sessionData = localStorage.getItem("session");
+        let token;
+
+        try {
+          const parsed = JSON.parse(sessionData);
+          token = parsed.token;
+        } catch (e) {
+          token = sessionData;
+        }
+
+        try {
+          const response = await fetch(`${TUNNEL_URL}/api/commands/toggle`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              "x-requested-with": "TheLunarArchive-Dashboard",
+              "ngrok-skip-browser-warning": "true",
+            },
+            body: JSON.stringify({
+              guildId: guildId,
+              commandName: commandName,
+              enabled: !currentStatus, // Flip the status
+            }),
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            loadCommands();
+          } else {
+            alert("Error: " + result.error);
+          }
+        } catch (err) {
+          console.error("Toggle failed:", err);
+          alert("Could not connect to the bot to save changes.");
+        }
+      }
+
       async function resetScore(gameKey, gameName) {
         if (
           !confirm(
