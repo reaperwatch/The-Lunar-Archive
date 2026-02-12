@@ -801,6 +801,8 @@
           token = sessionData;
         }
 
+        const newStatus = !currentStatus; // This flips the switch
+
         try {
           const response = await fetch(`${TUNNEL_URL}/api/commands/toggle`, {
             method: "POST",
