@@ -694,7 +694,13 @@
         }
 
         const guildId = guildSelector.value;
-        const session = JSON.parse(localStorage.getItem("session"));
+        const sessionData = localStorage.getItem("session");
+        let session;
+        try {
+          session = JSON.parse(sessionData);
+        } catch (e) {
+          session = { token: sessionData };
+        }
         const listEl = document.getElementById("commandsList");
 
         if (!guildId) return;
