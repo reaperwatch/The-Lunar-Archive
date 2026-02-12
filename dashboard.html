@@ -524,31 +524,11 @@
             </div>
           </div>
 
-          <div
-            class="tabs"
-            style="display: flex; gap: 10px; margin-bottom: 20px"
-          >
-            <button class="tab-btn active" onclick="showTab('general')">
-              General
-            </button>
-            <button class="tab-btn" onclick="showTab('commands')">
-              Commands
-            </button>
-            <button class="tab-btn" onclick="showTab('stats')">Stats</button>
-          </div>
-
-          <div id="general" class="tab-content">
-            <h3>General Settings</h3>
-          </div>
-
-          <div id="commands" class="tab-content" style="display: none">
+          <div id="commandManagement" style="margin-top: 20px">
             <h3>Command Management</h3>
             <p>Enable or disable slash commands for this server.</p>
-            <div id="commandsList" class="command-grid"></div>
-          </div>
-
-          <div id="stats" class="tab-content" style="display: none">
-            <h3>Server Stats</h3>
+            <hr />
+            <div id="commandsList"></div>
           </div>
 
           <div
@@ -697,78 +677,63 @@
         }
       }
 
-      // 1. Tab Switching Logic
-      function showTab(tabId) {
-        // Hide all contents
-        document.querySelectorAll(".tab-content").forEach((content) => {
-          content.style.display = "none";
-        });
-        // Show target content
-        document.getElementById(tabId).style.display = "block";
-
-        // Update button active states
-        document.querySelectorAll(".tab-btn").forEach((btn) => {
-          btn.classList.remove("active");
-        });
-        event.currentTarget.classList.add("active");
-      }
-
-      // 2. Fetch Commands from Bot
       async function loadCommands() {
         const guildId = document.getElementById("guildSelector").value;
         const session = JSON.parse(localStorage.getItem("session"));
         const listEl = document.getElementById("commandsList");
 
-        listEl.innerHTML = "Loading commands...";
+        if (!guildId) return;
+        listEl.innerHTML = "<p>Loading commands...</p>";
 
         try {
           const response = await fetch(`${API_URL}/api/commands/${guildId}`, {
-            headers: {
-              Authorization: session.token,
-              "Content-Type": "application/json",
-              "x-requested-with": "TheLunarArchive-Dashboard",
-              "ngrok-skip-browser-warning": "true",
-            },
+            headers: { Authorization: session.token },
           });
           const data = await response.json();
 
-          if (data.success) {
+          if (data.success && data.commands.length > 0) {
             listEl.innerHTML = data.commands
               .map(
                 (cmd) => `
-        <div class="command-card" style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;">
-          <div>
-            <strong>/${cmd.name}</strong>
-            <div style="font-size:0.8em; color:#666;">${cmd.description}</div>
-          </div>
-          <input type="checkbox" ${cmd.enabled ? "checked" : ""} 
-                 onchange="toggleCommand('${cmd.name}', this)">
-        </div>
-      `,
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #eee;">
+                    <div>
+                        <strong style="color:#cb686b;">/${cmd.name}</strong>
+                        <div style="font-size:0.85em; color:#666;">${cmd.description || "No description"}</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" ${cmd.enabled ? "checked" : ""} 
+                               onchange="toggleCommand('${cmd.name}', this)">
+                    </label>
+                </div>
+            `,
               )
               .join("");
+          } else {
+            listEl.innerHTML = "<p>No commands found.</p>";
           }
         } catch (err) {
-          listEl.innerHTML = "Error loading commands.";
+          listEl.innerHTML = "<p>Error connecting to bot API.</p>";
         }
       }
 
-      // 3. Toggle Command via API
       async function toggleCommand(commandName, checkbox) {
         const action = checkbox.checked ? "enable" : "disable";
         const guildId = document.getElementById("guildSelector").value;
         const session = JSON.parse(localStorage.getItem("session"));
 
-        await fetch(`${API_URL}/api/toggle-command`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: session.token,
-            "x-requested-with": "TheLunarArchive-Dashboard",
-            "ngrok-skip-browser-warning": "true",
-          },
-          body: JSON.stringify({ guildId, commandName, action }),
-        });
+        try {
+          await fetch(`${API_URL}/api/toggle-command`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: session.token,
+            },
+            body: JSON.stringify({ guildId, commandName, action }),
+          });
+        } catch (err) {
+          alert("Failed to save change.");
+          checkbox.checked = !checkbox.checked;
+        }
       }
 
       async function resetScore(gameKey, gameName) {
@@ -880,6 +845,7 @@
               document.getElementById("dm_reply").checked = data.stats.dm_reply;
 
               if (data.adminGuilds?.length > 0) {
+                loadCommands();
                 allAdminGuilds = data.adminGuilds;
                 const select = document.getElementById("guildSelect");
                 select.innerHTML = "";
