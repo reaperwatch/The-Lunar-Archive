@@ -690,7 +690,7 @@
         const guildId = guildSelector.value;
 
         if (!guildSelector || !guildSelector.value) {
-          console.warn("Guild selector not ready yet.");
+          console.warn("Guild selector not ready. Skipping loadCommands.");
           return;
         }
 
