@@ -706,7 +706,7 @@
                     <p style="margin: 0; font-size: 0.9em; color: #ccc;">${cmd.description || "No description"}</p>
                 </div>
                 <button 
-                    onclick="toggleCommand('${cmd.name}', ${cmd.enabled})"
+                    onclick="toggleCommand('${cmd.name}', ${cmd.enabled})" 
                     style="background: ${cmd.enabled ? "#43b581" : "#f04747"}; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"
                 >
                     ${cmd.enabled ? "Enabled" : "Disabled"}
