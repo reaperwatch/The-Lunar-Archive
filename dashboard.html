@@ -686,7 +686,14 @@
       }
 
       async function loadCommands() {
-        const guildId = document.getElementById("guildSelector").value;
+        const guildSelector = document.getElementById("guildSelector");
+        const guildId = guildSelector.value;
+
+        if (!guildSelector || !guildSelector.value) {
+          console.warn("Guild selector not ready yet.");
+          return;
+        }
+
         const session = JSON.parse(localStorage.getItem("session"));
         const listEl = document.getElementById("commandsList");
 
