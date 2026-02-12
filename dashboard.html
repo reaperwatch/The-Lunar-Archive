@@ -524,6 +524,11 @@
             </div>
           </div>
 
+          <div id="commandManagement" style="display: none; margin-top: 20px">
+            <h3>Command Management</h3>
+            <div id="commandList" class="toggle-group"></div>
+          </div>
+
           <div
             id="prefixControls"
             style="
@@ -668,6 +673,49 @@
         } catch (err) {
           status.innerText = `❌ Error: ${err.message}`;
         }
+      }
+
+      async function toggleCommand(commandName, checkbox) {
+        const action = checkbox.checked ? "enable" : "disable";
+        const session = JSON.parse(localStorage.getItem("session"));
+        const guildId = document.getElementById("guildSelector").value;
+
+        try {
+          const response = await fetch(`${API_URL}/api/toggle-command`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: session.token,
+              "x-requested-with": "TheLunarArchive-Dashboard",
+              "ngrok-skip-browser-warning": "true",
+            },
+            body: JSON.stringify({ guildId, commandName, action }),
+          });
+
+          if (!response.ok) throw new Error("Failed to update");
+          console.log(`${commandName} is now ${action}d`);
+        } catch (err) {
+          alert("Error updating command: " + err.message);
+          checkbox.checked = !checkbox.checked; // Revert on failure
+        }
+      }
+
+      // Function to render the list (call this when a guild is selected)
+      function renderCommands(disabledList = []) {
+        const commands = ["ping", "other_command"]; // Add your command names here
+        const listEl = document.getElementById("commandList");
+        listEl.innerHTML = "";
+
+        commands.forEach((cmd) => {
+          const isEnabled = !disabledList.includes(cmd);
+          listEl.innerHTML += `
+            <label>
+                <input type="checkbox" ${isEnabled ? "checked" : ""} 
+                       onchange="toggleCommand('${cmd}', this)">
+                ${cmd.charAt(0).toUpperCase() + cmd.slice(1)}
+            </label>`;
+        });
+        document.getElementById("commandManagement").style.display = "block";
       }
 
       async function resetScore(gameKey, gameName) {
