@@ -813,7 +813,7 @@
             body: JSON.stringify({
               guildId: guildId,
               commandName: commandName,
-              enabled: !currentStatus, // Flip the status
+              enabled: newStatus,
             }),
           });
 
