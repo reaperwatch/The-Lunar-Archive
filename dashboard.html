@@ -699,6 +699,8 @@
           const div = document.createElement("div");
           div.className = "commandslist";
 
+          const status = Boolean(cmd.enabled);
+
           div.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #444;">
                 <div>
@@ -706,10 +708,10 @@
                     <p style="margin: 0; font-size: 0.9em; color: #ccc;">${cmd.description || "No description"}</p>
                 </div>
                 <button 
-                    onclick="toggleCommand('${cmd.name}', ${cmd.enabled})" 
-                    style="background: ${cmd.enabled ? "#43b581" : "#f04747"}; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"
+                    onclick="toggleCommand('${cmd.name}', ${status})" 
+                    style="background: ${status ? "#43b581" : "#f04747"}; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"
                 >
-                    ${cmd.enabled ? "Enabled" : "Disabled"}
+                    ${status ? "Enabled" : "Disabled"}
                 </button>
             </div>
         `;
@@ -801,9 +803,7 @@
           token = sessionData;
         }
 
-        const IscurrentStatus = String(currentStatus) === "true";
-
-        const newStatus = !IscurrentStatus; // This flips the switch
+        const newStatus = !currentStatus;
 
         try {
           const response = await fetch(`${TUNNEL_URL}/api/commands/toggle`, {
