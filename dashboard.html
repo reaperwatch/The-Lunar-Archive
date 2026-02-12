@@ -714,8 +714,16 @@
               "ngrok-skip-browser-warning": "true",
             },
           });
+
+          if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+          }
+
           const data = await response.json();
 
+          const commands = data.commands || [];
+
+          displayCommands(commands);
           if (data.success && data.commands.length > 0) {
             listEl.innerHTML = data.commands
               .map(
@@ -738,7 +746,7 @@
             listEl.innerHTML = "<p>No commands found.</p>";
           }
         } catch (err) {
-          listEl.innerHTML = "<p>Error connecting to bot.</p>";
+          listEl.innerHTML = `<p style="color: red;">Error: ${err.message}</p>`;
         }
       }
 
