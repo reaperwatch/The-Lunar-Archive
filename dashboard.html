@@ -834,7 +834,6 @@
               document.getElementById("dm_reply").checked = data.stats.dm_reply;
 
               if (data.adminGuilds?.length > 0) {
-                loadCommands();
                 allAdminGuilds = data.adminGuilds;
                 const select = document.getElementById("guildSelect");
                 select.innerHTML = "";
@@ -849,6 +848,7 @@
                 document.getElementById("adminStatus").innerText =
                   "Managing your servers successfully.";
                 updateSelectedGuild();
+                loadCommands();
               } else {
                 document.getElementById("adminStatus").innerText =
                   "No admin servers found.";
