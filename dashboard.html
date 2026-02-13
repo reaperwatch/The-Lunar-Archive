@@ -847,7 +847,7 @@
 
         try {
           const response = await fetch(
-            `${true}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
+            `${TUNNEL_URL}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
           );
           const data = await response.json();
 
@@ -865,7 +865,7 @@
         const isChecked = document.getElementById("aiToggle").checked;
 
         try {
-          const response = await fetch(`${API_BASE}/toggle-ai`, {
+          const response = await fetch(`${TUNNEL_URL}/toggle-ai`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
