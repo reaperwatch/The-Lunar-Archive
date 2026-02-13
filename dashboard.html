@@ -520,8 +520,9 @@
                 id="guildSelector"
                 style="width: 100%"
                 onchange="
-                  updateSelectedGuild() /*
+                  updateSelectedGuild(); /*
                   loadCommands();*/
+                  fetchAISettings();
                 "
               ></select>
             </div>
@@ -708,19 +709,19 @@
           div.className = "commandslist";
 
           div.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #444;">
-                <div>
-                    <strong style="color: #cb686b;">/${cmd.name}</strong>
-                    <p style="margin: 0; font-size: 0.9em; color: #ccc;">${cmd.description || "No description"}</p>
-                </div>
-                <button 
-                    onclick="toggleCommand('${cmd.name}', ${cmd.enabled})" 
-                    style="background: ${cmd.enabled ? "#43b581" : "#f04747"}; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"
-                >
-                    ${cmd.enabled ? "Enabled" : "Disabled"}
-                </button>
-            </div>
-        `;
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #444;">
+                      <div>
+                          <strong style="color: #cb686b;">/${cmd.name}</strong>
+                          <p style="margin: 0; font-size: 0.9em; color: #ccc;">${cmd.description || "No description"}</p>
+                      </div>
+                      <button
+                          onclick="toggleCommand('${cmd.name}', ${cmd.enabled})"
+                          style="background: ${cmd.enabled ? "#43b581" : "#f04747"}; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"
+                      >
+                          ${cmd.enabled ? "Enabled" : "Disabled"}
+                      </button>
+                  </div>
+              `;
           listEl.appendChild(div);
         });
       }
@@ -771,19 +772,19 @@
             listEl.innerHTML = data.commands
               .map(
                 (cmd) => `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#f9f9f9; border-radius:5px;">
-                    <div>
-                        <strong style="color:#cb686b;">/${cmd.name}</strong>
-                        <div style="font-size:0.8em; color:#666;">${cmd.description || "No description"}</div>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" ${cmd.enabled ? "checked" : ""} 
-                               onchange="toggleCommand('${cmd.name}', this)">
-                        <span class="slider round"></span>
-                    </label>
+                      <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#f9f9f9; border-radius:5px;">
+                          <div>
+                              <strong style="color:#cb686b;">/${cmd.name}</strong>
+                              <div style="font-size:0.8em; color:#666;">${cmd.description || "No description"}</div>
+                          </div>
+                          <label class="switch">
+                              <input type="checkbox" ${cmd.enabled ? "checked" : ""}
+                                     onchange="toggleCommand('${cmd.name}', this)">
+                              <span class="slider round"></span>
+                          </label>
 
-                </div>
-            `,
+                      </div>
+                  `,
               )
               .join("");
           } else {
@@ -836,20 +837,27 @@
         }
       }
 
-      async function loadGuildSettings(guildId) {
+      async function fetchAISettings() {
+        const guildId = document.getElementById("guildSelector").value;
         const sessionToken = localStorage.getItem("session");
+        const aiToggle = document.getElementById("aiToggle");
 
-        const response = await fetch(
-          `${TUNNEL_URL}/get-guild-settings?guildId=${guildId}&sessionToken=${sessionToken}`,
-        );
-        const settings = await response.json();
+        try {
+          const response = await fetch(
+            `${TUNNEL_URL}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
+          );
+          const data = await response.json();
 
-        const aiCheckbox = document.getElementById("aiToggle");
-
-        if (settings.aiStatus === "false") {
-          aiCheckbox.checked = false;
-        } else {
-          aiCheckbox.checked = true;
+          // Default to checked unless the database specifically says "false"
+          if (data.status === "false") {
+            aiToggle.checked = false;
+          } else {
+            aiToggle.checked = true;
+          }
+        } catch (err) {
+          console.error("Failed to fetch AI status:", err);
+          // Default to checked if the request fails
+          aiToggle.checked = true;
         }
       }
 
@@ -869,7 +877,7 @@
           body: JSON.stringify({
             guildId,
             sessionToken,
-            enabled: isEnabled,
+            enabled: isEnabled ? "true" : "false",
           }),
         });
 
