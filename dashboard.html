@@ -531,7 +531,7 @@
           <div class="setting-item">
             <span>AI Functionality</span>
             <label class="switch">
-              <input type="checkbox" id="aiToggle" onclick="toggleAI()" />
+              <input type="checkbox" id="aiToggle" onchange="toggleAI()" />
               <span class="slider round"></span>
             </label>
           </div>
@@ -646,6 +646,8 @@
 
         if (guild) {
           window.currentGuildId = guild.id;
+          document.getElementById("aiToggle").checked = true;
+          fetchAISettings();
           document.getElementById("prefixInput").value = guild.prefix;
           document.getElementById("prefixControls").style.display = "block";
           document.getElementById("saveStatus").innerText = "";
@@ -842,13 +844,14 @@
         const sessionToken = localStorage.getItem("session");
         const aiToggle = document.getElementById("aiToggle");
 
+        if (!guildId) return;
+
         try {
           const response = await fetch(
-            `${TUNNEL_URL}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
+            `${API_BASE}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
           );
           const data = await response.json();
 
-          // Default to checked unless the database specifically says "false"
           if (data.status === "false") {
             aiToggle.checked = false;
           } else {
@@ -856,8 +859,7 @@
           }
         } catch (err) {
           console.error("Failed to fetch AI status:", err);
-          // Default to checked if the request fails
-          aiToggle.checked = true;
+          aiToggle.checked = true; // Default to ON on error
         }
       }
 
