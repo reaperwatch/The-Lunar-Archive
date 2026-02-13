@@ -646,7 +646,6 @@
 
         if (guild) {
           window.currentGuildId = guild.id;
-          document.getElementById("aiToggle").checked = true;
           fetchAISettings();
           document.getElementById("prefixInput").value = guild.prefix;
           document.getElementById("prefixControls").style.display = "block";
@@ -840,7 +839,7 @@
       }
 
       async function fetchAISettings() {
-        const guildId = document.getElementById("guildSelector").value;
+        const guildId = window.currentGuildId;
         const sessionToken = localStorage.getItem("session");
         const aiToggle = document.getElementById("aiToggle");
 
@@ -848,44 +847,40 @@
 
         try {
           const response = await fetch(
-            `${API_BASE}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
+            `${true}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
           );
           const data = await response.json();
 
-          if (data.status === "false") {
-            aiToggle.checked = false;
-          } else {
-            aiToggle.checked = true;
-          }
+          aiToggle.checked = data.status !== "false";
+          console.log(`AI Status for ${guildId}: ${data.status}`);
         } catch (err) {
-          console.error("Failed to fetch AI status:", err);
+          console.error("Error loading AI settings:", err);
           aiToggle.checked = true; // Default to ON on error
         }
       }
 
       async function toggleAI() {
-        const guildId = document.getElementById("guildSelector").value;
+        const guildId = window.currentGuildId;
         const sessionToken = localStorage.getItem("session");
-        const isEnabled = document.getElementById("aiToggle").checked;
+        const isChecked = document.getElementById("aiToggle").checked;
 
-        const response = await fetch(`${TUNNEL_URL}/toggle-ai`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: sessionToken,
-            "ngrok-skip-browser-warning": "true",
-            "x-requested-with": "TheLunarArchive-Dashboard",
-          },
-          body: JSON.stringify({
-            guildId,
-            sessionToken,
-            enabled: isEnabled ? "true" : "false",
-          }),
-        });
+        try {
+          const response = await fetch(`${API_BASE}/toggle-ai`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              guildId: guildId,
+              sessionToken: sessionToken,
+              enabled: isChecked,
+            }),
+          });
 
-        const data = await response.json();
-        if (data.success) {
-          console.log("AI Status updated:", data.enabled);
+          const result = await response.json();
+          if (result.success) {
+            console.log("AI setting saved successfully.");
+          }
+        } catch (err) {
+          console.error("Error saving AI settings:", err);
         }
       }
 
