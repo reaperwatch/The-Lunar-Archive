@@ -848,6 +848,14 @@
         try {
           const response = await fetch(
             `${TUNNEL_URL}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+                "x-requested-with": "TheLunarArchive-Dashboard",
+                "ngrok-skip-browser-warning": "true",
+              },
+            },
           );
           const data = await response.json();
 
@@ -867,7 +875,12 @@
         try {
           const response = await fetch(`${TUNNEL_URL}/toggle-ai`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+              "x-requested-with": "TheLunarArchive-Dashboard",
+              "ngrok-skip-browser-warning": "true",
+            },
             body: JSON.stringify({
               guildId: guildId,
               sessionToken: sessionToken,
