@@ -836,6 +836,23 @@
         }
       }
 
+      async function loadGuildSettings(guildId) {
+        const sessionToken = localStorage.getItem("session");
+
+        const response = await fetch(
+          `${TUNNEL_URL}/get-guild-settings?guildId=${guildId}&sessionToken=${sessionToken}`,
+        );
+        const settings = await response.json();
+
+        const aiCheckbox = document.getElementById("aiToggle");
+
+        if (settings.aiStatus === "false") {
+          aiCheckbox.checked = false;
+        } else {
+          aiCheckbox.checked = true;
+        }
+      }
+
       async function toggleAI() {
         const guildId = document.getElementById("guildSelector").value;
         const sessionToken = localStorage.getItem("session");
