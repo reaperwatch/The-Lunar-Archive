@@ -520,11 +520,19 @@
                 id="guildSelector"
                 style="width: 100%"
                 onchange="
-                  updateSelectedGuild();
-                  loadCommands();
+                  updateSelectedGuild() /*
+                  loadCommands();*/
                 "
               ></select>
             </div>
+          </div>
+
+          <div class="setting-item">
+            <span>AI Functionality</span>
+            <label class="switch">
+              <input type="checkbox" id="aiToggle" onclick="toggleAI()" />
+              <span class="slider round"></span>
+            </label>
           </div>
           <!--
           <div id="commandManagement" style="margin-top: 20px">
@@ -825,6 +833,32 @@
         } catch (err) {
           console.error("Toggle failed:", err);
           alert("Could not connect to the bot to save changes.");
+        }
+      }
+
+      async function toggleAI() {
+        const guildId = document.getElementById("guildSelector").value;
+        const sessionToken = localStorage.getItem("session");
+        const isEnabled = document.getElementById("aiToggle").checked;
+
+        const response = await fetch(`${TUNNEL_URL}/toggle-ai`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: sessionToken,
+            "ngrok-skip-browser-warning": "true",
+            "x-requested-with": "TheLunarArchive-Dashboard",
+          },
+          body: JSON.stringify({
+            guildId,
+            sessionToken,
+            enabled: isEnabled,
+          }),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          console.log("AI Status updated:", data.enabled);
         }
       }
 
