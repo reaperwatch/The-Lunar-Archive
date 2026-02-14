@@ -515,14 +515,14 @@
               src=""
               style="width: 40px; border-radius: 50%"
             />
-            <div style="flex-grow: inherit">
+            <div style="flex-direction: column; align-items: center">
               <label style="margin-bottom: 5px"
                 >Select Server <br />
                 (owner/admin)</label
               >
               <select
                 id="guildSelector"
-                style="width: 100%"
+                style="width: 100%; align-items: center"
                 onchange="
                   updateSelectedGuild(); /*
                   loadCommands();*/
@@ -561,6 +561,8 @@
               display: flex;
               align-items: center;
               justify-content: center;
+              max-width: 400px;
+              margin: 0 auto 20px auto;
             "
           >
             <label
