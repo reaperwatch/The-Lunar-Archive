@@ -166,7 +166,6 @@ footer {
     max-width: 400px !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
-    flex-direction: row !important;
     gap: 15px;
 
     padding: 16px 18px;
