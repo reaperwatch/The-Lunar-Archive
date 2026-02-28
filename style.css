@@ -162,31 +162,18 @@ footer {
   }
 
   .link-card {
-    width: 50%;
-    justify-content: flex-start !important;
-    gap: 15px;
-    padding: 16px 18px;
-    overflow: visible !important;
-  }
-
-  .link-card div {
-    display: flex;
+    width: min-content;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    overflow: visible !important;
+    font-size: 1rem;
+    padding: 16px 18px;
+    overflow-x: visible !important;
+    overflow-inline: unset !important;
   }
 
   .link-card code {
-    font-size: 0.7rem;
-    margin-top: 4px;
-    white-space: normal;
-    display: inline-block;
-    line-height: 1.2;
+    font-size: 0.35rem;
   }
-
-  .card-icon {
-    flex-shrink: 0;
-    padding-right: 0;
+  .link-card div {
+    overflow-inline: clip !important;
   }
 }
