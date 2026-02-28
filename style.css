@@ -151,7 +151,7 @@ footer {
   animation-delay: 1.8s;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   h1 {
     font-size: 1.8rem;
   }
@@ -162,18 +162,11 @@ footer {
   }
 
   .link-card {
-    width: min-content;
-    flex-direction: column;
     font-size: 1rem;
     padding: 16px 18px;
-    overflow-x: visible !important;
-    overflow-inline: unset !important;
   }
 
   .link-card code {
     font-size: 0.35rem;
-  }
-  .link-card div {
-    overflow-inline: clip !important;
   }
 }
