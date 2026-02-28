@@ -150,6 +150,9 @@ footer {
 .link-card:nth-of-type(7) {
   animation-delay: 1.6s;
 }
+.link-card:nth-of-type(8) {
+  animation-delay: 1.8s;
+}
 
 @media (max-width: 480px) {
   h1 {
