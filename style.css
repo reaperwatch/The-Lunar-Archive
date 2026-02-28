@@ -164,9 +164,13 @@ footer {
   .link-card {
     font-size: 1rem;
     padding: 16px 18px;
+    overflow-inline: visible !important;
   }
 
   .link-card code {
     font-size: 0.35rem;
+  }
+  .link-card div {
+    overflow-inline: clip !important;
   }
 }
