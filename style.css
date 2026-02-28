@@ -90,6 +90,9 @@ header p {
 
 .link-card div {
   text-align: left;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 
 .card-icon {
