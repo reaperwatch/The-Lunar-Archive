@@ -164,7 +164,6 @@ footer {
   .link-card {
     width: 50%;
     justify-content: flex-start !important;
-    align-items: flex-start !important;
     gap: 15px;
     padding: 16px 18px;
     overflow: visible !important;
