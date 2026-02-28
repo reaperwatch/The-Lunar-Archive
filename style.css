@@ -93,7 +93,7 @@ header p {
 .card-icon {
   width: 2em;
   height: 2em;
-  padding-right: inherit;
+  flex-direction: row;
   transition: transform 0.3s ease;
 }
 
