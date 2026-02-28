@@ -162,7 +162,7 @@ footer {
   }
 
   .link-card {
-    width: 90%;
+    width: 30%;
     max-width: 400px !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
@@ -183,7 +183,7 @@ footer {
   }
 
   .link-card code {
-    font-size: 0.35rem;
+    font-size: 0.7rem;
     margin-top: 4px;
     white-space: normal;
     display: inline-block;
