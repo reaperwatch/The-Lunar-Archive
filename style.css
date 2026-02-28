@@ -55,7 +55,6 @@ header p {
 
 .link-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: linear-gradient(180deg, #bb86fc, #1e1e1e, #1e1e1e 50%);
@@ -93,7 +92,7 @@ header p {
 .card-icon {
   width: 2em;
   height: 2em;
-  flex-direction: row;
+  padding-right: inherit;
   transition: transform 0.3s ease;
 }
 
@@ -165,13 +164,17 @@ footer {
   .link-card {
     width: auto;
     max-width: 75%;
+    flex-direction: column;
     font-size: 1rem;
     padding: 16px 18px;
-    overflow: visible !important;
+    overflow-x: visible !important;
     overflow-inline: unset !important;
   }
 
   .link-card code {
     font-size: 0.35rem;
+  }
+  .link-card div {
+    overflow-inline: clip !important;
   }
 }
