@@ -164,7 +164,7 @@ footer {
   .link-card {
     font-size: 1rem;
     padding: 16px 18px;
-    overflow-inline: visible !important;
+    overflow-inline: inherit !important;
   }
 
   .link-card code {
