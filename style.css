@@ -164,6 +164,7 @@ footer {
   .link-card {
     font-size: 1rem;
     padding: 16px 18px;
+    width: 50%;
   }
 
   .link-card code {
