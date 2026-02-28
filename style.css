@@ -166,9 +166,7 @@ footer {
     justify-content: flex-start !important;
     align-items: flex-start !important;
     gap: 15px;
-
     padding: 16px 18px;
-    height: auto;
     overflow: visible !important;
   }
 
