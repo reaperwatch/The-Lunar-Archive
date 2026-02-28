@@ -71,7 +71,7 @@ header p {
   width: 50%;
   opacity: 0;
   animation: slideDownFadeIn 0.5s ease-out forwards;
-
+  overflow-inline: clip;
   transition:
     transform 0.3s ease,
     background-position 0.3s ease-in-out,
@@ -85,20 +85,14 @@ header p {
   font-size: 0.8rem;
   padding: 2px 6px;
   border-radius: 4px;
+  margin-left: 0 !important;
   font-family: "Courier New", Courier, monospace;
-}
-
-.link-card div {
-  text-align: left;
-  display: flex;
-  justify-items: center;
-  align-items: center;
 }
 
 .card-icon {
   width: 2em;
   height: 2em;
-  margin-right: 10px;
+  padding-right: inherit;
   transition: transform 0.3s ease;
 }
 
