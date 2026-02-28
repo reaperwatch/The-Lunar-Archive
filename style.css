@@ -166,9 +166,4 @@ footer {
     padding: 16px 18px;
     width: 50%;
   }
-
-  .link-card code {
-    font-size: 0.35rem;
-    overflow-inline: visible !important;
-  }
 }
