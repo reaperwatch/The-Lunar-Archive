@@ -163,7 +163,7 @@ footer {
 
   .link-card {
     width: auto;
-    max-width: 75%;
+    max-width: 50%;
     flex-direction: column;
     font-size: 1rem;
     padding: 16px 18px;
