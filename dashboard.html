@@ -1014,7 +1014,7 @@
           }
         } else if (token) {
           fetch(`${TUNNEL_URL}/api/get-settings`, {
-            method: "GET",
+            method: "OPTIONS",
             headers: {
               "x-requested-with": "TheLunarArchive-Dashboard",
               Authorization: token,
