@@ -1099,10 +1099,53 @@
               }
             });
         } else {
-          document.getElementById("status").innerText = "Please log in.";
-          document.getElementById("loginBtn").style.display = "block";
-          document.getElementById("loginBtn").onclick = () =>
-            (window.location.href = DISCORD_LOGIN_URL);
+          // USER IS NOT LOGGED IN
+          const statusEl = document.getElementById("status");
+          statusEl.innerText = "Please log in.";
+
+          const loginBtn = document.getElementById("loginBtn");
+          loginBtn.style.display = "block";
+
+          // offline development bypass for testing without Discord OAuth
+          loginBtn.onclick = () => {
+            const isLocal =
+              window.location.hostname === "localhost" ||
+              window.location.hostname === "127.0.0.1";
+
+            if (isLocal) {
+              console.log(
+                "Local environment detected. Attempting dev bypass...",
+              );
+
+              fetch(`${API_BASE}/api/login`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "x-requested-with": "TheLunarArchive-Dashboard",
+                },
+                body: JSON.stringify({
+                  code: "dev_bypass",
+                  secret: "offline_key",
+                }),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  if (data.token) {
+                    localStorage.setItem("session", data.token);
+                    window.location.reload();
+                  } else {
+                    statusEl.innerText =
+                      "❌ Local login failed. Is your bot running?";
+                  }
+                })
+                .catch((err) => {
+                  statusEl.innerText = "❌ Connection error: " + err.message;
+                });
+            } else {
+              // Standard behavior for live site
+              window.location.href = DISCORD_LOGIN_URL;
+            }
+          };
         }
       };
     </script>
