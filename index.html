@@ -133,10 +133,27 @@
   <body>
     <div class="container">
       <header>
-        <img src="./icons/pfp.jpg" alt="Profile Picture" id="profile-pic" />
+        <img alt="Discord Profile Picture" id="profile-pic" />
         <h1>The Lunar Archive</h1>
         <p>Welcome to my corner of the internet.</p>
       </header>
+
+      <script>
+        fetch(
+          "https://instructively-hushful-cinda.ngrok-free.dev/api/my-avatar",
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+              "x-requested-with": "TheLunarArchive-Dashboard",
+            },
+          },
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("profile-pic").src = data.avatar;
+          })
+          .catch(console.error);
+      </script>
 
       <!-- Links -->
       <main>
