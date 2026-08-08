@@ -143,6 +143,10 @@
       </header>
 
       <script>
+        const cachedAvatar = document.getElementById("profile-pic");
+
+        cachedAvatar.src = `./icons/profile.png?v=${Date.now()}`;
+
         fetch(
           "https://instructively-hushful-cinda.ngrok-free.dev/api/my-avatar",
           {
@@ -154,7 +158,7 @@
         )
           .then((res) => res.json())
           .then((data) => {
-            document.getElementById("profile-pic").src = data.avatar;
+            cachedAvatar.src = data.avatar;
           })
           .catch(console.error);
       </script>
