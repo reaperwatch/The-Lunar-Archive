@@ -437,7 +437,7 @@
           </div>
         </div>
 
-        <h4>Privacy & AI Settings</h4>
+        <h4>Privacy & DM Settings</h4>
         <div class="toggle-group">
           <label
             ><input
@@ -495,7 +495,7 @@
               id="dm_reply"
               onclick="toggleOption('dm_reply')"
             />
-            Enable AI DM Replies
+            Enable Auto DM Replies
           </label>
         </div>
 
@@ -554,7 +554,7 @@
                 onchange="
                   updateSelectedGuild(); /*
                   loadCommands();*/
-                  fetchAISettings();
+                  fetchMentionSettings();
                 "
               ></select>
             </div>
@@ -570,11 +570,15 @@
               >
                 <span
                   style="font-size: 0.9rem; font-weight: 500; color: #b39dff"
-                  >AI Functionality</span
+                  >Mention Functionality</span
                 >
 
                 <div class="switch">
-                  <input type="checkbox" id="aiToggle" onchange="toggleAI()" />
+                  <input
+                    type="checkbox"
+                    id="mentionToggle"
+                    onchange="toggleMention()"
+                  />
                   <span class="slider round"></span>
                 </div>
               </label>
@@ -712,7 +716,7 @@
 
         if (guild) {
           window.currentGuildId = guild.id;
-          fetchAISettings();
+          fetchMentionSettings();
           document.getElementById("prefixInput").value = guild.prefix;
           document.getElementById("prefixControls").style.display = "block";
           document.getElementById("saveStatus").innerText = "";
@@ -904,16 +908,16 @@
         }
       }
 
-      async function fetchAISettings() {
+      async function fetchMentionSettings() {
         const guildId = window.currentGuildId;
         const sessionToken = localStorage.getItem("session");
-        const aiToggle = document.getElementById("aiToggle");
+        const mentionToggle = document.getElementById("mentionToggle");
 
         if (!guildId) return;
 
         try {
           const response = await fetch(
-            `${TUNNEL_URL}/get-ai-status?guildId=${guildId}&sessionToken=${sessionToken}`,
+            `${TUNNEL_URL}/get-mention-status?guildId=${guildId}&sessionToken=${sessionToken}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -925,21 +929,21 @@
           );
           const data = await response.json();
 
-          aiToggle.checked = data.status !== "false";
-          console.log(`AI Status for ${guildId}: ${data.status}`);
+          mentionToggle.checked = data.status !== "false";
+          console.log(`Mention Status for ${guildId}: ${data.status}`);
         } catch (err) {
-          console.error("Error loading AI settings:", err);
-          aiToggle.checked = true; // Default to ON on error
+          console.error("Error loading mention settings:", err);
+          mentionToggle.checked = true; // Default to ON on error
         }
       }
 
-      async function toggleAI() {
+      async function toggleMention() {
         const guildId = window.currentGuildId;
         const sessionToken = localStorage.getItem("session");
-        const isChecked = document.getElementById("aiToggle").checked;
+        const isChecked = document.getElementById("mentionToggle").checked;
 
         try {
-          const response = await fetch(`${TUNNEL_URL}/toggle-ai`, {
+          const response = await fetch(`${TUNNEL_URL}/toggle-mention`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -956,10 +960,10 @@
 
           const result = await response.json();
           if (result.success) {
-            console.log("AI setting saved successfully.");
+            console.log("Mention setting saved successfully.");
           }
         } catch (err) {
-          console.error("Error saving AI settings:", err);
+          console.error("Error saving mention settings:", err);
         }
       }
 
