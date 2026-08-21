@@ -251,6 +251,7 @@ footer {
 
   .features {
     grid-template-columns: 1fr;
+    max-width: 90%;
   }
 
   #bot-profile-pic {
